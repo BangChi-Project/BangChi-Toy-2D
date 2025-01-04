@@ -4,7 +4,7 @@ public class EnemySpawner : MonoBehaviour
 {
     [Header("Monster Prefabs")]
     [Tooltip("Select to use Monster Prefabs")]
-    GameObject _monsterPrefab;
+    [SerializeField] GameObject monsterPrefab;
     [Tooltip("spawnDelay")]
     float _spawnDelay;
     float _spawnTimer;
@@ -21,7 +21,7 @@ public class EnemySpawner : MonoBehaviour
         if (_spawnTimer >= _spawnDelay)
         { 
             _spawnTimer = 0f;
-            Instantiate(_monsterPrefab, transform.position, Quaternion.identity);
+            Instantiate(monsterPrefab, transform.position, Quaternion.identity);
         }
     }
 }
