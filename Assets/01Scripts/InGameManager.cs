@@ -3,6 +3,8 @@ using UnityEngine;
 public class InGameManager : MonoBehaviour
 {
     [Header("SingleTon")] private static InGameManager _instance = null;
+    
+    [Header("Player Pos")] [Tooltip("for Enemy Chasing")] private Vector3 _playerPos {get; set;}
 
     public static InGameManager Instance
     {
@@ -35,9 +37,15 @@ public class InGameManager : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
     }
+
+    void Update()
+    {
+        _playerPos = player.transform.position;
+    }
     
     [Tooltip("Getter")]
-    public Vector2 GetPlayerPos() {
-        return player.transform.position;
+    public Vector3 GetPlayerPos()
+    {
+        return _playerPos;
     }
 }
