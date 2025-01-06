@@ -3,6 +3,8 @@ using UnityEngine;
 public class PlayerAttackHandler : MonoBehaviour
 {
     AttackRangeChecker attackRangeChecker;
+    [SerializeField] private float attackCoolTime;
+    private float t=0;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -14,13 +16,17 @@ public class PlayerAttackHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        t += Time.deltaTime;
     }
     
     // Event
     // private void OnEnable()
     private void HandleEnemyEnter(Collider2D enemy)
     {
-        Debug.Log($"Entered {enemy.gameObject.tag}!");
+        if (t > attackCoolTime)
+        {
+            t = 0;
+            Debug.Log($"Entered {enemy.gameObject.tag}, Attack!");
+        }
     }
 }

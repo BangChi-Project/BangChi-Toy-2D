@@ -28,7 +28,7 @@ public class AttackRangeChecker : MonoBehaviour
     {
         if (other.CompareTag(enemyTag))
         {
-            Debug.Log(other.gameObject.name);
+            // Debug.Log(other.gameObject.name);
             // if (enemiesInRange.Add(other))
             OnEnemyEnter?.Invoke(other);
         }
