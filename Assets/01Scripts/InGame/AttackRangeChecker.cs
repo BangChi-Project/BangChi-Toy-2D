@@ -7,7 +7,6 @@ public class AttackRangeChecker : MonoBehaviour
 {
     // this script assume that parent object have wepon?
     // AttackRange have circle collider
-    private string enemyTag = "Enemy";
     
     public Action<Collider2D> OnEnemyEnter;
     // private HashSet<Collider2D> enemiesInRange = new HashSet<Collider2D>();
@@ -26,11 +25,11 @@ public class AttackRangeChecker : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (other.CompareTag(enemyTag))
+        if (other.CompareTag(InGameManager.Instance.enemyTag))
         {
             // Debug.Log(other.gameObject.name);
             // if (enemiesInRange.Add(other))
-            OnEnemyEnter?.Invoke(other);
+            OnEnemyEnter?.Invoke(other); // Invoke Event to PlayerAttackHandler
         }
     }
 }

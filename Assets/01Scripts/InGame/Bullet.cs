@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
@@ -39,5 +40,11 @@ public class Bullet : MonoBehaviour
     {
         yield return new WaitForSeconds(deleteTime);
         Destroy(this.gameObject);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        // Delete or any effect
+        // if (other.CompareTag(InGameManager.Instance.enemyTag)) {}
     }
 }

@@ -11,12 +11,13 @@ GameObject:
   - component: {fileID: 3442543050165472289}
   - component: {fileID: 7686319309809446503}
   - component: {fileID: 2757562719300284163}
+  - component: {fileID: 8192013103019104099}
   - component: {fileID: 7606228206181089985}
   - component: {fileID: 367684886808234019}
   - component: {fileID: 4967285418067208339}
   m_Layer: 0
   m_Name: Enemy-treant-walk-front-1
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -113,6 +114,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8192013103019104099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2674097246602653995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b491edbef88b14d9692eccb046ff82d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7606228206181089985
 MonoBehaviour:
   m_ObjectHideFlags: 0
