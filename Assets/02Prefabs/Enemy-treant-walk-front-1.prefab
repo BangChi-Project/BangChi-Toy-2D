@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7606228206181089985}
   - component: {fileID: 367684886808234019}
   - component: {fileID: 4967285418067208339}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Enemy-treant-walk-front-1
   m_TagString: Enemy
   m_Icon: {fileID: 0}

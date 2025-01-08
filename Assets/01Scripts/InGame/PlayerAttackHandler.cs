@@ -1,9 +1,10 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerAttackHandler : MonoBehaviour
 {
     AttackRangeChecker attackRangeChecker;
-    [SerializeField] private float attackCoolTime;
     private float t=0;
     [SerializeField] Player player;
     
@@ -21,14 +22,18 @@ public class PlayerAttackHandler : MonoBehaviour
     }
     
     // Event
-    // private void OnEnable()
+    // Event destructor
+    void OnDisable()
+    {
+        attackRangeChecker.OnEnemyEnter -= HandleEnemyEnter; // Prevent Memory Leak
+    }
     private void HandleEnemyEnter(Collider2D enemy)
     {
-        if (t > attackCoolTime)
+        if (player.State != Player.StateEnum.Attack && t > player.AttackSpeed)
         {
-            t = 0;
-            Debug.Log($"Entered {enemy.gameObject.tag}, Attack!");
-            player.Attack(enemy);
+            Debug.Log($"Entered {enemy.name}");
+            if (player.EnemyEnter(enemy))
+                t = 0; // Attack Success
         }
     }
 }
