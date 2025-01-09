@@ -24,9 +24,17 @@ public class TreeMonster : Enemy
         
     }
 
-    private void Death()
+    public override void Death()
     {
         Destroy(gameObject);
+    }
+    
+    private void OnTriggerStay2D (Collider2D other)
+    {
+        if (other.CompareTag(InGameManager.Instance.playerTag))
+        {
+            other.GetComponent<Player>().TakeDamage(Atk);
+        }
     }
 
     public override void Initialize()
@@ -34,6 +42,6 @@ public class TreeMonster : Enemy
         MaxHealth = 150f;
         Health = MaxHealth;
         MoveSpeed = 1.5f;
-        Atk = 0.5f;
+        Atk = 2f;
     }
 }
