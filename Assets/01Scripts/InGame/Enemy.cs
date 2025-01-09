@@ -15,11 +15,8 @@ public abstract class Enemy : MonoBehaviour
     public float MoveSpeed {get; set;}
     public float Atk { get; set; }
 
-    private void OnTriggerStay2D (Collider2D other)
+    public virtual void Death()
     {
-        if (other.CompareTag(InGameManager.Instance.playerTag))
-        {
-            other.GetComponent<Player>().TakeDamage(Atk);
-        }
+        Destroy(gameObject);
     }
 }
