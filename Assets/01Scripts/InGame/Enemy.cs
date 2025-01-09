@@ -1,25 +1,12 @@
 using System;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag(InGameManager.Instance.weaponTag))
-        {
-            Destroy(this.gameObject);
-        }
-    }
+    public string EnemyName {get; set;}
+    public float Health {get; set;}
+    public float MaxHealth {get; set;}
+    public float MoveSpeed {get; set;}
+    public abstract void TakeDamage(float damage);
+    public abstract void Initialize();
 }

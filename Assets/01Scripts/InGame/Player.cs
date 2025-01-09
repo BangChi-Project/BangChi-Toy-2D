@@ -15,6 +15,9 @@ public class Player : MonoBehaviour
         Hitted,
     }
     public StateEnum State { get; private set; } = StateEnum.Idle;
+    public float Health { get; private set; } = 100f;
+    public float MaxHealth { get; private set; } = 100f;
+    public float Atk { get; private set; } = 100f;
     [SerializeField] private float detectSpeed = 0.5f;
     [SerializeField] private float attackSpeed = 1f;
     public float AttackSpeed
@@ -126,7 +129,8 @@ public class Player : MonoBehaviour
 
     private IEnumerator CoAttack(Collider2D other)
     {
-        Instantiate(bullet, transform.position, Quaternion.identity).SetTarget(other);
+        Bullet b = Instantiate<Bullet>(bullet, transform.position, Quaternion.identity);
+        b.Initialize(other, Atk);
         yield return new WaitForSeconds(AttackSpeed);
         State = StateEnum.Idle;
     }

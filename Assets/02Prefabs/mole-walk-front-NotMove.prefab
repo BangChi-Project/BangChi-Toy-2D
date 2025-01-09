@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 5801465153637698299}
   - component: {fileID: 804618225462266132}
   - component: {fileID: 1418834213961171116}
+  - component: {fileID: 234526429000400512}
   - component: {fileID: -5055353854755821183}
   - component: {fileID: -8286454596345893714}
-  - component: {fileID: 5000596684029989829}
+  - component: {fileID: 5303605401552641032}
   m_Layer: 10
   m_Name: mole-walk-front-NotMove
   m_TagString: Enemy
@@ -113,6 +114,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &234526429000400512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2083352753892971040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8d7860a3db6a45a7b7eafadb86f763f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!70 &-5055353854755821183
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -177,7 +190,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &5000596684029989829
+--- !u!114 &5303605401552641032
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,6 +199,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 2083352753892971040}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b491edbef88b14d9692eccb046ff82d5, type: 3}
+  m_Script: {fileID: 11500000, guid: e8d7860a3db6a45a7b7eafadb86f763f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
