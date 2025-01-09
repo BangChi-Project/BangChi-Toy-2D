@@ -9,6 +9,9 @@ public abstract class Weapon : MonoBehaviour
 
     public virtual void Attack(Collider2D other) // override 가능
     {
-        other.GetComponent<Enemy>().TakeDamage(Atk);
+        if (other.CompareTag(InGameManager.Instance.enemyTag))
+        {
+            other.GetComponent<Enemy>().TakeDamage(Atk);
+        }
     }
 }
