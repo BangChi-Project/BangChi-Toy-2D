@@ -3,11 +3,12 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-public class Bullet : MonoBehaviour
+public class Bullet : Weapon
 {
     private Vector3 targetDir;
-    private Collider2D target; // test
+    private Collider2D target; // Guided
     [SerializeField] private float deleteTime;
+    public float Atk { get; set; }
 
     [SerializeField] float bulletSpeed;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -45,6 +46,16 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         // Delete or any effect
-        // if (other.CompareTag(InGameManager.Instance.enemyTag)) {}
+        if (other.CompareTag(InGameManager.Instance.enemyTag))
+        {
+            other.GetComponent<Enemy>().TakeDamage(Atk);
+            // Destroy(other.gameObject);
+        }
+    }
+
+    public override void Initialize(Collider2D other, float atk)
+    {
+        SetTarget(other);
+        Atk = atk;
     }
 }

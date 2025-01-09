@@ -1,25 +1,25 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public abstract void TakeDamage(float damage);
+    public abstract void Initialize();
+    
+    [SerializeField] protected UIHandler uiHandler;
+    
+    public string EnemyName {get; set;}
+    public float Health {get; set;}
+    public float MaxHealth {get; set;}
+    public float MoveSpeed {get; set;}
+    public float Atk { get; set; }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerStay2D (Collider2D other)
     {
-        
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag(InGameManager.Instance.weaponTag))
+        if (other.CompareTag(InGameManager.Instance.playerTag))
         {
-            Destroy(this.gameObject);
+            other.GetComponent<Player>().TakeDamage(Atk);
         }
     }
 }

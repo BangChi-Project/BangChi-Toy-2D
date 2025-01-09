@@ -5,9 +5,8 @@ public class EnemyMove : MonoBehaviour
     [Header("hi")]
     [Tooltip("explain")]
     private Rigidbody2D _rb;
-    
-    [SerializeField]
-    private float moveSpeed;
+
+    [SerializeField] private Enemy enemy;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -21,7 +20,7 @@ public class EnemyMove : MonoBehaviour
 
         Vector3 dir = (playerPos - transform.position).normalized;
 
-        transform.position += dir * moveSpeed * Time.deltaTime;
+        transform.position += dir * enemy.MoveSpeed * Time.deltaTime;
         // _rb.AddForce(dir * moveSpeed * Time.deltaTime, ForceMode2D.Impulse);
     }
 }
