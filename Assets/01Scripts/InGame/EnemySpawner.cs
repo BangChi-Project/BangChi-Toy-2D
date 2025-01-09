@@ -6,21 +6,21 @@ public class EnemySpawner : MonoBehaviour
     [Tooltip("Select to use Monster Prefabs")]
     [SerializeField] GameObject monsterPrefab;
     [Tooltip("spawnDelay")]
-    float _spawnDelay;
-    float _spawnTimer;
+    [SerializeField] float spawnDelay = 1f;
+    float spawnTimer;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        _spawnDelay = 1f;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        _spawnTimer += Time.deltaTime; // deltaTime is not be affected by frame
-        if (_spawnTimer >= _spawnDelay)
+        spawnTimer += Time.deltaTime; // deltaTime is not be affected by frame
+        if (spawnTimer >= spawnDelay)
         { 
-            _spawnTimer = 0f;
+            spawnTimer = 0f;
             Instantiate(monsterPrefab, transform.position, Quaternion.identity);
         }
     }

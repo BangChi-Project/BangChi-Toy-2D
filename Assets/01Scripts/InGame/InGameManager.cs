@@ -6,6 +6,10 @@ public class InGameManager : MonoBehaviour
     
     [Header("Player Pos")] [Tooltip("for Enemy Chasing")] private Vector3 _playerPos {get; set;}
 
+    // 
+    public string enemyTag = "Enemy";
+    public string weaponTag = "Weapon";
+    
     public static InGameManager Instance
     {
         get

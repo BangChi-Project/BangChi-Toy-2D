@@ -1,6 +1,7 @@
+using System;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -12,5 +13,13 @@ public class Player : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag(InGameManager.Instance.weaponTag))
+        {
+            Destroy(this.gameObject);
+        }
     }
 }
