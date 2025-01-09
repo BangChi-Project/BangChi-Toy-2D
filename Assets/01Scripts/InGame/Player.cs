@@ -13,13 +13,15 @@ public class Player : MonoBehaviour
         Moving,
         Attack,
         Hitted,
+        Death,
     }
+    [SerializeField] private float detectSpeed = 0.5f;
+    [SerializeField] private float attackSpeed = 1f;
+    [SerializeField] private UIHandler uiHandler;
     public StateEnum State { get; private set; } = StateEnum.Idle;
     public float Health { get; private set; } = 100f;
     public float MaxHealth { get; private set; } = 100f;
     public float Atk { get; private set; } = 100f;
-    [SerializeField] private float detectSpeed = 0.5f;
-    [SerializeField] private float attackSpeed = 1f;
     public float AttackSpeed
     {
         get
@@ -54,10 +56,13 @@ public class Player : MonoBehaviour
             case (StateEnum.Moving):
                 Moving();
                 break;
+            case (StateEnum.Death):
+                Death();
+                break;
         }
     }
 
-    public bool EnemyEnter(Collider2D other) // Event!
+    public bool EnemyEnter(Collider2D other) // EnemyEnter Event! -> Attack!
     {
         switch (State)
         {
@@ -74,6 +79,17 @@ public class Player : MonoBehaviour
             default:
                 return false;
         }
+    }
+
+    public void TakeDamage(float damage)
+    {
+        Debug.Log("Take Damage! hp: " + Health);
+        Health -= damage;
+        if (Health <= 0)
+        {
+            State = StateEnum.Death;
+        }
+        uiHandler.SetHpBar(Health / MaxHealth);
     }
 
     float detectRadius = 2f; //
@@ -133,6 +149,11 @@ public class Player : MonoBehaviour
         b.Initialize(other, Atk);
         yield return new WaitForSeconds(AttackSpeed);
         State = StateEnum.Idle;
+    }
+
+    private void Death()
+    {
+        Destroy(this.gameObject);
     }
     
     private void OnDrawGizmos()

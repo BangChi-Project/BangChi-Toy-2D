@@ -2,6 +2,13 @@ using UnityEngine;
 
 public class InGameManager : MonoBehaviour
 {
+    public enum StateEnum
+    {
+        Start,
+        Playing,
+        Pause,
+        End,
+    }
     [Header("SingleTon")] private static InGameManager _instance = null;
     
     [Header("Player Pos")] [Tooltip("for Enemy Chasing")] private Vector3 _playerPos {get; set;}
@@ -9,6 +16,11 @@ public class InGameManager : MonoBehaviour
     // 
     public string enemyTag = "Enemy";
     public string weaponTag = "Weapon";
+    public string playerTag = "Player";
+    public StateEnum GameState { get; private set; } = StateEnum.Playing;
+    
+    [Header("Player Data")] [SerializeField]
+    GameObject player;
     
     public static InGameManager Instance
     {
@@ -33,8 +45,6 @@ public class InGameManager : MonoBehaviour
         }
     }
 
-    [Header("Player Data")] [SerializeField]
-    GameObject player;
 
 // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

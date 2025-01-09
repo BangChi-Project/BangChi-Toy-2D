@@ -48,7 +48,8 @@ public class Bullet : Weapon
         // Delete or any effect
         if (other.CompareTag(InGameManager.Instance.enemyTag))
         {
-            Destroy(other.gameObject);
+            other.GetComponent<Enemy>().TakeDamage(Atk);
+            // Destroy(other.gameObject);
         }
     }
 
