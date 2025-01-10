@@ -42,6 +42,7 @@ public class FirestoreManager : MonoBehaviour
                 _firestore = FirebaseFirestore.DefaultInstance;
                 Debug.Log("Firebase Firestore Initialized");
                 SaveDataToFirestore("test", "test", "12345", "Test Name", DateTimeOffset.UtcNow.ToUnixTimeSeconds());
+                LoadDataFromFirestore("test");
             }
             else
             {
@@ -74,6 +75,31 @@ public class FirestoreManager : MonoBehaviour
             else
             {
                 Debug.LogError($"Failed to write document: {task.Exception}");
+            }
+        });
+    }
+
+      public void LoadDataFromFirestore(string collectionName)
+    {
+        if (_firestore == null)
+        {
+            Debug.LogError("Firestore not initialized.");
+            return;
+        }
+
+        _firestore.Collection(collectionName).GetSnapshotAsync().ContinueWithOnMainThread(task =>
+        {
+            if (task.IsCompletedSuccessfully)
+            {
+                QuerySnapshot snapshot = task.Result;
+                foreach (DocumentSnapshot document in snapshot.Documents)
+                {
+                    Debug.Log($"Document ID: {document.Id}, Data: {document.ToDictionary()}");
+                }
+            }
+            else
+            {
+                Debug.LogError($"Failed to load documents: {task.Exception}");
             }
         });
     }
