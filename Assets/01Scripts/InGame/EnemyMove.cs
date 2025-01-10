@@ -16,11 +16,14 @@ public class EnemyMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 playerPos = InGameManager.Instance.GetPlayerPos();
+        if (InGameManager.Instance.GameState == InGameManager.StateEnum.Playing)
+        {
+            Vector3 playerPos = InGameManager.Instance.GetPlayerPos();
 
-        Vector3 dir = (playerPos - transform.position).normalized;
+            Vector3 dir = (playerPos - transform.position).normalized;
 
-        transform.position += dir * enemy.MoveSpeed * Time.deltaTime;
-        // _rb.AddForce(dir * moveSpeed * Time.deltaTime, ForceMode2D.Impulse);
+            transform.position += dir * enemy.MoveSpeed * Time.deltaTime;
+            // _rb.AddForce(dir * moveSpeed * Time.deltaTime, ForceMode2D.Impulse);
+        }
     }
 }

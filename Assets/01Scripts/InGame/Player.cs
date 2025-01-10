@@ -48,17 +48,21 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        switch (State)
+        if (InGameManager.Instance.GameState == InGameManager.StateEnum.Playing)
         {
-            case (StateEnum.Idle):
-                Detect();
-                break;
-            case (StateEnum.Moving):
-                Moving();
-                break;
-            case (StateEnum.Death):
-                Death();
-                break;
+            switch (State)
+            {
+                case (StateEnum.Idle):
+                    Detect();
+                    break;
+                case (StateEnum.Moving):
+                    Moving();
+                    break;
+                case (StateEnum.Death):
+                    InGameManager.Instance.SetGameEnd();
+                    Death();
+                    break;
+            }
         }
     }
 

@@ -1,3 +1,5 @@
+using System.Diagnostics;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class InGameManager : MonoBehaviour
@@ -54,7 +56,23 @@ public class InGameManager : MonoBehaviour
 
     void Update()
     {
-        _playerPos = player.transform.position;
+        switch (GameState)
+        {
+            case(StateEnum.Start):
+                break;
+            case(StateEnum.Playing):
+                _playerPos = player.transform.position;
+                break;
+            case(StateEnum.Pause):
+                break;
+            case(StateEnum.End):
+                break;
+        }
+    }
+
+    public void SetGameEnd()
+    {
+        GameState = StateEnum.End;
     }
     
     [Tooltip("Getter")]
