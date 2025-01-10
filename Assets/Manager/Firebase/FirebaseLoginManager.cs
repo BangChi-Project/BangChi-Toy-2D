@@ -1,11 +1,13 @@
-using System;
-using System.Threading.Tasks;
-using Firebase.Auth;
 using UnityEngine;
 using UnityEngine.UI;
+using Firebase.Auth;
+using Google;
+using AppleAuth;
+using System.Threading.Tasks;
 
 public class FirebaseLoginManager : MonoBehaviour
 {
+    // Reference to buttons in the Unity scene
     public Button googleLoginButton;
     public Button appleLoginButton;
 
@@ -13,87 +15,116 @@ public class FirebaseLoginManager : MonoBehaviour
 
     void Start()
     {
+        // Initialize Firebase Auth
         auth = FirebaseAuth.DefaultInstance;
 
+        // Add listeners to buttons
         googleLoginButton.onClick.AddListener(() => SignInWithGoogle());
         appleLoginButton.onClick.AddListener(() => SignInWithApple());
     }
 
     private void SignInWithGoogle()
     {
-        Debug.Log("Google login clicked.");
-        SignInWithGoogleAsync().ContinueWith(task =>
+        Debug.Log("Google login started");
+
+        GetGoogleIdToken().ContinueWith(task =>
         {
             if (task.IsFaulted || task.IsCanceled)
             {
-                Debug.LogError("Google login failed: " + task.Exception);
+                Debug.LogError("Failed to get Google ID token: " + task.Exception);
+                return;
             }
-            else
-            {
-                FirebaseUser newUser = task.Result;
-                Debug.Log("Google login successful. User: " + newUser.DisplayName);
-            }
+
+            string googleIdToken = task.Result;
+            Credential credential = GoogleAuthProvider.GetCredential(googleIdToken, null);
+            SignInWithCredential(credential, "Google");
         });
-    }
-
-    private async Task<FirebaseUser> SignInWithGoogleAsync()
-    {
-        // Placeholder: Replace this with Google Sign-In SDK integration and obtain an ID token.
-        string googleIdToken = await GetGoogleIdTokenAsync();
-
-        if (string.IsNullOrEmpty(googleIdToken))
-        {
-            throw new Exception("Google ID Token is null or empty.");
-        }
-
-        Credential credential = GoogleAuthProvider.GetCredential(googleIdToken, null);
-        FirebaseUser user = await auth.SignInWithCredentialAsync(credential);
-
-        return user;
-    }
-
-    private Task<string> GetGoogleIdTokenAsync()
-    {
-        // Replace this with Google Sign-In implementation to obtain ID token.
-        return Task.FromResult("dummy-google-id-token");
     }
 
     private void SignInWithApple()
     {
-        Debug.Log("Apple login clicked.");
-        SignInWithAppleAsync().ContinueWith(task =>
+        Debug.Log("Apple login started");
+
+        GetAppleIdToken().ContinueWith(task =>
         {
             if (task.IsFaulted || task.IsCanceled)
             {
-                Debug.LogError("Apple login failed: " + task.Exception);
+                Debug.LogError("Failed to get Apple ID token: " + task.Exception);
+                return;
             }
-            else
-            {
-                FirebaseUser newUser = task.Result;
-                Debug.Log("Apple login successful. User: " + newUser.DisplayName);
-            }
+
+            string appleIdToken = task.Result;
+            Credential credential = OAuthProvider.GetCredential("apple.com", appleIdToken, null, null);
+            SignInWithCredential(credential, "Apple");
         });
     }
 
-    private async Task<FirebaseUser> SignInWithAppleAsync()
+    private void SignInWithCredential(Credential credential, string providerName)
     {
-        // Placeholder: Replace this with Apple Sign-In SDK integration and obtain an ID token.
-        string appleIdToken = await GetAppleIdTokenAsync();
-
-        if (string.IsNullOrEmpty(appleIdToken))
+        auth.SignInWithCredentialAsync(credential).ContinueWith(task =>
         {
-            throw new Exception("Apple ID Token is null or empty.");
-        }
+            if (task.IsCanceled)
+            {
+                Debug.LogError($"{providerName} sign-in was canceled.");
+                return;
+            }
+            if (task.IsFaulted)
+            {
+                Debug.LogError($"{providerName} sign-in encountered an error: {task.Exception}");
+                return;
+            }
 
-        Credential credential = OAuthProvider.GetCredential("apple.com", appleIdToken, null, null);
-        FirebaseUser user = await auth.SignInWithCredentialAsync(credential);
-
-        return user;
+            FirebaseUser user = task.Result;
+            Debug.Log($"{providerName} login successful. User: {user.DisplayName}, Email: {user.Email}");
+        });
     }
 
-    private Task<string> GetAppleIdTokenAsync()
+    private Task<string> GetGoogleIdToken()
     {
-        // Replace this with Apple Sign-In implementation to obtain ID token.
-        return Task.FromResult("dummy-apple-id-token");
+        var taskCompletionSource = new TaskCompletionSource<string>();
+
+        GoogleSignIn.Configuration = new GoogleSignInConfiguration
+        {
+            RequestIdToken = true,
+            WebClientId = "YOUR_WEB_CLIENT_ID"
+        };
+
+        GoogleSignIn.DefaultInstance.SignIn().ContinueWith(task =>
+        {
+            if (task.IsFaulted || task.IsCanceled)
+            {
+                taskCompletionSource.SetException(task.Exception ?? new System.Exception("Google Sign-In failed"));
+                return;
+            }
+
+            taskCompletionSource.SetResult(task.Result.IdToken);
+        });
+
+        return taskCompletionSource.Task;
+    }
+
+    private Task<string> GetAppleIdToken()
+    {
+        var taskCompletionSource = new TaskCompletionSource<string>();
+
+        var quickLoginArgs = new AppleAuthQuickLoginArgs();
+        AppleAuthManager.Instance.LoginWithAppleId(quickLoginArgs, 
+            credentialState =>
+            {
+                if (credentialState.IsAuthorized)
+                {
+                    taskCompletionSource.SetResult(credentialState.IdToken);
+                }
+                else
+                {
+                    taskCompletionSource.SetException(new System.Exception("Apple Sign-In failed"));
+                }
+            },
+            error =>
+            {
+                taskCompletionSource.SetException(new System.Exception("Apple Sign-In encountered an error: " + error));
+            });
+
+        return taskCompletionSource.Task;
     }
 }
