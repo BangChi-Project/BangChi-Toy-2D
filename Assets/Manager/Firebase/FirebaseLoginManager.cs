@@ -3,6 +3,8 @@ using UnityEngine.UI;
 using Firebase.Auth;
 using Google;
 using AppleAuth;
+using AppleAuth.Interfaces;
+using AppleAuth.Enums;
 using System.Threading.Tasks;
 
 public class FirebaseLoginManager : MonoBehaviour
@@ -11,6 +13,8 @@ public class FirebaseLoginManager : MonoBehaviour
     public Button googleLoginButton;
     public Button appleLoginButton;
 
+    private IAppleAuthManager _appleAuthManager;
+
     private FirebaseAuth auth;
 
     void Start()
@@ -18,9 +22,27 @@ public class FirebaseLoginManager : MonoBehaviour
         // Initialize Firebase Auth
         auth = FirebaseAuth.DefaultInstance;
 
+        // Initialize AppleAuthManager (only for iOS)
+#if UNITY_IOS
+        if (AppleAuthManager.IsCurrentPlatformSupported)
+        {
+            _appleAuthManager = new AppleAuthManager(new PayloadDeserializer());
+        }
+#endif
+
         // Add listeners to buttons
         googleLoginButton.onClick.AddListener(() => SignInWithGoogle());
         appleLoginButton.onClick.AddListener(() => SignInWithApple());
+    }
+
+    void Update()
+    {
+#if UNITY_IOS
+        if (_appleAuthManager != null)
+        {
+            _appleAuthManager.Update();
+        }
+#endif
     }
 
     private void SignInWithGoogle()
@@ -43,20 +65,32 @@ public class FirebaseLoginManager : MonoBehaviour
 
     private void SignInWithApple()
     {
+#if UNITY_IOS
         Debug.Log("Apple login started");
 
-        GetAppleIdToken().ContinueWith(task =>
-        {
-            if (task.IsFaulted || task.IsCanceled)
+        var loginArgs = new AppleAuthLoginArgs(LoginOptions.IncludeEmail | LoginOptions.IncludeFullName);
+        _appleAuthManager.LoginWithAppleId(
+            loginArgs,
+            credential =>
             {
-                Debug.LogError("Failed to get Apple ID token: " + task.Exception);
-                return;
-            }
+                var appleIdCredential = credential as IAppleIDCredential;
+                if (appleIdCredential != null)
+                {
+                    string appleUserId = appleIdCredential.User;
+                    string idToken = appleIdCredential.IdentityToken;
 
-            string appleIdToken = task.Result;
-            Credential credential = OAuthProvider.GetCredential("apple.com", appleIdToken, null, null);
-            SignInWithCredential(credential, "Apple");
-        });
+                    Credential firebaseCredential = OAuthProvider.GetCredential("apple.com", idToken, null, null);
+                    SignInWithCredential(firebaseCredential, "Apple");
+                }
+            },
+            error =>
+            {
+                var authorizationErrorCode = error.GetAuthorizationErrorCode();
+                Debug.LogError("Apple Sign-In failed: " + authorizationErrorCode + " " + error);
+            });
+#else
+        Debug.LogError("Apple Sign-In is not supported on this platform.");
+#endif
     }
 
     private void SignInWithCredential(Credential credential, string providerName)
@@ -99,31 +133,6 @@ public class FirebaseLoginManager : MonoBehaviour
 
             taskCompletionSource.SetResult(task.Result.IdToken);
         });
-
-        return taskCompletionSource.Task;
-    }
-
-    private Task<string> GetAppleIdToken()
-    {
-        var taskCompletionSource = new TaskCompletionSource<string>();
-
-        var quickLoginArgs = new AppleAuthQuickLoginArgs();
-        AppleAuthManager.Instance.LoginWithAppleId(quickLoginArgs, 
-            credentialState =>
-            {
-                if (credentialState.IsAuthorized)
-                {
-                    taskCompletionSource.SetResult(credentialState.IdToken);
-                }
-                else
-                {
-                    taskCompletionSource.SetException(new System.Exception("Apple Sign-In failed"));
-                }
-            },
-            error =>
-            {
-                taskCompletionSource.SetException(new System.Exception("Apple Sign-In encountered an error: " + error));
-            });
 
         return taskCompletionSource.Task;
     }
