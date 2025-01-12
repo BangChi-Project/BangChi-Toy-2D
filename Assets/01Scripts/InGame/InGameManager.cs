@@ -15,14 +15,16 @@ public class InGameManager : MonoBehaviour
     
     [Header("Player Pos")] [Tooltip("for Enemy Chasing")] private Vector3 _playerPos {get; set;}
 
+    [Header("Player Data")]
+    [SerializeField] GameObject player;
+    
     // 
     public string enemyTag = "Enemy";
     public string weaponTag = "Weapon";
     public string playerTag = "Player";
     public StateEnum GameState { get; private set; } = StateEnum.Playing;
     
-    [Header("Player Data")] [SerializeField]
-    GameObject player;
+    public float GameTime { get; private set; } = 0f;
     
     public static InGameManager Instance
     {
@@ -62,10 +64,12 @@ public class InGameManager : MonoBehaviour
                 break;
             case(StateEnum.Playing):
                 _playerPos = player.transform.position;
+                GameTime += Time.deltaTime;
                 break;
             case(StateEnum.Pause):
                 break;
             case(StateEnum.End):
+                InGameUIManager.Instance.ShowResultPanel();
                 break;
         }
     }

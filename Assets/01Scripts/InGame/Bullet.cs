@@ -8,7 +8,6 @@ public class Bullet : Weapon
     private Vector3 targetDir;
     private Collider2D target; // Guided
     [SerializeField] private float deleteTime;
-    public float Atk { get; set; }
 
     [SerializeField] float bulletSpeed;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
