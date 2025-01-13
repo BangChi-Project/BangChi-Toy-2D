@@ -7,7 +7,7 @@ public abstract class Enemy : MonoBehaviour
     public abstract void TakeDamage(float damage);
     public abstract void Initialize();
     
-    [SerializeField] protected UIHandler uiHandler;
+    [SerializeField] protected StateUIHandler StateUIHandler;
     
     public string EnemyName {get; set;}
     public float Health {get; set;}

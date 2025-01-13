@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 234526429000400512}
   - component: {fileID: -8286454596345893714}
   - component: {fileID: -5055353854755821183}
-  - component: {fileID: 5303605401552641032}
   m_Layer: 10
   m_Name: mole-walk-front-NotMove
   m_TagString: Enemy
@@ -126,7 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8d7860a3db6a45a7b7eafadb86f763f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiHandler: {fileID: 0}
+  StateUIHandler: {fileID: 0}
 --- !u!50 &-8286454596345893714
 Rigidbody2D:
   serializedVersion: 5
@@ -191,16 +190,3 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1.2, y: 1.2}
   m_Direction: 0
---- !u!114 &5303605401552641032
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2083352753892971040}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8d7860a3db6a45a7b7eafadb86f763f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  uiHandler: {fileID: 0}

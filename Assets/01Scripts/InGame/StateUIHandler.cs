@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class UIHandler : MonoBehaviour
+public class StateUIHandler : MonoBehaviour
 {
     [SerializeField] private RectTransform hpBar;
 

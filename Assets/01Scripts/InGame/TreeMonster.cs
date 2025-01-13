@@ -9,7 +9,7 @@ public class TreeMonster : Enemy
         {
             Death();
         }
-        uiHandler.SetHpBar(Health/MaxHealth);
+        StateUIHandler.SetHpBar(Health/MaxHealth);
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

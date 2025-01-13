@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
     }
     [SerializeField] private float detectSpeed = 0.5f;
     [SerializeField] private float attackSpeed = 1f;
-    [SerializeField] private UIHandler uiHandler;
+    [SerializeField] private StateUIHandler _stateUIHandler;
     public StateEnum State { get; private set; } = StateEnum.Idle;
     public float Health { get; private set; } = 100f;
     public float MaxHealth { get; private set; } = 100f;
@@ -93,7 +93,7 @@ public class Player : MonoBehaviour
         {
             State = StateEnum.Death;
         }
-        uiHandler.SetHpBar(Health / MaxHealth);
+        _stateUIHandler.SetHpBar(Health / MaxHealth);
     }
 
     float detectRadius = 2f; //

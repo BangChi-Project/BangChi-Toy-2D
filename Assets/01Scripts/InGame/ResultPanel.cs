@@ -13,7 +13,7 @@ public class ResultPanel : MonoBehaviour
     public void ShowResultPanel()
     {
         this.gameObject.SetActive(true);
-        text = "Result!\n" + InGameManager.Instance.GameTime + " Sec";
+        text = "Result!\n" + InGameManager.Instance.GameTime.ToString("0.0") + " Sec";
         resultText.SetText(text);
     }
 }

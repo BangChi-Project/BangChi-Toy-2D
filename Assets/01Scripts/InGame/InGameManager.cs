@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class InGameManager : MonoBehaviour
 {
@@ -42,6 +43,7 @@ public class InGameManager : MonoBehaviour
         {
             _instance = this;
             DontDestroyOnLoad(this.gameObject);
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
         else
         {
@@ -53,7 +55,7 @@ public class InGameManager : MonoBehaviour
 // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        Initialize();
     }
 
     void Update()
@@ -78,10 +80,30 @@ public class InGameManager : MonoBehaviour
     {
         GameState = StateEnum.End;
     }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        UnityEngine.Debug.Log("InGame::Scene Loaded::"+scene.name);
+        if (scene.name == "Test_Lobby")
+        {
+            GameState = StateEnum.End;
+        }
+        else
+            Initialize();
+    }
     
     [Tooltip("Getter")]
     public Vector3 GetPlayerPos()
     {
         return _playerPos;
+    }
+
+    void Initialize()
+    {
+        GameTime = 0f;
+        GameState = StateEnum.Start;
+        player = GameObject.FindGameObjectWithTag("Player");
+        
+        GameState = StateEnum.Playing;
     }
 }
