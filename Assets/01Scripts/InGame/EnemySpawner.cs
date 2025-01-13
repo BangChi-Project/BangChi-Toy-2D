@@ -17,7 +17,7 @@ public class EnemySpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (InGameManager.Instance.GameState == InGameManager.StateEnum.Playing)
+        if (InGameManager.Instance.GameState == InGameManager.StateEnum.Running)
         {
             t += Time.deltaTime; // deltaTime is not be affected by frame
             if (t >= spawnDelay)

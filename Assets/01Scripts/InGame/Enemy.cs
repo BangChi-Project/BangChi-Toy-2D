@@ -15,8 +15,25 @@ public abstract class Enemy : MonoBehaviour
     public float MoveSpeed {get; set;}
     public float Atk { get; set; }
 
+    public InGameManager.StateEnum State { get; set; } = InGameManager.StateEnum.Running;
+
     public virtual void Death()
     {
         Destroy(gameObject);
+    }
+
+    public void OnEnable()
+    {
+        InGameManager.Instance.OnStateChange += OnStateChange;
+    }
+
+    public void OnDisable()
+    {
+        InGameManager.Instance.OnStateChange -= OnStateChange;
+    }
+
+    private void OnStateChange(InGameManager.StateEnum state)
+    {
+        State = state;
     }
 }

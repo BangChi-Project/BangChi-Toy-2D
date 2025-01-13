@@ -18,7 +18,9 @@ public class Player : MonoBehaviour
     [SerializeField] private float detectSpeed = 0.5f;
     [SerializeField] private float attackSpeed = 1f;
     [SerializeField] private StateUIHandler _stateUIHandler;
+    private float t;
     public StateEnum State { get; private set; } = StateEnum.Idle;
+    public InGameManager.StateEnum GameState { get; private set; } = InGameManager.StateEnum.Running;
     public float Health { get; private set; } = 100f;
     public float MaxHealth { get; private set; } = 100f;
     public float Atk { get; private set; } = 100f;
@@ -42,14 +44,16 @@ public class Player : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        t = 0;
+        InGameManager.Instance.OnStateChange += OnStateChange;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (InGameManager.Instance.GameState == InGameManager.StateEnum.Playing)
+        if (GameState == InGameManager.StateEnum.Running)
         {
+            t += Time.deltaTime;
             switch (State)
             {
                 case (StateEnum.Idle):
@@ -59,10 +63,34 @@ public class Player : MonoBehaviour
                     Moving();
                     break;
                 case (StateEnum.Death):
-                    InGameManager.Instance.SetGameEnd();
+                    InGameManager.Instance.SetGameState(InGameManager.StateEnum.End);
                     Death();
                     break;
             }
+        }
+    }
+    
+    // public void OnEnable()
+    // {
+    //     InGameManager.Instance.OnStateChange += OnStateChange;
+    // }
+
+    public void OnDisable()
+    {
+        InGameManager.Instance.OnStateChange -= OnStateChange;
+    }
+
+    private void OnStateChange(InGameManager.StateEnum state)
+    {
+        GameState = state;
+        switch (state)
+        {
+            case(InGameManager.StateEnum.Running):
+                StartCoroutine(nameof(CoAttackLeftTime), attackSpeed-t);
+                break;
+            case(InGameManager.StateEnum.Pause):
+                StopCoroutine(nameof(CoAttack));
+                break;
         }
     }
 
@@ -75,6 +103,7 @@ public class Player : MonoBehaviour
                 StartCoroutine(nameof(CoAttack), other);
                 return true;
             case(StateEnum.Moving): // Stop Moving
+                t = 0;
                 State = StateEnum.Attack;
                 StartCoroutine(nameof(CoAttack), other);
                 return true;
@@ -152,6 +181,12 @@ public class Player : MonoBehaviour
         Bullet b = Instantiate<Bullet>(bullet, transform.position, Quaternion.identity);
         b.Initialize(other, Atk);
         yield return new WaitForSeconds(AttackSpeed);
+        State = StateEnum.Idle;
+    }
+
+    private IEnumerator CoAttackLeftTime(float leftTime)
+    {
+        yield return new WaitForSeconds(leftTime);
         State = StateEnum.Idle;
     }
 

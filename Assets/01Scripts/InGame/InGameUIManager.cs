@@ -64,6 +64,25 @@ public class InGameUIManager : MonoBehaviour
         SceneManager.LoadScene("Test_Lobby");
     }
 
+    public void OnClickChangeGameState(int i) // InGameManager.StateEnum state)
+    {
+        switch (i)
+        {
+            case 0: // start
+                InGameManager.Instance.SetGameState(InGameManager.StateEnum.Start);
+                break;
+            case 1: // running
+                InGameManager.Instance.SetGameState(InGameManager.StateEnum.Running);
+                break;
+            case 2: // pause
+                InGameManager.Instance.SetGameState(InGameManager.StateEnum.Pause);
+                break;
+            case 3: // End
+                InGameManager.Instance.SetGameState(InGameManager.StateEnum.End);
+                break;
+        }
+    }
+
     private void Initialize()
     {
         this.gameObject.SetActive(true);
