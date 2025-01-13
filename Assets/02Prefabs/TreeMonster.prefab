@@ -490,7 +490,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8d7860a3db6a45a7b7eafadb86f763f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiHandler: {fileID: 4864477409963583033}
+  StateUIHandler: {fileID: 4864477409963583033}
 --- !u!114 &8578331437320237753
 MonoBehaviour:
   m_ObjectHideFlags: 0

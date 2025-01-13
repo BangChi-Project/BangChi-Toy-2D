@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class InGameManager : MonoBehaviour
 {
@@ -15,14 +16,16 @@ public class InGameManager : MonoBehaviour
     
     [Header("Player Pos")] [Tooltip("for Enemy Chasing")] private Vector3 _playerPos {get; set;}
 
+    [Header("Player Data")]
+    [SerializeField] GameObject player;
+    
     // 
     public string enemyTag = "Enemy";
     public string weaponTag = "Weapon";
     public string playerTag = "Player";
     public StateEnum GameState { get; private set; } = StateEnum.Playing;
     
-    [Header("Player Data")] [SerializeField]
-    GameObject player;
+    public float GameTime { get; private set; } = 0f;
     
     public static InGameManager Instance
     {
@@ -40,6 +43,7 @@ public class InGameManager : MonoBehaviour
         {
             _instance = this;
             DontDestroyOnLoad(this.gameObject);
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
         else
         {
@@ -51,7 +55,7 @@ public class InGameManager : MonoBehaviour
 // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        Initialize();
     }
 
     void Update()
@@ -62,10 +66,12 @@ public class InGameManager : MonoBehaviour
                 break;
             case(StateEnum.Playing):
                 _playerPos = player.transform.position;
+                GameTime += Time.deltaTime;
                 break;
             case(StateEnum.Pause):
                 break;
             case(StateEnum.End):
+                InGameUIManager.Instance.ShowResultPanel();
                 break;
         }
     }
@@ -74,10 +80,30 @@ public class InGameManager : MonoBehaviour
     {
         GameState = StateEnum.End;
     }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        UnityEngine.Debug.Log("InGame::Scene Loaded::"+scene.name);
+        if (scene.name == "Test_Lobby")
+        {
+            GameState = StateEnum.End;
+        }
+        else
+            Initialize();
+    }
     
     [Tooltip("Getter")]
     public Vector3 GetPlayerPos()
     {
         return _playerPos;
+    }
+
+    void Initialize()
+    {
+        GameTime = 0f;
+        GameState = StateEnum.Start;
+        player = GameObject.FindGameObjectWithTag("Player");
+        
+        GameState = StateEnum.Playing;
     }
 }
