@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float detectSpeed = 0.5f;
     [SerializeField] private float attackSpeed = 1f;
     [SerializeField] private StateUIHandler _stateUIHandler;
-    private float runnedAttackTime;
+    private float runnedTime;
     public StateEnum State { get; private set; } = StateEnum.Idle;
     public InGameManager.StateEnum GameState { get; private set; } = InGameManager.StateEnum.Running;
     public float Health { get; private set; } = 100f;
@@ -52,7 +52,7 @@ public class Player : MonoBehaviour
     {
         if (GameState == InGameManager.StateEnum.Running)
         {
-            runnedAttackTime += Time.deltaTime;
+            runnedTime += Time.deltaTime;
             switch (State)
             {
                 case (StateEnum.Idle):
@@ -73,7 +73,6 @@ public class Player : MonoBehaviour
     // {
     //     InGameManager.Instance.OnStateChange += OnStateChange;
     // }
-
     public void OnDisable()
     {
         InGameManager.Instance.OnStateChange -= OnStateChange;
@@ -85,10 +84,13 @@ public class Player : MonoBehaviour
         switch (state)
         {
             case(InGameManager.StateEnum.Running):
-                StartCoroutine(nameof(CoAttack), attackSpeed-runnedAttackTime);
+                StartCoroutine(nameof(CoAttack), attackSpeed-runnedTime);
+                if (State == StateEnum.Detect) // when State is Attack, cant Detect
+                    StartCoroutine(nameof(CoDetect), detectSpeed-runnedTime);
                 break;
             case(InGameManager.StateEnum.Pause):
                 StopCoroutine(nameof(CoAttack));
+                StopCoroutine(nameof(CoDetect));
                 break;
         }
     }
@@ -101,7 +103,7 @@ public class Player : MonoBehaviour
                 Attack(other);
                 return true;
             case(StateEnum.Moving): // Stop Moving
-                runnedAttackTime = 0;
+                runnedTime = 0;
                 Attack(other);
                 return true;
             // case(StateEnum.Attack): // Already Attack, Handler Cut
@@ -123,17 +125,13 @@ public class Player : MonoBehaviour
     }
 
     float detectRadius = 2f; //
-    public void Detect() // PlayerDetectHandler
-    {
-        StartCoroutine(nameof(CoDetect), detectRadius);
-    }
 
     public void Moving()
     {
         transform.position += moveDir * moveSpeed * Time.deltaTime;
     }
     
-    private IEnumerator CoDetect()
+    public void Detect() // PlayerDetectHandler
     {
         State = StateEnum.Detect;
         
@@ -152,8 +150,9 @@ public class Player : MonoBehaviour
         if (enemies.Length == 0)
         {
             Debug.Log("No enemies");
-            yield return new WaitForSeconds(detectSpeed);
-            State = StateEnum.Idle; // Re Detect
+            StartCoroutine(nameof(CoDetect), detectSpeed);
+            // yield return new WaitForSeconds(detectSpeed);
+            // State = StateEnum.Idle; // Re Detect
         }
         else // set dir
         {
@@ -171,6 +170,11 @@ public class Player : MonoBehaviour
             moveDir.Normalize();
             State = StateEnum.Moving;
         }
+    }
+    private IEnumerator CoDetect(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        State = StateEnum.Idle; // Re Detect
     }
 
     private void Attack(Collider2D other)

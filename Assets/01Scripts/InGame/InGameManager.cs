@@ -82,8 +82,11 @@ public class InGameManager : MonoBehaviour
 
     public void SetGameState(StateEnum state)
     {
-        GameState = state;
-        OnStateChange?.Invoke(state);
+        if (GameState != StateEnum.End)
+        {
+            GameState = state;
+            OnStateChange?.Invoke(state);
+        }
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
