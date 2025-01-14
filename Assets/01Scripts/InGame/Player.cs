@@ -98,12 +98,11 @@ public class Player : MonoBehaviour
         switch (State)
         {
             case(StateEnum.Detect): // Stop Detect Enemy
-                StartCoroutine(nameof(CoAttack), other);
+                Attack(other);
                 return true;
             case(StateEnum.Moving): // Stop Moving
                 runnedAttackTime = 0;
-                State = StateEnum.Attack;
-                StartCoroutine(nameof(CoAttack), other);
+                Attack(other);
                 return true;
             // case(StateEnum.Attack): // Already Attack, Handler Cut
             //     return false;
