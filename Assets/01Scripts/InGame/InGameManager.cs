@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -8,7 +9,7 @@ public class InGameManager : MonoBehaviour
     public enum StateEnum
     {
         Start,
-        Playing,
+        Running,
         Pause,
         End,
     }
@@ -23,7 +24,10 @@ public class InGameManager : MonoBehaviour
     public string enemyTag = "Enemy";
     public string weaponTag = "Weapon";
     public string playerTag = "Player";
-    public StateEnum GameState { get; private set; } = StateEnum.Playing;
+    
+    public Action<StateEnum> OnStateChange;
+    
+    public StateEnum GameState { get; private set; } = StateEnum.Running;
     
     public float GameTime { get; private set; } = 0f;
     
@@ -64,7 +68,7 @@ public class InGameManager : MonoBehaviour
         {
             case(StateEnum.Start):
                 break;
-            case(StateEnum.Playing):
+            case(StateEnum.Running):
                 _playerPos = player.transform.position;
                 GameTime += Time.deltaTime;
                 break;
@@ -76,9 +80,13 @@ public class InGameManager : MonoBehaviour
         }
     }
 
-    public void SetGameEnd()
+    public void SetGameState(StateEnum state)
     {
-        GameState = StateEnum.End;
+        if (GameState != StateEnum.End)
+        {
+            GameState = state;
+            OnStateChange?.Invoke(state);
+        }
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -104,6 +112,6 @@ public class InGameManager : MonoBehaviour
         GameState = StateEnum.Start;
         player = GameObject.FindGameObjectWithTag("Player");
         
-        GameState = StateEnum.Playing;
+        GameState = StateEnum.Running;
     }
 }

@@ -16,7 +16,7 @@ public class EnemyMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (InGameManager.Instance.GameState == InGameManager.StateEnum.Playing)
+        if (enemy.State == InGameManager.StateEnum.Running)
         {
             Vector3 playerPos = InGameManager.Instance.GetPlayerPos();
 

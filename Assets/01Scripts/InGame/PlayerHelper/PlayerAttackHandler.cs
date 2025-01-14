@@ -18,7 +18,8 @@ public class PlayerAttackHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        t += Time.deltaTime;
+        if (player.GameState == InGameManager.StateEnum.Running)
+            t += Time.deltaTime;
     }
     
     // Event
@@ -29,11 +30,14 @@ public class PlayerAttackHandler : MonoBehaviour
     }
     private void HandleEnemyEnter(Collider2D enemy)
     {
-        if (player.State != Player.StateEnum.Attack && t > player.AttackSpeed)
+        if (player.GameState == InGameManager.StateEnum.Running)
         {
-            Debug.Log($"Entered {enemy.name}");
-            if (player.EnemyEnter(enemy))
-                t = 0; // Attack Success
+            if (player.State != Player.StateEnum.Attack && t > player.AttackSpeed)
+            {
+                Debug.Log($"Entered {enemy.name}");
+                if (player.EnemyEnter(enemy))
+                    t = 0; // Attack Success
+            }
         }
     }
 }
