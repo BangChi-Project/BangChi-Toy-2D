@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float detectSpeed = 0.5f;
     [SerializeField] private float attackSpeed = 1f;
     [SerializeField] private StateUIHandler _stateUIHandler;
-    private float stopAttackTime;
+    private float runnedAttackTime;
     public StateEnum State { get; private set; } = StateEnum.Idle;
     public InGameManager.StateEnum GameState { get; private set; } = InGameManager.StateEnum.Running;
     public float Health { get; private set; } = 100f;
@@ -52,7 +52,7 @@ public class Player : MonoBehaviour
     {
         if (GameState == InGameManager.StateEnum.Running)
         {
-            stopAttackTime += Time.deltaTime;
+            runnedAttackTime += Time.deltaTime;
             switch (State)
             {
                 case (StateEnum.Idle):
@@ -85,11 +85,10 @@ public class Player : MonoBehaviour
         switch (state)
         {
             case(InGameManager.StateEnum.Running):
-                StartCoroutine(nameof(CoAttackLeftTime), attackSpeed-stopAttackTime);
+                StartCoroutine(nameof(CoAttack), attackSpeed-runnedAttackTime);
                 break;
             case(InGameManager.StateEnum.Pause):
                 StopCoroutine(nameof(CoAttack));
-                StopCoroutine(nameof(CoAttackLeftTime));
                 break;
         }
     }
@@ -99,11 +98,10 @@ public class Player : MonoBehaviour
         switch (State)
         {
             case(StateEnum.Detect): // Stop Detect Enemy
-                State = StateEnum.Attack;
                 StartCoroutine(nameof(CoAttack), other);
                 return true;
             case(StateEnum.Moving): // Stop Moving
-                stopAttackTime = 0;
+                runnedAttackTime = 0;
                 State = StateEnum.Attack;
                 StartCoroutine(nameof(CoAttack), other);
                 return true;
@@ -176,17 +174,18 @@ public class Player : MonoBehaviour
         }
     }
 
-    private IEnumerator CoAttack(Collider2D other)
+    private void Attack(Collider2D other)
     {
+        State = StateEnum.Attack;
         Bullet b = Instantiate<Bullet>(bullet, transform.position, Quaternion.identity);
         b.Initialize(other, Atk);
-        yield return new WaitForSeconds(AttackSpeed);
-        State = StateEnum.Idle;
+
+        StartCoroutine(nameof(CoAttack), AttackSpeed);
     }
 
-    private IEnumerator CoAttackLeftTime(float leftTime)
+    private IEnumerator CoAttack(float waitTime)
     {
-        yield return new WaitForSeconds(leftTime);
+        yield return new WaitForSeconds(waitTime);
         State = StateEnum.Idle;
     }
 
