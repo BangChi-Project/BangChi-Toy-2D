@@ -3,12 +3,13 @@ using Unity.VisualScripting;
 using UnityEngine;
 using System.Collections.Generic;
 
-public class AttackRangeChecker : MonoBehaviour
+public class RangeChecker : MonoBehaviour
 {
     // this script assume that parent object have wepon?
     // AttackRange have circle collider
     
     public Action<Collider2D> OnEnemyEnter;
+    public Action<Collider2D> OnItemEnter;
     // private HashSet<Collider2D> enemiesInRange = new HashSet<Collider2D>();
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -31,5 +32,10 @@ public class AttackRangeChecker : MonoBehaviour
             // if (enemiesInRange.Add(other))
             OnEnemyEnter?.Invoke(other); // Invoke Event to PlayerAttackHandler
         }
+        // if (other.CompareTag(InGameManager.Instance.itemTag))
+        // {
+        //     Debug.Log("Check Item: " + other.gameObject.name);
+        //     OnItemEnter?.Invoke(other);
+        // }
     }
 }

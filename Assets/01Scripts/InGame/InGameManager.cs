@@ -13,39 +13,45 @@ public class InGameManager : MonoBehaviour
         Pause,
         End,
     }
-    [Header("SingleTon")] private static InGameManager _instance = null;
     
-    [Header("Player Pos")] [Tooltip("for Enemy Chasing")] private Vector3 _playerPos {get; set;}
+    // Instance
+    [Header("SingleTon")] private static InGameManager instance = null;
 
-    [Header("Player Data")]
-    [SerializeField] GameObject player;
     
-    // 
+    // constant field
     public string enemyTag = "Enemy";
     public string weaponTag = "Weapon";
     public string playerTag = "Player";
+    public string itemTag = "Item";
     
+    // Event
     public Action<StateEnum> OnStateChange;
     
+    // Properties
+    [Header("Player Pos")] [Tooltip("for Enemy Chasing")] public Vector3 PlayerPos { get; set; }
     public StateEnum GameState { get; private set; } = StateEnum.Running;
-    
     public float GameTime { get; private set; } = 0f;
+    
+    // private field
+    [Header("Player Data")]
+    [SerializeField] GameObject player;
+    [SerializeField] private InGameItemCollector itemCollector;
     
     public static InGameManager Instance
     {
         get
         {
-            if (_instance == null)
+            if (instance == null)
                 return null;
-            return _instance;
+            return instance;
         }
     }
 
     void Awake()
     {
-        if (_instance == null)
+        if (instance == null)
         {
-            _instance = this;
+            instance = this;
             DontDestroyOnLoad(this.gameObject);
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
@@ -69,7 +75,7 @@ public class InGameManager : MonoBehaviour
             case(StateEnum.Start):
                 break;
             case(StateEnum.Running):
-                _playerPos = player.transform.position;
+                PlayerPos = player.transform.position;
                 GameTime += Time.deltaTime;
                 break;
             case(StateEnum.Pause):
@@ -77,15 +83,6 @@ public class InGameManager : MonoBehaviour
             case(StateEnum.End):
                 InGameUIManager.Instance.ShowResultPanel();
                 break;
-        }
-    }
-
-    public void SetGameState(StateEnum state)
-    {
-        if (GameState != StateEnum.End)
-        {
-            GameState = state;
-            OnStateChange?.Invoke(state);
         }
     }
 
@@ -99,11 +96,24 @@ public class InGameManager : MonoBehaviour
         else
             Initialize();
     }
-    
-    [Tooltip("Getter")]
-    public Vector3 GetPlayerPos()
+    private void OnDestroy()
     {
-        return _playerPos;
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+    
+    [Tooltip("Setter")]
+    public void SetGameState(StateEnum state)
+    {
+        if (GameState != StateEnum.End)
+        {
+            GameState = state;
+            OnStateChange?.Invoke(state);
+        }
+    }
+
+    public void AddItem(Item item)
+    {
+        itemCollector.AddItem(item);
     }
 
     void Initialize()

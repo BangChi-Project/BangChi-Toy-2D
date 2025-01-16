@@ -8,6 +8,7 @@ public class InGameUIManager : MonoBehaviour
     private static InGameUIManager instance;
     [SerializeField] ResultPanel resultPanel;
     [SerializeField] TextMeshProUGUI timeText;
+    [SerializeField] public TextMeshProUGUI getItemsText; // test
 
     public static InGameUIManager Instance
     {
@@ -46,12 +47,19 @@ public class InGameUIManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        if (instance == null)
+            return;
+        
         if (scene.name == "Test_Lobby")
         {
             this.gameObject.SetActive(false);
         }
         else
             Initialize();
+    }
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     public void ShowResultPanel()
