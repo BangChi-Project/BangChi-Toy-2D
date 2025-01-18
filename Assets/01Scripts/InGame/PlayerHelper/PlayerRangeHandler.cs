@@ -33,7 +33,6 @@ public class PlayerRangeHandler : MonoBehaviour
     }
     private void HandleEnemyEnter(Collider2D enemy)
     {
-        Debug.Log($"Handle {enemy.name}");
         if (player.GameState == InGameManager.StateEnum.Running)
         {
             if (player.State != Player.StateEnum.Attack && t > player.AttackSpeed)

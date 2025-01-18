@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting.ReorderableList;
 using UnityEngine;
 
 public class InGameItemCollector : MonoBehaviour
@@ -15,6 +16,16 @@ public class InGameItemCollector : MonoBehaviour
 
     public void AddItem(Item addItem)
     {
+        Item findItem = InVentory.Find(item =>
+        {
+            Debug.Log($"Finding item Id: {item.IdNumber} isTrue? {item.IdNumber == addItem.IdNumber}");
+            return item.IdNumber == addItem.IdNumber;
+        });
+        if (findItem == null) // always return null,, Why???
+        {
+            Debug.Log($"Cant find same item Id: {addItem.IdNumber} isFalse");
+        }
+        
         bool isAdd = true;
         foreach (Item item in InVentory)
         {
@@ -22,13 +33,14 @@ public class InGameItemCollector : MonoBehaviour
             {
                 item.AddAmount(addItem.Amount);
                 isAdd = false;
+                break;
             }
         }
 
         if (isAdd)
         {
             InVentory.Add(addItem);
-            InVentory.Sort();
+            InVentory.Sort((x, y) => x.IdNumber.CompareTo(y.IdNumber));
         }
 
         string itemText = "";
