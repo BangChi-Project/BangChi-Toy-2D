@@ -91,11 +91,13 @@ public class Player : MonoBehaviour
 
     private void OnStateChange(InGameManager.StateEnum state)
     {
+        Debug.Log($"OnStateChange::playerState:{State}");
         GameState = state;
         switch (state)
         {
             case(InGameManager.StateEnum.Running):
-                StartCoroutine(nameof(CoAttack), attackSpeed-runnedTime);
+                if (State == StateEnum.Attack)
+                    StartCoroutine(nameof(CoAttack), attackSpeed-runnedTime);
                 if (State == StateEnum.Detect) // when State is Attack, cant Detect
                     StartCoroutine(nameof(CoDetect), detectSpeed-runnedTime);
                 break;
@@ -126,7 +128,7 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        Debug.Log("Take Damage! hp: " + Health);
+        // Debug.Log("Take Damage! hp: " + Health);
         Health -= damage;
         if (Health <= 0)
         {
@@ -147,7 +149,7 @@ public class Player : MonoBehaviour
     {
         State = StateEnum.Detect;
         
-        Debug.Log("Detect ");
+        Debug.Log("Detect!");
         detectRadius = 3f;
         Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, detectRadius, Layers.Enemy);
         while (enemies.Length == 0)
@@ -158,7 +160,7 @@ public class Player : MonoBehaviour
             enemies = Physics2D.OverlapCircleAll(transform.position, detectRadius, Layers.Enemy);
         }
 
-        Debug.Log("destance: " + detectRadius + ", dir: " + moveDir);
+        // Debug.Log("destance: " + detectRadius + ", dir: " + moveDir);
         if (enemies.Length == 0)
         {
             Debug.Log("No enemies");
