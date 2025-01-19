@@ -128,7 +128,7 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        // Debug.Log("Take Damage! hp: " + Health);
+        _stateUIHandler.PresentDamageText(damage);
         Health -= damage;
         if (Health <= 0)
         {

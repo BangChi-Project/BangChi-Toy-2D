@@ -4,6 +4,7 @@ public class TreeMonster : Enemy
 {
     public override void TakeDamage(float damage)
     {
+        StateUIHandler.PresentDamageText(damage);
         Health -= damage;
         if (Health <= 0)
         {
