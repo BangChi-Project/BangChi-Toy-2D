@@ -491,6 +491,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StateUIHandler: {fileID: 4864477409963583033}
+  gold: {fileID: 6602394190195327119, guid: 5231c7998f34f481ba99087174cee6af, type: 3}
+  gem: {fileID: 2212663858445540453, guid: 332411e9736664d2fb1f2c5270a03362, type: 3}
 --- !u!114 &8578331437320237753
 MonoBehaviour:
   m_ObjectHideFlags: 0

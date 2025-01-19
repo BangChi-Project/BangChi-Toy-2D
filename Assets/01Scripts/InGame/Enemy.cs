@@ -1,6 +1,7 @@
 using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public abstract class Enemy : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public abstract class Enemy : MonoBehaviour
     public abstract void Initialize();
     
     [SerializeField] protected StateUIHandler StateUIHandler;
+    [SerializeField] protected Item gold;
+    [SerializeField] protected Item gem;
     
     public string EnemyName {get; set;}
     public float Health {get; set;}

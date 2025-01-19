@@ -18,7 +18,7 @@ public class EnemyMove : MonoBehaviour
     {
         if (enemy.State == InGameManager.StateEnum.Running)
         {
-            Vector3 playerPos = InGameManager.Instance.GetPlayerPos();
+            Vector3 playerPos = InGameManager.Instance.PlayerPos;
 
             Vector3 dir = (playerPos - transform.position).normalized;
 
