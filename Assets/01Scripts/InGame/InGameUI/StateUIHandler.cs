@@ -3,6 +3,7 @@ using UnityEngine;
 public class StateUIHandler : MonoBehaviour
 {
     [SerializeField] private RectTransform hpBar;
+    [SerializeField] private DamageText damageText;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -14,6 +15,12 @@ public class StateUIHandler : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void PresentDamageText(float damage)
+    {
+        DamageText newDamageText = Instantiate(damageText, transform.position + Vector3.up * 0.5f, Quaternion.identity);
+        newDamageText.Initialize(damage);
     }
 
     public void SetHpBar(float value)
