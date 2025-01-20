@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting.ReorderableList;
 using UnityEngine;
 
 public class InGameItemCollector : MonoBehaviour
@@ -43,6 +41,29 @@ public class InGameItemCollector : MonoBehaviour
             InVentory.Sort((x, y) => x.IdNumber.CompareTo(y.IdNumber));
         }
 
+        UpdateItemText();
+    }
+
+    public bool UpgradeExcute(int id, int cost)
+    {
+        if (InVentory.Count > 0)
+        {
+            foreach (Item item in InVentory)
+            {
+                if (item.IdNumber == id && item.Amount >= cost)
+                {
+                    item.AddAmount(-cost);
+                    UpdateItemText();
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public void UpdateItemText()
+    {
         string itemText = "";
         foreach (Item item in InVentory)
         {
@@ -51,8 +72,9 @@ public class InGameItemCollector : MonoBehaviour
         InGameUIManager.Instance.getItemsText.SetText(itemText);
     }
 
-    private void Initialize()
+    public void Initialize()
     {
         InVentory = new List<Item>();
+        InGameUIManager.Instance.getItemsText.SetText("name + id + amount");
     }
 }

@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     }
     [SerializeField] private float detectSpeed = 0.5f;
     [SerializeField] private float attackSpeed = 1f;
+    [SerializeField] private float atk = 100f;
     [SerializeField] private StateUIHandler _stateUIHandler;
     [SerializeField] private PlayerDetectHandler detectHandler;
     [SerializeField] private GameObject playerObject;
@@ -29,7 +30,20 @@ public class Player : MonoBehaviour
     public InGameManager.StateEnum GameState { get; private set; } = InGameManager.StateEnum.Running;
     public float Health { get; private set; } = 100f;
     public float MaxHealth { get; private set; } = 100f;
-    public float Atk { get; private set; } = 100f;
+
+    [SerializeField]
+    public float Atk
+    {
+        get
+        {
+            return atk;
+        }
+        private set
+        {
+            atk = value;
+        }
+    }
+
     public float AttackSpeed
     {
         get
@@ -137,6 +151,13 @@ public class Player : MonoBehaviour
         _stateUIHandler.SetHpBar(Health / MaxHealth);
     }
 
+    public float GetCalCulatedAtk()
+    {
+        float res = Atk + InGameManager.Instance.playerUpgrader.Atk;
+
+        return res;
+    }
+
     float detectRadius = 2f; //
 
     public void Moving()
@@ -195,7 +216,7 @@ public class Player : MonoBehaviour
     {
         State = StateEnum.Attack;
         Bullet b = Instantiate<Bullet>(bullet, transform.position, Quaternion.identity);
-        b.Initialize(other, Atk);
+        b.Initialize(other, GetCalCulatedAtk());
 
         StartCoroutine(nameof(CoAttack), AttackSpeed);
     }
