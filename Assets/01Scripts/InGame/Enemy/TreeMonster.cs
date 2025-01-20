@@ -4,13 +4,13 @@ public class TreeMonster : Enemy
 {
     public override void TakeDamage(float damage)
     {
-        StateUIHandler.PresentDamageText(damage);
+        stateUIHandler.PresentDamageText(damage);
         Health -= damage;
         if (Health <= 0)
         {
             Death();
         }
-        StateUIHandler.SetHpBar(Health/MaxHealth);
+        stateUIHandler.SetHpBar(Health/MaxHealth);
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

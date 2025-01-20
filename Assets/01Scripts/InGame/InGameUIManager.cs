@@ -7,6 +7,7 @@ public class InGameUIManager : MonoBehaviour
 {
     private static InGameUIManager instance;
     [SerializeField] ResultPanel resultPanel;
+    [SerializeField] UpgradePanel upgradePanel;
     [SerializeField] TextMeshProUGUI timeText;
     [SerializeField] public TextMeshProUGUI getItemsText; // test
 
@@ -55,7 +56,9 @@ public class InGameUIManager : MonoBehaviour
             this.gameObject.SetActive(false);
         }
         else
-            Initialize();
+        {
+            // Initialize();
+        }
     }
     private void OnDestroy()
     {
@@ -65,11 +68,6 @@ public class InGameUIManager : MonoBehaviour
     public void ShowResultPanel()
     {
         resultPanel.ShowResultPanel();
-    }
-
-    public void OnClickBackToLobby()
-    {
-        SceneManager.LoadScene("Test_Lobby");
     }
 
     public void OnClickChangeGameState(int i) // InGameManager.StateEnum state)
@@ -91,9 +89,11 @@ public class InGameUIManager : MonoBehaviour
         }
     }
 
-    private void Initialize()
+    public void Initialize()
     {
         this.gameObject.SetActive(true);
         resultPanel.gameObject.SetActive(false);
+        
+        upgradePanel.Initialize();
     }
 }

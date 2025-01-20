@@ -31,10 +31,12 @@ public class InGameManager : MonoBehaviour
     [Header("Player Pos")] [Tooltip("for Enemy Chasing")] public Vector3 PlayerPos { get; set; }
     public StateEnum GameState { get; private set; } = StateEnum.Running;
     public float GameTime { get; private set; } = 0f;
+    public PlayerUpgrader playerUpgrader { get; private set; }
     
     // private field
     [Header("Player Data")]
-    [SerializeField] GameObject player;
+    [SerializeField] GameObject playerObj;
+    private Player player;
     [SerializeField] private InGameItemCollector itemCollector;
     
     public static InGameManager Instance
@@ -54,18 +56,12 @@ public class InGameManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(this.gameObject);
             SceneManager.sceneLoaded += OnSceneLoaded;
+            Initialize();
         }
         else
         {
             Destroy(this.gameObject);
         }
-    }
-
-
-// Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        Initialize();
     }
 
     void Update()
@@ -116,11 +112,35 @@ public class InGameManager : MonoBehaviour
         itemCollector.AddItem(item);
     }
 
+    public bool UpgradeExcute(int id, int cost)
+    {
+        if (itemCollector.UpgradeExcute(id, cost))
+        {
+            switch (id)
+            {
+                case(0):
+                    playerUpgrader.AtkUpgrade();
+                    return true;
+                case(1):
+                    playerUpgrader.HpUpgrade();
+                    player.UpdateHpBar();
+                    return true;
+            }
+        }
+        return false;
+    }
+
     void Initialize()
     {
         GameTime = 0f;
         GameState = StateEnum.Start;
-        player = GameObject.FindGameObjectWithTag("Player");
+        playerObj = GameObject.FindGameObjectWithTag("Player");
+        player = playerObj.GetComponent<Player>();
+        playerUpgrader = playerObj.GetComponent<PlayerUpgrader>();
+        playerUpgrader.Initialize();
+        itemCollector.Initialize();
+        
+        InGameUIManager.Instance.Initialize();
         
         GameState = StateEnum.Running;
     }

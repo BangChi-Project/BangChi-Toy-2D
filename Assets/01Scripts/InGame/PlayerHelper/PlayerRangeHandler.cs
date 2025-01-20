@@ -37,7 +37,7 @@ public class PlayerRangeHandler : MonoBehaviour
         {
             if (player.State != Player.StateEnum.Attack && t > player.AttackSpeed)
             {
-                Debug.Log($"Entered {enemy.name}");
+                // Debug.Log($"Entered {enemy.name}");
                 if (player.EnemyEnter(enemy))
                     t = 0; // Attack Success
             }

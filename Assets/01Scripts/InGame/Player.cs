@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     }
     [SerializeField] private float detectSpeed = 0.5f;
     [SerializeField] private float attackSpeed = 1f;
+    [SerializeField] private float atk = 100f;
     [SerializeField] private StateUIHandler _stateUIHandler;
     [SerializeField] private PlayerDetectHandler detectHandler;
     [SerializeField] private GameObject playerObject;
@@ -29,7 +30,20 @@ public class Player : MonoBehaviour
     public InGameManager.StateEnum GameState { get; private set; } = InGameManager.StateEnum.Running;
     public float Health { get; private set; } = 100f;
     public float MaxHealth { get; private set; } = 100f;
-    public float Atk { get; private set; } = 100f;
+
+    [SerializeField]
+    public float Atk
+    {
+        get
+        {
+            return atk;
+        }
+        private set
+        {
+            atk = value;
+        }
+    }
+
     public float AttackSpeed
     {
         get
@@ -130,11 +144,21 @@ public class Player : MonoBehaviour
     {
         _stateUIHandler.PresentDamageText(damage);
         Health -= damage;
-        if (Health <= 0)
+        float calculHp = Health + InGameManager.Instance.playerUpgrader.Hp;
+        float calculMaxHp = MaxHealth + InGameManager.Instance.playerUpgrader.Hp;
+        if (calculHp <= 0)
         {
             State = StateEnum.Death;
         }
-        _stateUIHandler.SetHpBar(Health / MaxHealth);
+
+        UpdateHpBar(calculHp / calculMaxHp);
+    }
+
+    public float GetCalCulatedAtk()
+    {
+        float res = Atk + InGameManager.Instance.playerUpgrader.Atk;
+
+        return res;
     }
 
     float detectRadius = 2f; //
@@ -149,7 +173,7 @@ public class Player : MonoBehaviour
     {
         State = StateEnum.Detect;
         
-        Debug.Log("Detect!");
+        // Debug.Log("Detect!");
         detectRadius = 3f;
         Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, detectRadius, Layers.Enemy);
         while (enemies.Length == 0)
@@ -163,14 +187,14 @@ public class Player : MonoBehaviour
         // Debug.Log("destance: " + detectRadius + ", dir: " + moveDir);
         if (enemies.Length == 0)
         {
-            Debug.Log("No enemies");
+            // Debug.Log("No enemies");
             StartCoroutine(nameof(CoDetect), detectSpeed);
             // yield return new WaitForSeconds(detectSpeed);
             // State = StateEnum.Idle; // Re Detect
         }
         else // set dir
         {
-            Debug.Log($"Find Enemy! {enemies.Length}");
+            // Debug.Log($"Find Enemy! {enemies.Length}");
             float minDis = 10000f;
             foreach (var enemy in enemies)
             {
@@ -195,7 +219,7 @@ public class Player : MonoBehaviour
     {
         State = StateEnum.Attack;
         Bullet b = Instantiate<Bullet>(bullet, transform.position, Quaternion.identity);
-        b.Initialize(other, Atk);
+        b.Initialize(other, GetCalCulatedAtk());
 
         StartCoroutine(nameof(CoAttack), AttackSpeed);
     }
@@ -209,6 +233,18 @@ public class Player : MonoBehaviour
     private void Death()
     {
         Destroy(this.gameObject);
+    }
+
+    public void UpdateHpBar(float value)
+    {
+        _stateUIHandler.SetHpBar(value);
+    }
+
+    public void UpdateHpBar()
+    {
+        float calculHp = Health + InGameManager.Instance.playerUpgrader.Hp;
+        float calculMaxHp = MaxHealth + InGameManager.Instance.playerUpgrader.Hp;
+        _stateUIHandler.SetHpBar(calculHp / calculMaxHp);
     }
     
     private void OnDrawGizmos()
