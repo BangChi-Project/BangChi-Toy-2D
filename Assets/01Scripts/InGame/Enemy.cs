@@ -1,6 +1,7 @@
 using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public abstract class Enemy : MonoBehaviour
@@ -8,7 +9,7 @@ public abstract class Enemy : MonoBehaviour
     public abstract void TakeDamage(float damage);
     public abstract void Initialize();
     
-    [SerializeField] protected StateUIHandler StateUIHandler;
+    [FormerlySerializedAs("StateUIHandler")] [SerializeField] protected StateUIHandler stateUIHandler;
     [SerializeField] protected Item gold;
     [SerializeField] protected Item gem;
     

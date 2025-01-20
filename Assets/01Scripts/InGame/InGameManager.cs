@@ -140,6 +140,8 @@ public class InGameManager : MonoBehaviour
         playerUpgrader.Initialize();
         itemCollector.Initialize();
         
+        InGameUIManager.Instance.Initialize();
+        
         GameState = StateEnum.Running;
     }
 }

@@ -17,7 +17,7 @@ public class PlayerUpgrader : MonoBehaviour
 
     public void AtkUpgrade()
     {
-        Atk += 10;
+        Atk += 15;
         AtkUpgradeCost += 1;
     }
 

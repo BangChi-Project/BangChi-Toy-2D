@@ -28090,7 +28090,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detectSpeed: 0.2
   attackSpeed: 0.35
-  atk: 50
+  atk: 45
   _stateUIHandler: {fileID: 1233012315}
   detectHandler: {fileID: 0}
   playerObject: {fileID: 500298491}
@@ -28841,7 +28841,7 @@ MonoBehaviour:
   weaponTag: Weapon
   playerTag: Player
   itemTag: Item
-  player: {fileID: 0}
+  playerObj: {fileID: 0}
   itemCollector: {fileID: 1601255071}
 --- !u!4 &1661088306
 Transform:

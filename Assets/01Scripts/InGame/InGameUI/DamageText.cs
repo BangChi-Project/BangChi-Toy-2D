@@ -17,12 +17,18 @@ public class DamageText : MonoBehaviour
     
     void Awake()
     {
+        t = 0;
+        
         gameState = InGameManager.StateEnum.Running;
         deleteTime = 1f;
-        moveSpeed = 0.5f;
+        moveSpeed = 0.8f;
         alpha = Color.red;
         disapearAlpha = 0.7f;
-        t = 0;
+    }
+
+    void Start()
+    {
+        InGameManager.Instance.OnStateChange += OnStateChange;
     }
 
     // Update is called once per frame
@@ -31,15 +37,11 @@ public class DamageText : MonoBehaviour
         if (gameState == InGameManager.StateEnum.Running)
         {
             t += Time.deltaTime;
+            
             transform.position += Vector3.up * moveSpeed * Time.deltaTime;
-            alpha.a = Mathf.Lerp(alpha.a, 0, Time.deltaTime * disapearAlpha); // 서서히 1 ~ 0.1
+            alpha.a = Mathf.Lerp(alpha.a, 0, Time.deltaTime * disapearAlpha); // 서서히 1 ~ 0.3
             damageTMP.color = alpha;
         }
-    }
-    
-    public void OnEnable()
-    {
-        InGameManager.Instance.OnStateChange += OnStateChange;
     }
 
     public void OnDisable()

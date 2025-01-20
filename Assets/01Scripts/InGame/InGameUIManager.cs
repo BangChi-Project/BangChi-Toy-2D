@@ -56,7 +56,9 @@ public class InGameUIManager : MonoBehaviour
             this.gameObject.SetActive(false);
         }
         else
-            Initialize();
+        {
+            // Initialize();
+        }
     }
     private void OnDestroy()
     {
@@ -87,7 +89,7 @@ public class InGameUIManager : MonoBehaviour
         }
     }
 
-    private void Initialize()
+    public void Initialize()
     {
         this.gameObject.SetActive(true);
         resultPanel.gameObject.SetActive(false);

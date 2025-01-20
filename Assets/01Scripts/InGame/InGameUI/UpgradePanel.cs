@@ -16,7 +16,7 @@ public class UpgradePanel : MonoBehaviour
         // Initialize();
     }
 
-    public void OnClickUpgradeButton(int id)
+    private void OnClickUpgradeButton(int id)
     {
         int cost;
         switch (id) // Update Text
@@ -54,28 +54,28 @@ public class UpgradePanel : MonoBehaviour
 
     public void Initialize()
     {
+        // 로직상 Initialize가 여러번 호출 되어 AddListener 이벤트가 중복으로 추가될 수 있다.
+        // 이 때 한번만 클릭해도 이벤트가 여러번 실행 될 수 있다.
         if (atkUpgradeButton != null)
-            atkUpgradeButton.onClick.RemoveAllListeners();
+            atkUpgradeButton.onClick.RemoveAllListeners(); // 모든 이벤트 제거
         if (hpUpgradeButton != null)
-            hpUpgradeButton.onClick.RemoveAllListeners();
-        // atkUpgradeText = GetComponentInChildren<TextMeshProUGUI>();
-        // atkUpgradeButton = GetComponentInChildren<Button>();
-        // atkUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().SetText(InGameManager.Instance.playerUpgrader.AtkUpgradeCost.ToString());
-        // atkUpgradeButton.onClick.AddListener(() => OnClickUpgradeButton(0)); // id:0 is gold
+            hpUpgradeButton.onClick.RemoveAllListeners(); // 모든 이벤트 제거
 
+        // 자식 오브젝트에 있는 모든 TMP를 가져옴
         var tmps = GetComponentsInChildren<TextMeshProUGUI>();
         atkUpgradeText = tmps[0];
         atkUpgradeText.SetText("ATK +0");
-        
-        hpUpgradeText = tmps[2];
+    
+        hpUpgradeText = tmps[2]; // 버튼에도 tmp있으므로 한칸 건너뜀
         hpUpgradeText.SetText("HP +0");
-        
+    
+        // 자식 오브젝트에 있는 모든 버튼을 가져옴
         var btns = GetComponentsInChildren<Button>();
-        atkUpgradeButton = btns[0];
+        atkUpgradeButton = btns[0]; // 공격력 업그레이드 버튼
         atkUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().SetText($"Gold\n{InGameManager.Instance.playerUpgrader.AtkUpgradeCost.ToString()}");
         atkUpgradeButton.onClick.AddListener(() => OnClickUpgradeButton(0)); // id:0 is gold
         
-        hpUpgradeButton = btns[1];
+        hpUpgradeButton = btns[1]; // 체력 업그레이드 버튼
         hpUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().SetText($"Gem\n{InGameManager.Instance.playerUpgrader.HpUpgradeCost.ToString()}");
         hpUpgradeButton.onClick.AddListener(() => OnClickUpgradeButton(1)); // id:1 is gem
     }
