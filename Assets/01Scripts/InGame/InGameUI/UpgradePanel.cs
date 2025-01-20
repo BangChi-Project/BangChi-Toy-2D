@@ -54,6 +54,10 @@ public class UpgradePanel : MonoBehaviour
 
     public void Initialize()
     {
+        if (atkUpgradeButton != null)
+            atkUpgradeButton.onClick.RemoveAllListeners();
+        if (hpUpgradeButton != null)
+            hpUpgradeButton.onClick.RemoveAllListeners();
         // atkUpgradeText = GetComponentInChildren<TextMeshProUGUI>();
         // atkUpgradeButton = GetComponentInChildren<Button>();
         // atkUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().SetText(InGameManager.Instance.playerUpgrader.AtkUpgradeCost.ToString());
