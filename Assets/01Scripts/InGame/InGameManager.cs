@@ -35,7 +35,8 @@ public class InGameManager : MonoBehaviour
     
     // private field
     [Header("Player Data")]
-    [SerializeField] GameObject player;
+    [SerializeField] GameObject playerObj;
+    private Player player;
     [SerializeField] private InGameItemCollector itemCollector;
     
     public static InGameManager Instance
@@ -115,8 +116,16 @@ public class InGameManager : MonoBehaviour
     {
         if (itemCollector.UpgradeExcute(id, cost))
         {
-            playerUpgrader.UpgradeAtk();
-            return true;
+            switch (id)
+            {
+                case(0):
+                    playerUpgrader.AtkUpgrade();
+                    return true;
+                case(1):
+                    playerUpgrader.HpUpgrade();
+                    player.UpdateHpBar();
+                    return true;
+            }
         }
         return false;
     }
@@ -125,8 +134,9 @@ public class InGameManager : MonoBehaviour
     {
         GameTime = 0f;
         GameState = StateEnum.Start;
-        player = GameObject.FindGameObjectWithTag("Player");
-        playerUpgrader = player.GetComponent<PlayerUpgrader>();
+        playerObj = GameObject.FindGameObjectWithTag("Player");
+        player = playerObj.GetComponent<Player>();
+        playerUpgrader = playerObj.GetComponent<PlayerUpgrader>();
         playerUpgrader.Initialize();
         itemCollector.Initialize();
         

@@ -144,11 +144,14 @@ public class Player : MonoBehaviour
     {
         _stateUIHandler.PresentDamageText(damage);
         Health -= damage;
-        if (Health <= 0)
+        float calculHp = Health + InGameManager.Instance.playerUpgrader.Hp;
+        float calculMaxHp = MaxHealth + InGameManager.Instance.playerUpgrader.Hp;
+        if (calculHp <= 0)
         {
             State = StateEnum.Death;
         }
-        _stateUIHandler.SetHpBar(Health / MaxHealth);
+
+        UpdateHpBar(calculHp / calculMaxHp);
     }
 
     public float GetCalCulatedAtk()
@@ -170,7 +173,7 @@ public class Player : MonoBehaviour
     {
         State = StateEnum.Detect;
         
-        Debug.Log("Detect!");
+        // Debug.Log("Detect!");
         detectRadius = 3f;
         Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, detectRadius, Layers.Enemy);
         while (enemies.Length == 0)
@@ -184,14 +187,14 @@ public class Player : MonoBehaviour
         // Debug.Log("destance: " + detectRadius + ", dir: " + moveDir);
         if (enemies.Length == 0)
         {
-            Debug.Log("No enemies");
+            // Debug.Log("No enemies");
             StartCoroutine(nameof(CoDetect), detectSpeed);
             // yield return new WaitForSeconds(detectSpeed);
             // State = StateEnum.Idle; // Re Detect
         }
         else // set dir
         {
-            Debug.Log($"Find Enemy! {enemies.Length}");
+            // Debug.Log($"Find Enemy! {enemies.Length}");
             float minDis = 10000f;
             foreach (var enemy in enemies)
             {
@@ -230,6 +233,18 @@ public class Player : MonoBehaviour
     private void Death()
     {
         Destroy(this.gameObject);
+    }
+
+    public void UpdateHpBar(float value)
+    {
+        _stateUIHandler.SetHpBar(value);
+    }
+
+    public void UpdateHpBar()
+    {
+        float calculHp = Health + InGameManager.Instance.playerUpgrader.Hp;
+        float calculMaxHp = MaxHealth + InGameManager.Instance.playerUpgrader.Hp;
+        _stateUIHandler.SetHpBar(calculHp / calculMaxHp);
     }
     
     private void OnDrawGizmos()

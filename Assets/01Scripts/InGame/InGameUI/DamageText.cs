@@ -49,7 +49,7 @@ public class DamageText : MonoBehaviour
     
     void OnStateChange(InGameManager.StateEnum state)
     {
-        Debug.Log("DamageText::OnStateChange");
+        // Debug.Log("DamageText::OnStateChange");
         gameState = state;
         switch (state)
         {
@@ -73,7 +73,7 @@ public class DamageText : MonoBehaviour
 
     public void Initialize(float damage)
     {
-        Debug.Log($"DamageText::DeleteTime: {deleteTime}");
+        // Debug.Log($"DamageText::DeleteTime: {deleteTime}");
         damageTMP.SetText(damage.ToString("N0")); // Integer
         StartCoroutine(nameof(CoDeleteDamageText), deleteTime);
     }
