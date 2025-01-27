@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float atk = 100f;
     [SerializeField] private PlayerDetectHandler detectHandler;
     [SerializeField] private GameObject playerObject;
-    [SerializeField] private Bullet bullet;
+    [SerializeField] private WeaponModelView bullet;
     [SerializeField] private float moveSpeed = 1f;
     private Vector3 moveDir;
     private float runnedTime;
@@ -130,8 +130,8 @@ public class Player : MonoBehaviour
     private void Attack(Collider2D other)
     {
         State = StateEnum.Attack;
-        Bullet b = Instantiate(bullet, transform.position, Quaternion.identity);
-        b.Initialize(other, GetCalCulatedAtk());
+        var bMV = Instantiate(bullet, transform.position, Quaternion.identity);
+        bMV.Initialize(other, GetCalCulatedAtk());
 
         StartCoroutine(nameof(CoAttack), AttackSpeed);
     }

@@ -800,7 +800,7 @@ MonoBehaviour:
   atk: 45
   detectHandler: {fileID: 0}
   playerObject: {fileID: 1640537310}
-  bullet: {fileID: 7410386148228303700, guid: c4321a3d2a541410cbfc07c290d9613b, type: 3}
+  bullet: {fileID: 5933606814879367268, guid: c4321a3d2a541410cbfc07c290d9613b, type: 3}
   moveSpeed: 1
 --- !u!1 &500298491
 GameObject:
@@ -29274,7 +29274,7 @@ MonoBehaviour:
   atk: 100
   detectHandler: {fileID: 0}
   playerObject: {fileID: 500298491}
-  bullet: {fileID: 7410386148228303700, guid: c4321a3d2a541410cbfc07c290d9613b, type: 3}
+  bullet: {fileID: 5933606814879367268, guid: c4321a3d2a541410cbfc07c290d9613b, type: 3}
   moveSpeed: 1
 --- !u!1 &1661088304
 GameObject:
