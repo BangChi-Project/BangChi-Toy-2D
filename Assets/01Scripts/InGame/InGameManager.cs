@@ -29,12 +29,12 @@ public class InGameManager : MonoBehaviour
     public Action<StateEnum> OnStateChange;
     
     // Properties
-    [Header("Player Pos")]
-    [Tooltip("for Enemy Chasing")]
+    [Header("Player Pos")] [Tooltip("for Enemy Chasing")]
+    private Vector3 playerPos;
     public Vector3 PlayerPos
     {
-        get { return playerViewModel.GetPlayerPos(); } // Get
-        set { PlayerPos = value; }
+        get { return playerPos; } // Get
+        private set { playerPos = value; }
     }
     public StateEnum GameState { get; private set; } = StateEnum.Running;
     public float GameTime { get; private set; } = 0f;
@@ -78,7 +78,7 @@ public class InGameManager : MonoBehaviour
             case(StateEnum.Start):
                 break;
             case(StateEnum.Running):
-                // PlayerPos = playerViewModel.GetPlayerPos();
+                PlayerPos = playerViewModel.GetPlayerPos();
                 GameTime += Time.deltaTime;
                 break;
             case(StateEnum.Pause):
