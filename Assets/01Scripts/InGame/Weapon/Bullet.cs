@@ -5,12 +5,9 @@ using UnityEngine.Rendering.Universal;
 
 public class Bullet : Weapon
 {
-    private Vector3 targetDir;
     private Collider2D target; // Guided
     private float t;
-    [SerializeField] private float deleteTime;
 
-    [SerializeField] float bulletSpeed;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -27,7 +24,7 @@ public class Bullet : Weapon
                 break;
             case(InGameManager.StateEnum.Running):
                 t += Time.deltaTime;
-                transform.position += targetDir * bulletSpeed * Time.deltaTime;
+                Moving();
                 break;
             case(InGameManager.StateEnum.Pause):
                 break;
@@ -41,7 +38,7 @@ public class Bullet : Weapon
         // transform.position += dir * bulletSpeed * Time.deltaTime;
     }
     
-    protected override void OnStateChange(InGameManager.StateEnum state)
+    public override void HandleOnStateChange(InGameManager.StateEnum state)
     {
         State = state;
         switch (state)
@@ -60,7 +57,7 @@ public class Bullet : Weapon
 
     public void SetTarget(Collider2D other)
     {
-        targetDir = (other.gameObject.transform.position - transform.position).normalized;
+        TargetDir = (other.gameObject.transform.position - transform.position).normalized;
         
         target = other; // test;
     }
@@ -73,18 +70,9 @@ public class Bullet : Weapon
         Destroy(this.gameObject);
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        // Delete or any effect
-        if (other.CompareTag(InGameManager.Instance.enemyTag))
-        {
-            other.GetComponent<Enemy>().TakeDamage(Atk);
-            // Destroy(other.gameObject);
-        }
-    }
-
     public override void Initialize(Collider2D other, float atk)
     {
+        State = InGameManager.StateEnum.Running;
         SetTarget(other);
         Atk = atk;
     }
