@@ -9,9 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5801465153637698299}
+  - component: {fileID: 1214586432941398725}
+  - component: {fileID: 7491095257673888231}
   - component: {fileID: 804618225462266132}
   - component: {fileID: 1418834213961171116}
-  - component: {fileID: 234526429000400512}
   - component: {fileID: -8286454596345893714}
   - component: {fileID: -5055353854755821183}
   m_Layer: 10
@@ -37,6 +38,35 @@ Transform:
   - {fileID: 1904457035875009018}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1214586432941398725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2083352753892971040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8cb5562bee34e7fb049a6e3b2a3fca1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyViewModel: {fileID: 7491095257673888231}
+  gold: {fileID: 6602394190195327119, guid: 5231c7998f34f481ba99087174cee6af, type: 3}
+  gem: {fileID: 2212663858445540453, guid: 332411e9736664d2fb1f2c5270a03362, type: 3}
+--- !u!114 &7491095257673888231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2083352753892971040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5679a6d1647e4947be6292e184136813, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 1214586432941398725}
+  enemyView: {fileID: 5791059681707579803}
 --- !u!212 &804618225462266132
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -114,21 +144,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &234526429000400512
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2083352753892971040}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8d7860a3db6a45a7b7eafadb86f763f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  StateUIHandler: {fileID: 5791059681707579803}
-  gold: {fileID: 6602394190195327119, guid: 5231c7998f34f481ba99087174cee6af, type: 3}
-  gem: {fileID: 2212663858445540453, guid: 332411e9736664d2fb1f2c5270a03362, type: 3}
 --- !u!50 &-8286454596345893714
 Rigidbody2D:
   serializedVersion: 5

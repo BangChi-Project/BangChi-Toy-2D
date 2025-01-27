@@ -1,28 +1,22 @@
 using UnityEngine;
 
-public class TreeMonster : Enemy
+public class EnemyDefaultModel : Enemy
 {
     public override void TakeDamage(float damage)
     {
-        ObjectView.PresentDamageText(damage);
+        enemyViewModel.PresentDamageText(damage);
         Health -= damage;
         if (Health <= 0)
         {
             Death();
         }
-        ObjectView.SetHpBar(Health/MaxHealth);
+        enemyViewModel.SetHpBar(Health/MaxHealth);
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         Initialize();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public override void Death()
@@ -38,14 +32,6 @@ public class TreeMonster : Enemy
                 .Initialize(1, "Gem", 1); // Random.Range(1, 5));
         }
         Destroy(gameObject);
-    }
-    
-    private void OnTriggerStay2D (Collider2D other)
-    {
-        if (other.CompareTag(InGameManager.Instance.playerTag))
-        {
-            other.GetComponent<PlayerViewModel>().TakeDamage(Atk);
-        }
     }
 
     public override void Initialize()

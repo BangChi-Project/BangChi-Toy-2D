@@ -33,6 +33,7 @@ public class PlayerRangeViewModel : MonoBehaviour
     }
     private void HandleEnemyEnter(Collider2D enemy)
     {
+        // HandleEnemyEnterNearest ? 체커에서 근접 enemy보내주기?
         if (player.GameState == InGameManager.StateEnum.Running)
         {
             if (player.State != Player.StateEnum.Attack && t > player.AttackSpeed)

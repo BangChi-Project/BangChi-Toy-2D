@@ -103,8 +103,6 @@ public class Player : MonoBehaviour
         {
             // Debug.Log("No enemies");
             StartCoroutine(nameof(CoDetect), detectSpeed);
-            // yield return new WaitForSeconds(detectSpeed);
-            // State = StateEnum.Idle; // Re Detect
         }
         else // set dir
         {
@@ -132,7 +130,7 @@ public class Player : MonoBehaviour
     private void Attack(Collider2D other)
     {
         State = StateEnum.Attack;
-        Bullet b = Instantiate<Bullet>(bullet, transform.position, Quaternion.identity);
+        Bullet b = Instantiate(bullet, transform.position, Quaternion.identity);
         b.Initialize(other, GetCalCulatedAtk());
 
         StartCoroutine(nameof(CoAttack), AttackSpeed);
