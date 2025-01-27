@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class StateUIHandler : MonoBehaviour
+public class ObjectView : MonoBehaviour
 {
     [SerializeField] private RectTransform hpBar;
     [SerializeField] private DamageText damageText;

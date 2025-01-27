@@ -3,6 +3,7 @@ using System.Diagnostics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Debug = UnityEngine.Debug;
 
 public class InGameManager : MonoBehaviour
 {
@@ -28,7 +29,13 @@ public class InGameManager : MonoBehaviour
     public Action<StateEnum> OnStateChange;
     
     // Properties
-    [Header("Player Pos")] [Tooltip("for Enemy Chasing")] public Vector3 PlayerPos { get; set; }
+    [Header("Player Pos")]
+    [Tooltip("for Enemy Chasing")]
+    public Vector3 PlayerPos
+    {
+        get { return playerViewModel.GetPlayerPos(); } // Get
+        set { PlayerPos = value; }
+    }
     public StateEnum GameState { get; private set; } = StateEnum.Running;
     public float GameTime { get; private set; } = 0f;
     public PlayerUpgrader playerUpgrader { get; private set; }
@@ -36,7 +43,7 @@ public class InGameManager : MonoBehaviour
     // private field
     [Header("Player Data")]
     [SerializeField] GameObject playerObj;
-    private Player player;
+    [SerializeField] private PlayerViewModel playerViewModel;
     [SerializeField] private InGameItemCollector itemCollector;
     
     public static InGameManager Instance
@@ -71,7 +78,7 @@ public class InGameManager : MonoBehaviour
             case(StateEnum.Start):
                 break;
             case(StateEnum.Running):
-                PlayerPos = player.transform.position;
+                // PlayerPos = playerViewModel.GetPlayerPos();
                 GameTime += Time.deltaTime;
                 break;
             case(StateEnum.Pause):
@@ -123,7 +130,7 @@ public class InGameManager : MonoBehaviour
                     return true;
                 case(1):
                     playerUpgrader.HpUpgrade();
-                    player.UpdateHpBar();
+                    playerViewModel.UpdateHpBar();
                     return true;
             }
         }
@@ -132,16 +139,32 @@ public class InGameManager : MonoBehaviour
 
     void Initialize()
     {
-        GameTime = 0f;
-        GameState = StateEnum.Start;
-        playerObj = GameObject.FindGameObjectWithTag("Player");
-        player = playerObj.GetComponent<Player>();
-        playerUpgrader = playerObj.GetComponent<PlayerUpgrader>();
-        playerUpgrader.Initialize();
-        itemCollector.Initialize();
-        
-        InGameUIManager.Instance.Initialize();
-        
-        GameState = StateEnum.Running;
+        try
+        {
+            GameTime = 0f;
+            GameState = StateEnum.Start;
+            playerObj = GameObject.FindGameObjectWithTag("Player");
+            playerViewModel = playerObj.GetComponent<PlayerViewModel>();
+            playerUpgrader = playerObj.GetComponent<PlayerUpgrader>();
+            
+            if (playerObj == null)
+                throw new UnityException("playerObj is null");
+            if (playerViewModel == null)
+                throw new UnityException("playerVM is null");
+            if (playerUpgrader == null)
+                throw new UnityException("playerUpgrader is null");
+            
+            playerUpgrader.Initialize();
+            itemCollector.Initialize();
+
+            InGameUIManager.Instance.Initialize();
+
+            GameState = StateEnum.Running;
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e);
+            this.gameObject.SetActive(false);
+        }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PlayerRangeHandler : MonoBehaviour
+public class PlayerRangeViewModel : MonoBehaviour
 {
     RangeChecker rangeChecker;
     private float t=0;
@@ -38,12 +38,12 @@ public class PlayerRangeHandler : MonoBehaviour
             if (player.State != Player.StateEnum.Attack && t > player.AttackSpeed)
             {
                 // Debug.Log($"Entered {enemy.name}");
-                if (player.EnemyEnter(enemy))
+                if (player.HandleEnemyEnter(enemy))
                     t = 0; // Attack Success
             }
         }
     }
-
+    
     private void HandleItemEnter(Collider2D item) // touch or Player chase Item
     {
         if (player.GameState == InGameManager.StateEnum.Running)

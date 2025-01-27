@@ -4,7 +4,7 @@ using UnityEngine;
 public class InGameItemCollector : MonoBehaviour
 {
     // Properties
-    public List<Item> InVentory { get; private set; }
+    public List<Item> Inventory { get; private set; }
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -25,7 +25,7 @@ public class InGameItemCollector : MonoBehaviour
         // }
         
         bool isAdd = true;
-        foreach (Item item in InVentory)
+        foreach (Item item in Inventory)
         {
             if (item.IdNumber == addItem.IdNumber)
             {
@@ -37,8 +37,8 @@ public class InGameItemCollector : MonoBehaviour
 
         if (isAdd)
         {
-            InVentory.Add(addItem);
-            InVentory.Sort((x, y) => x.IdNumber.CompareTo(y.IdNumber));
+            Inventory.Add(addItem);
+            Inventory.Sort((x, y) => x.IdNumber.CompareTo(y.IdNumber));
         }
 
         UpdateItemText();
@@ -46,9 +46,9 @@ public class InGameItemCollector : MonoBehaviour
 
     public bool UpgradeExcute(int id, int cost)
     {
-        if (InVentory.Count > 0)
+        if (Inventory.Count > 0)
         {
-            foreach (Item item in InVentory)
+            foreach (Item item in Inventory)
             {
                 if (item.IdNumber == id && item.Amount >= cost)
                 {
@@ -65,7 +65,7 @@ public class InGameItemCollector : MonoBehaviour
     public void UpdateItemText()
     {
         string itemText = "";
-        foreach (Item item in InVentory)
+        foreach (Item item in Inventory)
         {
             itemText += "item name: " + item.Name + "\nitem id: " + item.IdNumber + "\nitem amount: " + item.Amount + "\n\n";
         }
@@ -74,7 +74,7 @@ public class InGameItemCollector : MonoBehaviour
 
     public void Initialize()
     {
-        InVentory = new List<Item>();
+        Inventory = new List<Item>();
         InGameUIManager.Instance.getItemsText.SetText("name + id + amount");
     }
 }

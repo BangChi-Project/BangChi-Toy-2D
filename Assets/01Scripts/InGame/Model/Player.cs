@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
@@ -6,6 +5,7 @@ using InGame.Layers;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] PlayerViewModel playerViewModel;
     public enum StateEnum // 상태 패턴 도입해야함
     {
         Idle,
@@ -18,7 +18,6 @@ public class Player : MonoBehaviour
     [SerializeField] private float detectSpeed = 0.5f;
     [SerializeField] private float attackSpeed = 1f;
     [SerializeField] private float atk = 100f;
-    [SerializeField] private StateUIHandler _stateUIHandler;
     [SerializeField] private PlayerDetectHandler detectHandler;
     [SerializeField] private GameObject playerObject;
     [SerializeField] private Bullet bullet;
@@ -31,7 +30,6 @@ public class Player : MonoBehaviour
     public float Health { get; private set; } = 100f;
     public float MaxHealth { get; private set; } = 100f;
 
-    [SerializeField]
     public float Atk
     {
         get
@@ -56,12 +54,6 @@ public class Player : MonoBehaviour
         }
     }
     
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        InGameManager.Instance.OnStateChange += OnStateChange;
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -83,93 +75,15 @@ public class Player : MonoBehaviour
             }
         }
     }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag(InGameManager.Instance.itemTag))
-        {
-            var item = other.GetComponent<Item>();
-            InGameManager.Instance.AddItem(item);
-            Destroy(other.gameObject);
-        }
-    }
-
-    // public void OnEnable()
-    // {
-    //     InGameManager.Instance.OnStateChange += OnStateChange;
-    // }
-    public void OnDisable()
-    {
-        InGameManager.Instance.OnStateChange -= OnStateChange;
-    }
-
-    private void OnStateChange(InGameManager.StateEnum state)
-    {
-        Debug.Log($"OnStateChange::playerState:{State}");
-        GameState = state;
-        switch (state)
-        {
-            case(InGameManager.StateEnum.Running):
-                if (State == StateEnum.Attack)
-                    StartCoroutine(nameof(CoAttack), attackSpeed-runnedTime);
-                if (State == StateEnum.Detect) // when State is Attack, cant Detect
-                    StartCoroutine(nameof(CoDetect), detectSpeed-runnedTime);
-                break;
-            case(InGameManager.StateEnum.Pause):
-                StopCoroutine(nameof(CoAttack));
-                StopCoroutine(nameof(CoDetect));
-                break;
-        }
-    }
-
-    public bool EnemyEnter(Collider2D other) // EnemyEnter Event! -> Attack!
-    {
-        switch (State)
-        {
-            case(StateEnum.Detect): // Stop Detect Enemy
-                Attack(other);
-                return true;
-            case(StateEnum.Moving): // Stop Moving
-                runnedTime = 0;
-                Attack(other);
-                return true;
-            // case(StateEnum.Attack): // Already Attack, Handler Cut
-            //     return false;
-            default:
-                return false;
-        }
-    }
-
-    public void TakeDamage(float damage)
-    {
-        _stateUIHandler.PresentDamageText(damage);
-        Health -= damage;
-        float calculHp = Health + InGameManager.Instance.playerUpgrader.Hp;
-        float calculMaxHp = MaxHealth + InGameManager.Instance.playerUpgrader.Hp;
-        if (calculHp <= 0)
-        {
-            State = StateEnum.Death;
-        }
-
-        UpdateHpBar(calculHp / calculMaxHp);
-    }
-
-    public float GetCalCulatedAtk()
-    {
-        float res = Atk + InGameManager.Instance.playerUpgrader.Atk;
-
-        return res;
-    }
-
-    float detectRadius = 2f; //
-
-    public void Moving()
+    
+    private void Moving()
     {
         playerObject.transform.position += moveDir * moveSpeed * Time.deltaTime;
         // transform.parent.position += moveDir * moveSpeed * Time.deltaTime;
     }
     
-    public void Detect() // PlayerDetectHandler
+    float detectRadius = 2f; // for DetectGimo
+    private void Detect() // PlayerDetectHandler
     {
         State = StateEnum.Detect;
         
@@ -235,16 +149,62 @@ public class Player : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    public void UpdateHpBar(float value)
+    public void TakeDamage(float damage)
     {
-        _stateUIHandler.SetHpBar(value);
-    }
-
-    public void UpdateHpBar()
-    {
+        playerViewModel.PresentDamageText(damage);
+        Health -= damage;
         float calculHp = Health + InGameManager.Instance.playerUpgrader.Hp;
         float calculMaxHp = MaxHealth + InGameManager.Instance.playerUpgrader.Hp;
-        _stateUIHandler.SetHpBar(calculHp / calculMaxHp);
+        if (calculHp <= 0)
+        {
+            State = StateEnum.Death;
+        }
+
+        playerViewModel.UpdateHpBar(calculHp / calculMaxHp);
+    }
+
+    public void HandleStateChange(InGameManager.StateEnum state)
+    {
+        Debug.Log($"OnStateChange::playerState:{State}");
+        GameState = state;
+        switch (state)
+        {
+            case(InGameManager.StateEnum.Running):
+                if (State == StateEnum.Attack)
+                    StartCoroutine(nameof(CoAttack), attackSpeed-runnedTime);
+                if (State == StateEnum.Detect) // when State is Attack, cant Detect
+                    StartCoroutine(nameof(CoDetect), detectSpeed-runnedTime);
+                break;
+            case(InGameManager.StateEnum.Pause):
+                StopCoroutine(nameof(CoAttack));
+                StopCoroutine(nameof(CoDetect));
+                break;
+        }
+    }
+    
+    public bool HandleEnemyEnter(Collider2D other) // EnemyEnter Event! -> Attack!
+    {
+        switch (State)
+        {
+            case(StateEnum.Detect): // Stop Detect Enemy
+                Attack(other);
+                return true;
+            case(StateEnum.Moving): // Stop Moving
+                runnedTime = 0;
+                Attack(other);
+                return true;
+            // case(StateEnum.Attack): // Already Attack, Handler Cut
+            //     return false;
+            default:
+                return false;
+        }
+    }
+
+    public float GetCalCulatedAtk()
+    {
+        float res = Atk + InGameManager.Instance.playerUpgrader.Atk;
+
+        return res;
     }
     
     private void OnDrawGizmos()
@@ -261,5 +221,10 @@ public class Player : MonoBehaviour
             Gizmos.DrawLine(prevPoint, newPoint);
             prevPoint = newPoint;
         }
+    }
+
+    public Vector3 GetPlayerPos()
+    {
+        return playerObject.transform.position;
     }
 }
