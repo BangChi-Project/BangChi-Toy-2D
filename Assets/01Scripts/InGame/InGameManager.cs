@@ -30,11 +30,9 @@ public class InGameManager : MonoBehaviour
     
     // Properties
     [Header("Player Pos")] [Tooltip("for Enemy Chasing")]
-    private Vector3 playerPos;
     public Vector3 PlayerPos
     {
-        get { return playerPos; } // Get
-        private set { playerPos = value; }
+        get { return playerObj.transform.position; } // Get
     }
     public StateEnum GameState { get; private set; } = StateEnum.Running;
     public float GameTime { get; private set; } = 0f;
@@ -78,7 +76,7 @@ public class InGameManager : MonoBehaviour
             case(StateEnum.Start):
                 break;
             case(StateEnum.Running):
-                PlayerPos = playerViewModel.GetPlayerPos();
+                // PlayerPos = playerObj.transform.position;
                 GameTime += Time.deltaTime;
                 break;
             case(StateEnum.Pause):
@@ -139,32 +137,19 @@ public class InGameManager : MonoBehaviour
 
     void Initialize()
     {
-        try
-        {
-            GameTime = 0f;
-            GameState = StateEnum.Start;
-            playerObj = GameObject.FindGameObjectWithTag("Player");
-            playerViewModel = playerObj.GetComponent<PlayerViewModel>();
-            playerUpgrader = playerObj.GetComponent<PlayerUpgrader>();
-            
-            if (playerObj == null)
-                throw new UnityException("playerObj is null");
-            if (playerViewModel == null)
-                throw new UnityException("playerVM is null");
-            if (playerUpgrader == null)
-                throw new UnityException("playerUpgrader is null");
-            
-            playerUpgrader.Initialize();
-            itemCollector.Initialize();
+        GameTime = 0f;
+        GameState = StateEnum.Start;
+        
+        // playerObj = Instantiate(playerObj, PlayerPos, Quaternion.identity);
+        playerObj = GameObject.Find("Character");
+        playerViewModel = playerObj.GetComponentInChildren<PlayerViewModel>();
+        playerUpgrader = playerViewModel.GetComponent<PlayerUpgrader>();
+        
+        playerUpgrader.Initialize();
+        itemCollector.Initialize();
 
-            InGameUIManager.Instance.Initialize();
+        InGameUIManager.Instance.Initialize();
 
-            GameState = StateEnum.Running;
-        }
-        catch (Exception e)
-        {
-            Debug.Log(e);
-            this.gameObject.SetActive(false);
-        }
+        GameState = StateEnum.Running;
     }
 }
