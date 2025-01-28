@@ -151,8 +151,8 @@ public class Player : MonoBehaviour
     {
         playerViewModel.PresentDamageText(damage);
         Health -= damage;
-        float calculHp = Health + InGameManager.Instance.playerUpgrader.Hp;
-        float calculMaxHp = MaxHealth + InGameManager.Instance.playerUpgrader.Hp;
+        float calculHp = Health + InGameManager.Instance.PlayerUpgradeStat.Hp;
+        float calculMaxHp = MaxHealth + InGameManager.Instance.PlayerUpgradeStat.Hp;
         if (calculHp <= 0)
         {
             State = StateEnum.Death;
@@ -200,7 +200,7 @@ public class Player : MonoBehaviour
 
     public float GetCalCulatedAtk()
     {
-        float res = Atk + InGameManager.Instance.playerUpgrader.Atk;
+        float res = Atk + InGameManager.Instance.PlayerUpgradeStat.Atk;
 
         return res;
     }

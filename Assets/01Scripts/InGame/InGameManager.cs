@@ -15,10 +15,6 @@ public class InGameManager : MonoBehaviour
         End,
     }
     
-    // Instance
-    [Header("SingleTon")] private static InGameManager instance = null;
-
-    
     // constant field
     public string enemyTag = "Enemy";
     public string weaponTag = "Weapon";
@@ -29,21 +25,6 @@ public class InGameManager : MonoBehaviour
     public Action<StateEnum> OnStateChange;
     
     // Properties
-    [Header("Player Pos")] [Tooltip("for Enemy Chasing")]
-    public Vector3 PlayerPos
-    {
-        get { return playerObj.transform.position; } // Get
-    }
-    public StateEnum GameState { get; private set; } = StateEnum.Running;
-    public float GameTime { get; private set; } = 0f;
-    public PlayerUpgrader playerUpgrader { get; private set; }
-    
-    // private field
-    [Header("Player Data")]
-    [SerializeField] GameObject playerObj;
-    [SerializeField] private PlayerViewModel playerViewModel;
-    [SerializeField] private InGameItemCollector itemCollector;
-    
     public static InGameManager Instance
     {
         get
@@ -53,19 +34,36 @@ public class InGameManager : MonoBehaviour
             return instance;
         }
     }
+    [Header("Player Pos")] [Tooltip("for Enemy Chasing")]
+    public Vector3 PlayerPos
+    {
+        get { return playerObj.transform.position; } // Get
+    }
+    public StateEnum GameState { get; private set; } = StateEnum.Running;
+    public float GameTime { get; private set; } = 0f;
+    public PlayerUpgradeStat PlayerUpgradeStat { get; private set; }
+    
+    // private field
+    [Header("Player Data")]
+    [SerializeField] GameObject playerPrefab;
+    GameObject playerObj;
+    [SerializeField] private PlayerViewModel playerViewModel;
+    [SerializeField] private InGameItemCollector itemCollector;
+    [Header("SingleTon")] private static InGameManager instance = null;
+
 
     void Awake()
     {
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(this.gameObject);
+            DontDestroyOnLoad(this);
             SceneManager.sceneLoaded += OnSceneLoaded;
-            Initialize();
+            // Initialize();
         }
         else
         {
-            Destroy(this.gameObject);
+            Destroy(this);
         }
     }
 
@@ -82,7 +80,7 @@ public class InGameManager : MonoBehaviour
             case(StateEnum.Pause):
                 break;
             case(StateEnum.End):
-                InGameUIManager.Instance.ShowResultPanel();
+                InGuiViewModel.Instance.ShowResultPanel();
                 break;
         }
     }
@@ -95,10 +93,14 @@ public class InGameManager : MonoBehaviour
             GameState = StateEnum.End;
         }
         else
-            Initialize();
+        {
+            if (instance != null)
+                Initialize();
+        }
     }
-    private void OnDestroy()
+    void OnDestroy()
     {
+        // 이벤트 구독 해제
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
     
@@ -124,10 +126,10 @@ public class InGameManager : MonoBehaviour
             switch (id)
             {
                 case(0):
-                    playerUpgrader.AtkUpgrade();
+                    PlayerUpgradeStat.AtkUpgrade();
                     return true;
                 case(1):
-                    playerUpgrader.HpUpgrade();
+                    PlayerUpgradeStat.HpUpgrade();
                     playerViewModel.UpdateHpBar();
                     return true;
             }
@@ -135,20 +137,19 @@ public class InGameManager : MonoBehaviour
         return false;
     }
 
-    void Initialize()
+    private void Initialize()
     {
         GameTime = 0f;
         GameState = StateEnum.Start;
         
-        // playerObj = Instantiate(playerObj, PlayerPos, Quaternion.identity);
-        playerObj = GameObject.Find("Character");
+        // playerObj = Instantiate(playerObj, , Quaternion.identity);
+        playerObj = Instantiate(playerPrefab, transform.position, Quaternion.identity);
         playerViewModel = playerObj.GetComponentInChildren<PlayerViewModel>();
-        playerUpgrader = playerViewModel.GetComponent<PlayerUpgrader>();
+        PlayerUpgradeStat = GetComponent<PlayerUpgradeStat>();
         
-        playerUpgrader.Initialize();
+        PlayerUpgradeStat.Initialize();
         itemCollector.Initialize();
-
-        InGameUIManager.Instance.Initialize();
+        InGuiViewModel.Instance.Initialize();
 
         GameState = StateEnum.Running;
     }

@@ -46,7 +46,8 @@ public class DamageText : MonoBehaviour
 
     public void OnDisable()
     {
-        InGameManager.Instance.OnStateChange -= OnStateChange;
+        if (InGameManager.Instance != null)
+            InGameManager.Instance.OnStateChange -= OnStateChange;
     }
     
     void OnStateChange(InGameManager.StateEnum state)

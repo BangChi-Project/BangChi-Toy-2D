@@ -22,11 +22,11 @@ public class UpgradePanel : MonoBehaviour
         switch (id) // Update Text
         {
             case(0):
-                cost = InGameManager.Instance.playerUpgrader.AtkUpgradeCost;
+                cost = InGameManager.Instance.PlayerUpgradeStat.AtkUpgradeCost;
                 if (InGameManager.Instance.UpgradeExcute(id, cost))
                 {
-                    atkUpgradeText.SetText($"ATK +{InGameManager.Instance.playerUpgrader.Atk}");
-                    var atkUpgradeCost = InGameManager.Instance.playerUpgrader.AtkUpgradeCost;
+                    atkUpgradeText.SetText($"ATK +{InGameManager.Instance.PlayerUpgradeStat.Atk}");
+                    var atkUpgradeCost = InGameManager.Instance.PlayerUpgradeStat.AtkUpgradeCost;
                     atkUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().SetText($"Gold\n{atkUpgradeCost}");
                 }
                 else
@@ -35,11 +35,11 @@ public class UpgradePanel : MonoBehaviour
                 }
                 break;
             case(1):
-                cost = InGameManager.Instance.playerUpgrader.HpUpgradeCost;
+                cost = InGameManager.Instance.PlayerUpgradeStat.HpUpgradeCost;
                 if (InGameManager.Instance.UpgradeExcute(id, cost))
                 {
-                    hpUpgradeText.SetText($"HP +{InGameManager.Instance.playerUpgrader.Hp}");
-                    var hpUpgradeCost = InGameManager.Instance.playerUpgrader.HpUpgradeCost;
+                    hpUpgradeText.SetText($"HP +{InGameManager.Instance.PlayerUpgradeStat.Hp}");
+                    var hpUpgradeCost = InGameManager.Instance.PlayerUpgradeStat.HpUpgradeCost;
                     hpUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().SetText($"Gem\n{hpUpgradeCost}");
                 }
                 else
@@ -72,11 +72,11 @@ public class UpgradePanel : MonoBehaviour
         // 자식 오브젝트에 있는 모든 버튼을 가져옴
         var btns = GetComponentsInChildren<Button>();
         atkUpgradeButton = btns[0]; // 공격력 업그레이드 버튼
-        atkUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().SetText($"Gold\n{InGameManager.Instance.playerUpgrader.AtkUpgradeCost.ToString()}");
+        atkUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().SetText($"Gold\n{InGameManager.Instance.PlayerUpgradeStat.AtkUpgradeCost.ToString()}");
         atkUpgradeButton.onClick.AddListener(() => OnClickUpgradeButton(0)); // id:0 is gold
         
         hpUpgradeButton = btns[1]; // 체력 업그레이드 버튼
-        hpUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().SetText($"Gem\n{InGameManager.Instance.playerUpgrader.HpUpgradeCost.ToString()}");
+        hpUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().SetText($"Gem\n{InGameManager.Instance.PlayerUpgradeStat.HpUpgradeCost.ToString()}");
         hpUpgradeButton.onClick.AddListener(() => OnClickUpgradeButton(1)); // id:1 is gem
     }
 }

@@ -69,12 +69,12 @@ public class InGameItemCollector : MonoBehaviour
         {
             itemText += "item name: " + item.Name + "\nitem id: " + item.IdNumber + "\nitem amount: " + item.Amount + "\n\n";
         }
-        InGameUIManager.Instance.getItemsText.SetText(itemText);
+        InGuiViewModel.Instance.SetEarnItemText(itemText);
     }
 
     public void Initialize()
     {
         Inventory = new List<Item>();
-        InGameUIManager.Instance.getItemsText.SetText("name + id + amount");
+        InGuiViewModel.Instance.SetEarnItemText("name + id + amount");
     }
 }

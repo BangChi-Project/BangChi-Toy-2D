@@ -10,7 +10,8 @@ public class WeaponModelView:MonoBehaviour
 
     public void OnDisable()
     {
-        InGameManager.Instance.OnStateChange -= OnStateChange;
+        if (InGameManager.Instance != null)
+            InGameManager.Instance.OnStateChange -= OnStateChange;
     }
 
     private void OnStateChange(InGameManager.StateEnum state)

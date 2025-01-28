@@ -28,8 +28,11 @@ public class PlayerRangeViewModel : MonoBehaviour
     // Event destructor
     void OnDisable()
     {
-        rangeChecker.OnEnemyEnter -= HandleEnemyEnter; // Prevent Memory Leak
-        rangeChecker.OnItemEnter -= HandleItemEnter;
+        if (rangeChecker != null)
+        {
+            rangeChecker.OnEnemyEnter -= HandleEnemyEnter; // Prevent Memory Leak
+            rangeChecker.OnItemEnter -= HandleItemEnter;
+        }
     }
     private void HandleEnemyEnter(Collider2D enemy)
     {

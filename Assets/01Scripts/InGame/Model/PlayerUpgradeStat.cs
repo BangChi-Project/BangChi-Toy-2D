@@ -1,7 +1,6 @@
-using System;
 using UnityEngine;
 
-public class PlayerUpgrader : MonoBehaviour
+public class PlayerUpgradeStat: MonoBehaviour
 {
     public int Atk { get; set; }
     public int AtkUpgradeCost { get; set; }

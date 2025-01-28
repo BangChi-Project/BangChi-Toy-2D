@@ -26,7 +26,8 @@ public class PlayerViewModel: MonoBehaviour
     // }
     public void OnDisable()
     {
-        InGameManager.Instance.OnStateChange -= OnStateChange;
+        if (InGameManager.Instance != null)
+            InGameManager.Instance.OnStateChange -= OnStateChange;
     }
 
     private void OnStateChange(InGameManager.StateEnum state)
@@ -47,8 +48,8 @@ public class PlayerViewModel: MonoBehaviour
 
     public void UpdateHpBar() // view
     {
-        float calculHp = player.Health + InGameManager.Instance.playerUpgrader.Hp;
-        float calculMaxHp = player.MaxHealth + InGameManager.Instance.playerUpgrader.Hp;
+        float calculHp = player.Health + InGameManager.Instance.PlayerUpgradeStat.Hp;
+        float calculMaxHp = player.MaxHealth + InGameManager.Instance.PlayerUpgradeStat.Hp;
         objectView.SetHpBar(calculHp / calculMaxHp);
     }
 

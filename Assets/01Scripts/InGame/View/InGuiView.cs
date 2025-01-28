@@ -2,67 +2,20 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
-public class InGameUIManager : MonoBehaviour
+public class InGuiView : MonoBehaviour
 {
-    private static InGameUIManager instance;
     [SerializeField] ResultPanel resultPanel;
     [SerializeField] UpgradePanel upgradePanel;
     [SerializeField] TextMeshProUGUI timeText;
-    [SerializeField] public TextMeshProUGUI getItemsText; // test
-
-    public static InGameUIManager Instance
-    {
-        get
-        {
-            if (instance == null)
-                return null;
-            return instance;
-        }
-    }
-
-    void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(this.gameObject);
-            SceneManager.sceneLoaded += OnSceneLoaded;
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }
-    }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        Initialize();
-    }
+    [SerializeField] public TextMeshProUGUI earnItemsText; // test
+    private Button changeGameStateButton;
 
     // Update is called once per frame
-    void Update()
+    public void SetTimeText()
     {
         timeText.SetText(InGameManager.Instance.GameTime.ToString("0.0"));
-    }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        if (instance == null)
-            return;
-        
-        if (scene.name == "Test_Lobby")
-        {
-            this.gameObject.SetActive(false);
-        }
-        else
-        {
-            // Initialize();
-        }
-    }
-    private void OnDestroy()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     public void ShowResultPanel()
@@ -91,7 +44,6 @@ public class InGameUIManager : MonoBehaviour
 
     public void Initialize()
     {
-        this.gameObject.SetActive(true);
         resultPanel.gameObject.SetActive(false);
         
         upgradePanel.Initialize();
