@@ -175,7 +175,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 100
-  m_Sprite: {fileID: 4723107735738678597, guid: 21ad0db33ce445678f46ff78cff9260f, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -183,7 +183,7 @@ SpriteRenderer:
   m_Size: {x: 4, y: 4}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &8999060858212040064
@@ -403,10 +403,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2696484718887884487}
+  - {fileID: 2456965348692955185}
   - {fileID: 3967222719507532887}
   - {fileID: 3206732943680243504}
-  - {fileID: 2456965348692955185}
-  - {fileID: 2696484718887884487}
   - {fileID: 8224832248407737605}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -930,9 +930,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerViewModel: {fileID: 791138940910068186}
-  detectSpeed: 0.2
-  attackSpeed: 0.35
-  atk: 45
+  detectSpeed: 0.3
+  attackSpeed: 0.5
+  atk: 50
   detectHandler: {fileID: 0}
   playerObject: {fileID: 4904209020302609906}
   bullet: {fileID: 5933606814879367268, guid: c4321a3d2a541410cbfc07c290d9613b, type: 3}

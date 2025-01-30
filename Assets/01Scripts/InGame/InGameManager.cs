@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -20,6 +21,10 @@ public class InGameManager : MonoBehaviour
     public string weaponTag = "Weapon";
     public string playerTag = "Player";
     public string itemTag = "Item";
+    
+    // GameMaker Data
+    public StageData stageData;
+    private GameMaker gameMaker;
     
     // Event
     public Action<StateEnum> OnStateChange;
@@ -139,6 +144,7 @@ public class InGameManager : MonoBehaviour
 
     private void Initialize()
     {
+        stageData = GameManager.Instance.CurrentStage;
         GameTime = 0f;
         GameState = StateEnum.Start;
         
@@ -147,6 +153,13 @@ public class InGameManager : MonoBehaviour
         playerViewModel = playerObj.GetComponentInChildren<PlayerViewModel>();
         PlayerUpgradeStat = GetComponent<PlayerUpgradeStat>();
         
+        gameMaker = GetComponentInChildren<GameMaker>();
+        // SpawnerDatas = new ();
+        // SpawnerDatas.Add(new SpawnerData(1, new Vector3(5, 5, 0), 2f));
+        // SpawnerDatas.Add(new SpawnerData(1, new Vector3(-7, 0, 0), 3f));
+        
+        Debug.Log("spawnerCount: "+stageData.spawners.Count);
+        gameMaker.Initialize(stageData.spawners);
         PlayerUpgradeStat.Initialize();
         itemCollector.Initialize();
         InGuiViewModel.Instance.Initialize();

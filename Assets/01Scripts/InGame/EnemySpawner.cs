@@ -1,23 +1,22 @@
+using System;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
     [Header("Monster Prefabs")]
     [Tooltip("Select to use Monster Prefabs")]
-    [SerializeField] GameObject monsterPrefab;
+    private Enemy monsterPrefab;
+    
     [Tooltip("spawnDelay")]
     [SerializeField] float spawnDelay = 1f;
     float t = 0f;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    
+    bool isReady = false;
 
     // Update is called once per frame
     void Update()
     {
-        if (InGameManager.Instance.GameState == InGameManager.StateEnum.Running)
+        if (isReady && InGameManager.Instance.GameState == InGameManager.StateEnum.Running)
         {
             t += Time.deltaTime; // deltaTime is not be affected by frame
             if (t >= spawnDelay)
@@ -26,5 +25,13 @@ public class EnemySpawner : MonoBehaviour
                 Instantiate(monsterPrefab, transform.position, Quaternion.identity);
             }
         }
+    }
+
+    public void Initialize(Enemy enemy, float delay)
+    {
+        monsterPrefab = enemy;
+        spawnDelay = delay;
+        
+        isReady = true; // start Update
     }
 }
