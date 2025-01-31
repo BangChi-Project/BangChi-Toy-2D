@@ -25,8 +25,10 @@ public class GameManager : MonoBehaviour
     
     [Header("SingleTon")] private static GameManager instance = null;
     
+    private StageDataParsing stageDataParsing;
     public StageDataList StageList { get; set; }
     public StageData CurrentStage { get; set; }
+    [SerializeField] private StageContents stageContents;
     
     void Awake()
     {
@@ -35,12 +37,16 @@ public class GameManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(this);
             // SceneManager.sceneLoaded += OnSceneLoaded;
-            // Initialize();
         }
         else
         {
             Destroy(this);
         }
+    }
+
+    void Start()
+    {
+        Initialize();
     }
 
     // private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -64,5 +70,9 @@ public class GameManager : MonoBehaviour
 
     private void Initialize()
     {
+        stageDataParsing = GetComponent<StageDataParsing>();
+
+        stageDataParsing.LoadStageData();
+        stageContents.SetContents();
     }
 }

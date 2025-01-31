@@ -20,7 +20,7 @@
       "stageName": "testId3-Hard",
       "spawners": [
         { "monsterId": 0, "delay": 2.0, "position": {"x":7, "y":7, "z":0} },
-        { "monsterId": 1, "delay": 3.0, "position": {"x":-9, "y":0, "z":0} },
+        { "monsterId": 1, "delay": 1.0, "position": {"x":-9, "y":0, "z":0} },
         { "monsterId": 1, "delay": 3.0, "position": {"x":-7, "y":7, "z":0} }
       ]
     }

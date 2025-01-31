@@ -14,6 +14,11 @@
 
         private void Start()
         {
+            // SetContents();
+        }
+
+        public void SetContents()
+        {
             List<StageData> stageList = GameManager.Instance.StageList.stages;
             foreach (var stage in stageList)
             {

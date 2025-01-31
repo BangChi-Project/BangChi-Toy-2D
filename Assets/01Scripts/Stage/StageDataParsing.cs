@@ -10,14 +10,14 @@ public class StageDataParsing: MonoBehaviour
 
     private void Awake() // load Json
     {
-        if (isStageDataLoaded == false)
-            LoadStageData();
+        // if (isStageDataLoaded == false)
+        //     LoadStageData();
     }
 
-    private void LoadStageData()
+    public void LoadStageData()
     {
         // string filePath = Application.persistentDataPath + "/" + FILE_NAME; // Library/Application Support
-        string filePath = Path.Combine(Application.dataPath, FILE_NAME);
+        string filePath = Path.Combine(Application.dataPath, FILE_NAME); // 
         
         if (File.Exists(filePath))
         {
