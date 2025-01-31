@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Debug = UnityEngine.Debug;
+using Random = UnityEngine.Random;
 
 public class InGameManager : MonoBehaviour
 {
@@ -21,6 +22,8 @@ public class InGameManager : MonoBehaviour
     public string weaponTag = "Weapon";
     public string playerTag = "Player";
     public string itemTag = "Item";
+
+    public bool isTestMode;
     
     // GameMaker Data
     public StageData stageData;
@@ -144,7 +147,6 @@ public class InGameManager : MonoBehaviour
 
     private void Initialize()
     {
-        stageData = GameManager.Instance.CurrentStage;
         GameTime = 0f;
         GameState = StateEnum.Start;
         
@@ -157,7 +159,25 @@ public class InGameManager : MonoBehaviour
         // SpawnerDatas = new ();
         // SpawnerDatas.Add(new SpawnerData(1, new Vector3(5, 5, 0), 2f));
         // SpawnerDatas.Add(new SpawnerData(1, new Vector3(-7, 0, 0), 3f));
-        
+
+        if (isTestMode)
+        {
+            stageData = new StageData();
+            stageData.stageName = "TestMode";
+            stageData.stageId = 99;
+            stageData.spawners = new List<SpawnerData>();
+            
+            SpawnerData spawnerData = new SpawnerData();
+            spawnerData.monsterId = 1;
+            spawnerData.position = new Vector3(Random.Range(-10f, 10f), Random.Range(-10f, 10f), 0f);
+            spawnerData.delay = 2f;
+            
+            stageData.spawners.Add(spawnerData);
+        }
+        else
+        {
+            stageData = GameManager.Instance.CurrentStage;
+        }
         Debug.Log("spawnerCount: "+stageData.spawners.Count);
         gameMaker.Initialize(stageData.spawners);
         PlayerUpgradeStat.Initialize();
