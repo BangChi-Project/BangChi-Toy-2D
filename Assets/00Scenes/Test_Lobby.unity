@@ -488,7 +488,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1464013225}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1753370666}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1073,7 +1073,8 @@ Transform:
   m_LocalPosition: {x: 850.7217, y: 664.49365, z: -7.5494194}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 555651189}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1753370667
@@ -1100,6 +1101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89d6bd16ab574114b8da779e9bf2cac6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvas: {fileID: 555651188}
   stageContents: {fileID: 199466980}
 --- !u!1 &1926454672
 GameObject:
@@ -1142,7 +1144,6 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1390957950}
-  - {fileID: 555651189}
   - {fileID: 268408783}
   - {fileID: 1032199649}
   - {fileID: 1753370666}

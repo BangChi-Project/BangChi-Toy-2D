@@ -25,10 +25,13 @@ public class GameManager : MonoBehaviour
     
     [Header("SingleTon")] private static GameManager instance = null;
     
+    private bool isReady = false;
+    [SerializeField] private Canvas canvas;
+    
     private StageDataParsing stageDataParsing;
     public StageDataList StageList { get; set; }
     public StageData CurrentStage { get; set; }
-    [SerializeField] private StageContents stageContents;
+    [SerializeField] private StageContents stageContents = null;
     
     void Awake()
     {
@@ -36,7 +39,7 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(this);
-            // SceneManager.sceneLoaded += OnSceneLoaded;
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
         else
         {
@@ -49,24 +52,25 @@ public class GameManager : MonoBehaviour
         Initialize();
     }
 
-    // private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    // {
-    //     UnityEngine.Debug.Log("InGame::Scene Loaded::"+scene.name);
-    //     if (scene.name == "Test_Lobby")
-    //     {
-    //         GameState = StateEnum.End;
-    //     }
-    //     else
-    //     {
-    //         if (instance != null)
-    //             Initialize();
-    //     }
-    // }
-    // void OnDestroy()
-    // {
-    //     // 이벤트 구독 해제
-    //     SceneManager.sceneLoaded -= OnSceneLoaded;
-    // }
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Debug.Log("Game::Scene Loaded::"+scene.name);
+        if (scene.name == "Test_Lobby")
+        {
+            canvas.gameObject.SetActive(true);
+            // if (instance != null && isReady)
+            //     stageContents.SetContents();
+        }
+        else
+        {
+            canvas.gameObject.SetActive(false);
+        }
+    }
+    void OnDestroy()
+    {
+        // 이벤트 구독 해제
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
 
     private void Initialize()
     {
@@ -74,5 +78,7 @@ public class GameManager : MonoBehaviour
 
         stageDataParsing.LoadStageData();
         stageContents.SetContents();
+        
+        isReady = true;
     }
 }
