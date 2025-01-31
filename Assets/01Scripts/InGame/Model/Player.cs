@@ -182,8 +182,12 @@ public class Player : MonoBehaviour
     
     public bool HandleEnemyEnter(Collider2D other) // EnemyEnter Event! -> Attack!
     {
+        StopCoroutine(nameof(CoDetect));
         switch (State)
         {
+            case(StateEnum.Idle):
+                Attack(other);
+                return true;
             case(StateEnum.Detect): // Stop Detect Enemy
                 Attack(other);
                 return true;
