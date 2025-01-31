@@ -16,8 +16,8 @@ public class StageDataParsing: MonoBehaviour
 
     public void LoadStageData()
     {
-        // string filePath = Application.persistentDataPath + "/" + FILE_NAME; // Library/Application Support
-        string filePath = Path.Combine(Application.dataPath, FILE_NAME); // 
+        // string filePath = Application.persistentDataPath + "/" + FILE_NAME; // Library/Application Support/...
+        string filePath = Path.Combine(Application.dataPath, FILE_NAME); // Assets/FILE_NAME
         
         if (File.Exists(filePath))
         {
