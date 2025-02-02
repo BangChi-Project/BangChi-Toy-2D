@@ -39,7 +39,7 @@ public class DamageText : MonoBehaviour
             t += Time.deltaTime;
             
             transform.position += Vector3.up * moveSpeed * Time.deltaTime;
-            alpha.a = Mathf.Lerp(alpha.a, 0, Time.deltaTime * disapearAlpha); // 서서히 1 ~ 0.3
+            alpha.a = Mathf.Lerp(alpha.a, 0, Time.deltaTime * disapearAlpha); // 서서히 1 ~> 0.3
             damageTMP.color = alpha;
         }
     }
@@ -68,14 +68,22 @@ public class DamageText : MonoBehaviour
         }
     }
 
+    public void SetDisable()
+    {
+        StopCoroutine(nameof(CoDeleteDamageText));
+        
+        this.gameObject.SetActive(false);
+    }
+
     IEnumerator CoDeleteDamageText(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
-        Destroy(this.gameObject);
+        SetDisable();
     }
 
     public void Initialize(float damage)
     {
+        alpha.a = 1f;
         // Debug.Log($"DamageText::DeleteTime: {deleteTime}");
         damageTMP.SetText(damage.ToString("N0")); // Integer
         StartCoroutine(nameof(CoDeleteDamageText), deleteTime);

@@ -100,7 +100,7 @@ public class InGameManager : MonoBehaviour
         {
             GameState = StateEnum.End;
             
-            poolManager.SetDisableAllObject();
+            poolManager.DestroyAllObject();
         }
         else
         {

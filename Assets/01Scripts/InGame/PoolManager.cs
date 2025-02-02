@@ -5,14 +5,17 @@ using UnityEngine;
 
 public class PoolManager: MonoBehaviour
 {
-    // Assets/Resources
-    private EnemyViewModel[] enemyPrefabs;
-    private Item[] itemPrefabs;
+    [Header("Assets/Resources")]
+    [SerializeField] private EnemyViewModel[] enemyPrefabs;
+    [SerializeField] private Item[] itemPrefabs;
+    [SerializeField] private DamageText damageTextPrefab;
     
-    // Poll
+    [Header("Pools")]
     private List<EnemyViewModel>[] enemiesPool;
     private List<Item>[] itemsPool;
+    private List<DamageText> damageTextPool;
 
+    // Object Getter
     public EnemyViewModel GetEnemyInPool(int id)
     {
         foreach (EnemyViewModel e in enemiesPool[id])
@@ -44,6 +47,21 @@ public class PoolManager: MonoBehaviour
         return item;
     }
 
+    public DamageText GetDamageTextInPool()
+    {
+        foreach (DamageText dt in damageTextPool)
+        {
+            if (dt.gameObject.activeSelf == false)
+            {
+                dt.gameObject.SetActive(true);
+                return dt;
+            }
+        }
+        DamageText damageText = Instantiate(damageTextPrefab, transform.position, Quaternion.identity, this.transform);
+        damageTextPool.Add(damageText);
+        return damageText;
+    }
+
     public EnemyViewModel GetEnemyPrefabs(int id)
     {
         return enemyPrefabs[id];
@@ -54,27 +72,35 @@ public class PoolManager: MonoBehaviour
         return itemPrefabs[id];
     }
 
-    public void SetDisableAllObject()
+    public void DestroyAllObject()
     {
-        Debug.Log("Set DisableAllObject");
+        Debug.Log("Destroy All Object");
         foreach (var enemies in enemiesPool)
         {
             foreach (var enemy in enemies)
-                enemy.gameObject.SetActive(false);
+                Destroy(enemy.gameObject);
         }
 
         foreach (var items in itemsPool)
         {
             foreach (var item in items)
-                item.gameObject.SetActive(false);
+                Destroy(item.gameObject);
+        }
+
+        foreach (var dt in damageTextPool)
+        {
+            Destroy(dt.gameObject);
         }
     }
     
     public void Initialize()
     {
+        // Load and Set new List
         LoadEnemies();
         
         LoadItems();
+
+        LoadDamageText();
     }
     
     private void LoadEnemies()
@@ -91,7 +117,7 @@ public class PoolManager: MonoBehaviour
 
     private void LoadItems()
     {
-        itemPrefabs = Resources.LoadAll<Item>("");
+        itemPrefabs = Resources.LoadAll<Item>("Items");
         Debug.Log("Items Load: " + itemPrefabs.Length);
 
         itemsPool = new List<Item>[itemPrefabs.Length];
@@ -99,5 +125,12 @@ public class PoolManager: MonoBehaviour
         {
             itemsPool[i] = new List<Item>();
         }
+    }
+
+    private void LoadDamageText()
+    {
+        damageTextPrefab = Resources.Load<DamageText>("DamageText");
+        
+        damageTextPool = new List<DamageText>();
     }
 }
