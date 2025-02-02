@@ -5,7 +5,7 @@ public class EnemySpawner : MonoBehaviour
 {
     [Header("Monster Prefabs")]
     [Tooltip("Select to use Monster Prefabs")]
-    private Enemy monsterPrefab;
+    private int enemyId;
     
     [Tooltip("spawnDelay")]
     [SerializeField] float spawnDelay = 1f;
@@ -22,14 +22,16 @@ public class EnemySpawner : MonoBehaviour
             if (t >= spawnDelay)
             { 
                 t = 0f;
-                Instantiate(monsterPrefab, transform.position, Quaternion.identity);
+                EnemyViewModel enemy = InGameManager.Instance.poolManager.GetEnemyInPool(enemyId);
+                enemy.transform.position = transform.position;
+                enemy.Initialize();
             }
         }
     }
 
-    public void Initialize(Enemy enemy, float delay)
+    public void Initialize(int id, float delay)
     {
-        monsterPrefab = enemy;
+        enemyId = id;
         spawnDelay = delay;
         
         isReady = true; // start Update

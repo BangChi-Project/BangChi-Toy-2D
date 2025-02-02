@@ -23,8 +23,13 @@ public class ObjectView : MonoBehaviour
         newDamageText.Initialize(damage);
     }
 
-    public void SetHpBar(float value)
+    public void SetHpBar(float value) // 0~1f
     {
         hpBar.localScale = new Vector3(value, hpBar.localScale.y, hpBar.localScale.z);
+    }
+
+    public void Initialize()
+    {
+        SetHpBar(1f);
     }
 }

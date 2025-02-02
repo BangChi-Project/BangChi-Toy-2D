@@ -66,5 +66,6 @@ public class EnemyViewModel:MonoBehaviour
     public void Initialize()
     {
         enemy.Initialize();
+        enemyView.Initialize();
     }
 }

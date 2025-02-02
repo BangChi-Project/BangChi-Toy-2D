@@ -12,11 +12,11 @@ public class PlayerViewModel: MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag(InGameManager.Instance.itemTag))
+        if (other.CompareTag(InGameManager.Instance.itemTag)) // GetItem
         {
             var item = other.GetComponent<Item>();
             InGameManager.Instance.AddItem(item);
-            Destroy(other.gameObject);
+            item.gameObject.SetActive(false);
         }
     }
 

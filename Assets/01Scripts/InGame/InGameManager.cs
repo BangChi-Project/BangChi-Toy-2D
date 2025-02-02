@@ -49,6 +49,7 @@ public class InGameManager : MonoBehaviour
     }
     public StateEnum GameState { get; private set; } = StateEnum.Running;
     public float GameTime { get; private set; } = 0f;
+    public PoolManager poolManager;
     public PlayerUpgradeStat PlayerUpgradeStat { get; private set; }
     
     // private field
@@ -155,12 +156,13 @@ public class InGameManager : MonoBehaviour
         playerViewModel = playerObj.GetComponentInChildren<PlayerViewModel>();
         PlayerUpgradeStat = GetComponent<PlayerUpgradeStat>();
         
+        poolManager = GetComponentInChildren<PoolManager>();
         gameMaker = GetComponentInChildren<GameMaker>();
         // SpawnerDatas = new ();
         // SpawnerDatas.Add(new SpawnerData(1, new Vector3(5, 5, 0), 2f));
         // SpawnerDatas.Add(new SpawnerData(1, new Vector3(-7, 0, 0), 3f));
 
-        if (isTestMode)
+        if (isTestMode) // spawner test
         {
             stageData = new StageData();
             stageData.stageName = "TestMode";
@@ -179,6 +181,7 @@ public class InGameManager : MonoBehaviour
             stageData = GameManager.Instance.CurrentStage;
         }
         Debug.Log("spawnerCount: "+stageData.spawners.Count);
+        poolManager.Initialize();
         gameMaker.Initialize(stageData.spawners);
         PlayerUpgradeStat.Initialize();
         itemCollector.Initialize();

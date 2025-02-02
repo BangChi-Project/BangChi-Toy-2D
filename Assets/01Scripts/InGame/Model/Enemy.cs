@@ -38,4 +38,23 @@ public abstract class Enemy : MonoBehaviour
     {
         State = state;
     }
+
+    protected void DropItem_A() // Gold : Gem = 1 : 1
+    {
+        if (Random.value < 0.5f)
+        {
+            Item it = InGameManager.Instance.poolManager.GetItemInPool(0);
+            it.Initialize(0, "Gold",1);  // Random.Range(10, 100));
+            it.transform.position = transform.position;
+            
+            // Instantiate(gold, transform.position, Quaternion.identity)
+            //     .Initialize(0, "Gold",1);  // Random.Range(10, 100));
+        }
+        else
+        {
+            Item it = InGameManager.Instance.poolManager.GetItemInPool(1);
+            it.Initialize(1, "Gem",1);  // Random.Range(10, 100));
+            it.transform.position = transform.position;
+        }
+    }
 }

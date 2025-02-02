@@ -34,6 +34,10 @@ public class Item : MonoBehaviour
 
     public void Initialize(int idNumber, string name, int amount)
     {
+        isMove = false;
+        StopCoroutine(nameof(CoFollowPlayer));
+        StartCoroutine(nameof(CoFollowPlayer));
+        
         IdNumber = idNumber;
         Name = name;
         Amount = amount;

@@ -21,17 +21,9 @@ public class EnemyDefaultModel : Enemy
 
     public override void Death()
     {
-        if (Random.value < 0.5f)
-        {
-            Instantiate(gold, transform.position, Quaternion.identity)
-                .Initialize(0, "Gold",1);  // Random.Range(10, 100));
-        }
-        else
-        {
-            Instantiate(gem, transform.position, Quaternion.identity)
-                .Initialize(1, "Gem", 1); // Random.Range(1, 5));
-        }
-        Destroy(gameObject);
+        DropItem_A();
+        // Destroy(gameObject);
+        this.gameObject.SetActive(false); // for pool
     }
 
     public override void Initialize()
