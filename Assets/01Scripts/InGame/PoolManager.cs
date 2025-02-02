@@ -6,8 +6,8 @@ using UnityEngine;
 public class PoolManager: MonoBehaviour
 {
     // Assets/Resources
-    private EnemyViewModel[] enemies;
-    private Item[] items;
+    private EnemyViewModel[] enemyPrefabs;
+    private Item[] itemPrefabs;
     
     // Poll
     private List<EnemyViewModel>[] enemiesPool;
@@ -24,7 +24,7 @@ public class PoolManager: MonoBehaviour
             }
         }
 
-        EnemyViewModel enemyVM = Instantiate(enemies[id], transform.position, Quaternion.identity, this.transform);
+        EnemyViewModel enemyVM = Instantiate(enemyPrefabs[id], transform.position, Quaternion.identity, this.transform);
         enemiesPool[id].Add(enemyVM);
         return enemyVM;
     }
@@ -39,11 +39,37 @@ public class PoolManager: MonoBehaviour
                 return it;
             }
         }
-        Item item = Instantiate(items[id], transform.position, Quaternion.identity, this.transform);
+        Item item = Instantiate(itemPrefabs[id], transform.position, Quaternion.identity, this.transform);
         itemsPool[id].Add(item);
         return item;
     }
 
+    public EnemyViewModel GetEnemyPrefabs(int id)
+    {
+        return enemyPrefabs[id];
+    }
+
+    public Item GetItemPrefabs(int id)
+    {
+        return itemPrefabs[id];
+    }
+
+    public void SetDisableAllObject()
+    {
+        Debug.Log("Set DisableAllObject");
+        foreach (var enemies in enemiesPool)
+        {
+            foreach (var enemy in enemies)
+                enemy.gameObject.SetActive(false);
+        }
+
+        foreach (var items in itemsPool)
+        {
+            foreach (var item in items)
+                item.gameObject.SetActive(false);
+        }
+    }
+    
     public void Initialize()
     {
         LoadEnemies();
@@ -53,11 +79,11 @@ public class PoolManager: MonoBehaviour
     
     private void LoadEnemies()
     {
-        enemies = Resources.LoadAll<EnemyViewModel>("Enemies");
-        Debug.Log("Enemies Load: " + enemies.Length);
+        enemyPrefabs = Resources.LoadAll<EnemyViewModel>("Enemies");
+        Debug.Log("Enemies Load: " + enemyPrefabs.Length);
         
-        enemiesPool = new List<EnemyViewModel>[enemies.Length];
-        for (var i = 0; i < enemies.Length; i++)
+        enemiesPool = new List<EnemyViewModel>[enemyPrefabs.Length];
+        for (var i = 0; i < enemyPrefabs.Length; i++)
         {
             enemiesPool[i] = new List<EnemyViewModel>();
         }
@@ -65,23 +91,13 @@ public class PoolManager: MonoBehaviour
 
     private void LoadItems()
     {
-        items = Resources.LoadAll<Item>("");
-        Debug.Log("Items Load: " + items.Length);
+        itemPrefabs = Resources.LoadAll<Item>("");
+        Debug.Log("Items Load: " + itemPrefabs.Length);
 
-        itemsPool = new List<Item>[items.Length];
-        for (var i = 0; i < items.Length; i++)
+        itemsPool = new List<Item>[itemPrefabs.Length];
+        for (var i = 0; i < itemPrefabs.Length; i++)
         {
             itemsPool[i] = new List<Item>();
         }
-    }
-
-    public EnemyViewModel GetEnemyPrefabs(int id)
-    {
-        return enemies[id];
-    }
-
-    public Item GetItemPrefabs(int id)
-    {
-        return items[id];
     }
 }

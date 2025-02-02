@@ -16,7 +16,7 @@ public class PlayerViewModel: MonoBehaviour
         {
             var item = other.GetComponent<Item>();
             InGameManager.Instance.AddItem(item);
-            item.gameObject.SetActive(false);
+            item.SetDisable(); // SetActive(false)
         }
     }
 

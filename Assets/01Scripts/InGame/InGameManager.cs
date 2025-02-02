@@ -96,10 +96,11 @@ public class InGameManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        UnityEngine.Debug.Log("InGame::Scene Loaded::"+scene.name);
-        if (scene.name == "Test_Lobby")
+        if (scene.name == "Test_Lobby") // when go to Lobby
         {
             GameState = StateEnum.End;
+            
+            poolManager.SetDisableAllObject();
         }
         else
         {

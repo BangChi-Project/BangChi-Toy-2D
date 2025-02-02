@@ -32,10 +32,16 @@ public class Item : MonoBehaviour
         Amount += amount;
     }
 
+    public void SetDisable()
+    {
+        StopCoroutine(nameof(CoFollowPlayer));
+        this.gameObject.SetActive(false);
+    }
     public void Initialize(int idNumber, string name, int amount)
     {
+        this.gameObject.SetActive(true);
+        
         isMove = false;
-        StopCoroutine(nameof(CoFollowPlayer));
         StartCoroutine(nameof(CoFollowPlayer));
         
         IdNumber = idNumber;
