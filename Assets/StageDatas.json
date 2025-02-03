@@ -1,0 +1,28 @@
+{
+  "stages": [
+    {
+      "stageId": 1,
+      "stageName": "easy",
+      "spawners": [
+        { "monsterId": 1, "delay": 1.5, "position": {"x":-5, "y":-5, "z":0} }
+      ]
+    },
+    {
+      "stageId": 2,
+      "stageName": "test",
+      "spawners": [
+        { "monsterId": 0, "delay": 2.0, "position": {"x":5, "y":5, "z":0} },
+        { "monsterId": 1, "delay": 3.0, "position": {"x":-7, "y":0, "z":0} }
+      ]
+    },
+    {
+      "stageId": 3,
+      "stageName": "testId3-Hard",
+      "spawners": [
+        { "monsterId": 0, "delay": 2.0, "position": {"x":7, "y":7, "z":0} },
+        { "monsterId": 1, "delay": 1.0, "position": {"x":-9, "y":0, "z":0} },
+        { "monsterId": 1, "delay": 3.0, "position": {"x":-7, "y":7, "z":0} }
+      ]
+    }
+  ]
+}

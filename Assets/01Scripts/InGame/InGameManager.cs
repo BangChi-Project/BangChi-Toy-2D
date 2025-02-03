@@ -1,8 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Debug = UnityEngine.Debug;
+using Random = UnityEngine.Random;
 
 public class InGameManager : MonoBehaviour
 {
@@ -14,31 +17,22 @@ public class InGameManager : MonoBehaviour
         End,
     }
     
-    // Instance
-    [Header("SingleTon")] private static InGameManager instance = null;
-
-    
     // constant field
     public string enemyTag = "Enemy";
     public string weaponTag = "Weapon";
     public string playerTag = "Player";
     public string itemTag = "Item";
+
+    public bool isTestMode;
+    
+    // GameMaker Data
+    public StageData stageData;
+    private GameMaker gameMaker;
     
     // Event
     public Action<StateEnum> OnStateChange;
     
     // Properties
-    [Header("Player Pos")] [Tooltip("for Enemy Chasing")] public Vector3 PlayerPos { get; set; }
-    public StateEnum GameState { get; private set; } = StateEnum.Running;
-    public float GameTime { get; private set; } = 0f;
-    public PlayerUpgrader playerUpgrader { get; private set; }
-    
-    // private field
-    [Header("Player Data")]
-    [SerializeField] GameObject playerObj;
-    private Player player;
-    [SerializeField] private InGameItemCollector itemCollector;
-    
     public static InGameManager Instance
     {
         get
@@ -48,19 +42,37 @@ public class InGameManager : MonoBehaviour
             return instance;
         }
     }
+    [Header("Player Pos")] [Tooltip("for Enemy Chasing")]
+    public Vector3 PlayerPos
+    {
+        get { return playerObj.transform.position; } // Get
+    }
+    public StateEnum GameState { get; private set; } = StateEnum.Running;
+    public float GameTime { get; private set; } = 0f;
+    public PoolManager poolManager;
+    public PlayerUpgradeStat PlayerUpgradeStat { get; private set; }
+    
+    // private field
+    [Header("Player Data")]
+    [SerializeField] GameObject playerPrefab;
+    GameObject playerObj;
+    [SerializeField] private PlayerViewModel playerViewModel;
+    [SerializeField] private InGameItemCollector itemCollector;
+    [Header("SingleTon")] private static InGameManager instance = null;
+
 
     void Awake()
     {
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(this.gameObject);
+            DontDestroyOnLoad(this);
             SceneManager.sceneLoaded += OnSceneLoaded;
-            Initialize();
+            // Initialize();
         }
         else
         {
-            Destroy(this.gameObject);
+            Destroy(this);
         }
     }
 
@@ -71,29 +83,34 @@ public class InGameManager : MonoBehaviour
             case(StateEnum.Start):
                 break;
             case(StateEnum.Running):
-                PlayerPos = player.transform.position;
+                // PlayerPos = playerObj.transform.position;
                 GameTime += Time.deltaTime;
                 break;
             case(StateEnum.Pause):
                 break;
             case(StateEnum.End):
-                InGameUIManager.Instance.ShowResultPanel();
+                InGuiViewModel.Instance.ShowResultPanel();
                 break;
         }
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        UnityEngine.Debug.Log("InGame::Scene Loaded::"+scene.name);
-        if (scene.name == "Test_Lobby")
+        if (scene.name == "Test_Lobby") // when go to Lobby
         {
             GameState = StateEnum.End;
+            
+            poolManager.DestroyAllObject();
         }
         else
-            Initialize();
+        {
+            if (instance != null)
+                Initialize();
+        }
     }
-    private void OnDestroy()
+    void OnDestroy()
     {
+        // 이벤트 구독 해제
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
     
@@ -119,29 +136,58 @@ public class InGameManager : MonoBehaviour
             switch (id)
             {
                 case(0):
-                    playerUpgrader.AtkUpgrade();
+                    PlayerUpgradeStat.AtkUpgrade();
                     return true;
                 case(1):
-                    playerUpgrader.HpUpgrade();
-                    player.UpdateHpBar();
+                    PlayerUpgradeStat.HpUpgrade();
+                    playerViewModel.UpdateHpBar();
                     return true;
             }
         }
         return false;
     }
 
-    void Initialize()
+    private void Initialize()
     {
         GameTime = 0f;
         GameState = StateEnum.Start;
-        playerObj = GameObject.FindGameObjectWithTag("Player");
-        player = playerObj.GetComponent<Player>();
-        playerUpgrader = playerObj.GetComponent<PlayerUpgrader>();
-        playerUpgrader.Initialize();
+        
+        // playerObj = Instantiate(playerObj, , Quaternion.identity);
+        playerObj = Instantiate(playerPrefab, transform.position, Quaternion.identity);
+        playerViewModel = playerObj.GetComponentInChildren<PlayerViewModel>();
+        PlayerUpgradeStat = GetComponent<PlayerUpgradeStat>();
+        
+        poolManager = GetComponentInChildren<PoolManager>();
+        gameMaker = GetComponentInChildren<GameMaker>();
+        // SpawnerDatas = new ();
+        // SpawnerDatas.Add(new SpawnerData(1, new Vector3(5, 5, 0), 2f));
+        // SpawnerDatas.Add(new SpawnerData(1, new Vector3(-7, 0, 0), 3f));
+
+        if (isTestMode) // spawner test
+        {
+            stageData = new StageData();
+            stageData.stageName = "TestMode";
+            stageData.stageId = 99;
+            stageData.spawners = new List<SpawnerData>();
+            
+            SpawnerData spawnerData = new SpawnerData();
+            spawnerData.monsterId = 1;
+            spawnerData.position = new Vector3(Random.Range(-10f, 10f), Random.Range(-10f, 10f), 0f);
+            spawnerData.delay = 2f;
+            
+            stageData.spawners.Add(spawnerData);
+        }
+        else
+        {
+            stageData = GameManager.Instance.CurrentStage;
+        }
+        Debug.Log("spawnerCount: "+stageData.spawners.Count);
+        poolManager.Initialize();
+        gameMaker.Initialize(stageData.spawners);
+        PlayerUpgradeStat.Initialize();
         itemCollector.Initialize();
-        
-        InGameUIManager.Instance.Initialize();
-        
+        InGuiViewModel.Instance.Initialize();
+
         GameState = StateEnum.Running;
     }
 }

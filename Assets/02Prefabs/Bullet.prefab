@@ -97,6 +97,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6036116766502185921}
   - component: {fileID: 7410386148228303700}
+  - component: {fileID: 5933606814879367268}
   - component: {fileID: -5016210088156501189}
   m_Layer: 0
   m_Name: Bullet
@@ -133,8 +134,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e95ce9c7e368489f87c380e1d8ebdb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponModelView: {fileID: 5933606814879367268}
+  moveSpeed: 4
   deleteTime: 1
-  bulletSpeed: 4
+--- !u!114 &5933606814879367268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2858600324460464997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d9b82f13ffe456f9be2c8110359c6f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapon: {fileID: 7410386148228303700}
 --- !u!58 &-5016210088156501189
 CircleCollider2D:
   m_ObjectHideFlags: 0
