@@ -4,11 +4,6 @@ public class PlayerViewModel: MonoBehaviour
 {
     [SerializeField] private Player player;
     [SerializeField] private ObjectView objectView;
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        InGameManager.Instance.OnStateChange += OnStateChange;
-    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -20,10 +15,10 @@ public class PlayerViewModel: MonoBehaviour
         }
     }
 
-    // public void OnEnable()
-    // {
-    //     InGameManager.Instance.OnStateChange += OnStateChange;
-    // }
+    public void OnEnable()
+    {
+        InGameManager.Instance.OnStateChange += OnStateChange;
+    }
     public void OnDisable()
     {
         if (InGameManager.Instance != null)

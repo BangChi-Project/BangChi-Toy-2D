@@ -4,8 +4,10 @@ using UnityEngine.Serialization;
 public abstract class Enemy : MonoBehaviour
 {
     [SerializeField] protected EnemyViewModel enemyViewModel;
-    [SerializeField] protected Item gold;
-    [SerializeField] protected Item gem;
+
+    // [SerializeField] protected RuntimeAnimatorController[] enemiesAnimator;
+    // protected Animator anim; // anim.runtimeAnimator
+    
     [Header("hi")]
     [Tooltip("explain")]
     protected Rigidbody2D _rb;

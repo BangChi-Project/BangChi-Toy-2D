@@ -72,6 +72,7 @@ public class PoolManager: MonoBehaviour
         return itemPrefabs[id];
     }
 
+    // Destroy(Clean)
     public void DestroyAllObject()
     {
         Debug.Log("Destroy All Object");
@@ -80,6 +81,7 @@ public class PoolManager: MonoBehaviour
             foreach (var enemy in enemies)
                 Destroy(enemy.gameObject);
         }
+        Debug.Log($"{enemiesPool.Length}");
 
         foreach (var items in itemsPool)
         {

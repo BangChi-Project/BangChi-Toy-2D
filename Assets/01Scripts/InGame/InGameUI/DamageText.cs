@@ -26,11 +26,6 @@ public class DamageText : MonoBehaviour
         disapearAlpha = 0.7f;
     }
 
-    void Start()
-    {
-        InGameManager.Instance.OnStateChange += OnStateChange;
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -42,6 +37,11 @@ public class DamageText : MonoBehaviour
             alpha.a = Mathf.Lerp(alpha.a, 0, Time.deltaTime * disapearAlpha); // 서서히 1 ~> 0.3
             damageTMP.color = alpha;
         }
+    }
+
+    public void OnEnable()
+    {
+        InGameManager.Instance.OnStateChange += OnStateChange;
     }
 
     public void OnDisable()
