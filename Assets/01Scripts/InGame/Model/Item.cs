@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
+[Serializable]
 public class Item : MonoBehaviour
 {
     public int IdNumber { get; private set; } // DB Item CodeNumber
@@ -25,11 +26,6 @@ public class Item : MonoBehaviour
                 Moving();
             }
         }
-    }
-
-    public void AddAmount(int amount)
-    {
-        Amount += amount;
     }
 
     public void SetDisable()
@@ -61,6 +57,6 @@ public class Item : MonoBehaviour
 
         Vector3 dir = (playerPos - transform.position).normalized;
 
-        transform.position += dir * moveSpeed * Time.deltaTime;
+        transform.position += dir * (moveSpeed * Time.deltaTime);
     }
 }

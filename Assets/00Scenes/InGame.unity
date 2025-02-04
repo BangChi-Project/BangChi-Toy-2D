@@ -272,7 +272,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &124487523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -639,7 +639,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 8.4375
+  orthographic size: 9.428281
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -26839,6 +26839,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcefc1e0225945c38d9394efc73fb207, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyPrefabs: []
+  itemPrefabs: []
+  damageTextPrefab: {fileID: 0}
 --- !u!1 &1048136192
 GameObject:
   m_ObjectHideFlags: 0

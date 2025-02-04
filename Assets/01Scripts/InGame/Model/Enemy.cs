@@ -29,7 +29,7 @@ public abstract class Enemy : MonoBehaviour
 
         Vector3 dir = (playerPos - transform.position).normalized;
 
-        transform.position += dir * MoveSpeed * Time.deltaTime;
+        transform.position += dir * (MoveSpeed * Time.deltaTime);
     }
     public virtual void Death()
     {

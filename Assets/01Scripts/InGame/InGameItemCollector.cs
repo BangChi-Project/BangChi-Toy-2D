@@ -1,10 +1,32 @@
+using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+
+[Serializable]
+public class ItemData
+{
+    public string Name { get; set; }
+    public int IdNumber { get; set; }
+    public int Amount { get; set; }
+    
+    public void AddAmount(int amount)
+    {
+        Amount += amount;
+    }
+
+    public ItemData(Item item)
+    {
+        Name = item.Name;
+        IdNumber = item.IdNumber;
+        Amount = item.Amount;
+    }
+}
 
 public class InGameItemCollector : MonoBehaviour
 {
     // Properties
-    public List<Item> Inventory { get; private set; }
+    public List<ItemData> Inventory { get; private set; }
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -24,20 +46,20 @@ public class InGameItemCollector : MonoBehaviour
         //     Debug.Log($"Cant find same item Id: {addItem.IdNumber} isFalse");
         // }
         
-        bool isAdd = true;
-        foreach (Item item in Inventory)
+        bool isFind = true;
+        foreach (ItemData item in Inventory)
         {
             if (item.IdNumber == addItem.IdNumber)
             {
                 item.AddAmount(addItem.Amount);
-                isAdd = false;
+                isFind = false;
                 break;
             }
         }
 
-        if (isAdd)
+        if (isFind)
         {
-            Inventory.Add(addItem);
+            Inventory.Add(new ItemData(addItem));
             Inventory.Sort((x, y) => x.IdNumber.CompareTo(y.IdNumber));
         }
 
@@ -48,7 +70,7 @@ public class InGameItemCollector : MonoBehaviour
     {
         if (Inventory.Count > 0)
         {
-            foreach (Item item in Inventory)
+            foreach (ItemData item in Inventory)
             {
                 if (item.IdNumber == id && item.Amount >= cost)
                 {
@@ -65,7 +87,7 @@ public class InGameItemCollector : MonoBehaviour
     public void UpdateItemText()
     {
         string itemText = "";
-        foreach (Item item in Inventory)
+        foreach (ItemData item in Inventory)
         {
             itemText += "item name: " + item.Name + "\nitem id: " + item.IdNumber + "\nitem amount: " + item.Amount + "\n\n";
         }
@@ -74,7 +96,7 @@ public class InGameItemCollector : MonoBehaviour
 
     public void Initialize()
     {
-        Inventory = new List<Item>();
+        Inventory = new List<ItemData>();
         InGuiViewModel.Instance.SetEarnItemText("name + id + amount");
     }
 }

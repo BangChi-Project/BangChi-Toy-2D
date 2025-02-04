@@ -33,7 +33,7 @@ public class DamageText : MonoBehaviour
         {
             t += Time.deltaTime;
             
-            transform.position += Vector3.up * moveSpeed * Time.deltaTime;
+            transform.position += Vector3.up * (moveSpeed * Time.deltaTime);
             alpha.a = Mathf.Lerp(alpha.a, 0, Time.deltaTime * disapearAlpha); // 서서히 1 ~> 0.3
             damageTMP.color = alpha;
         }

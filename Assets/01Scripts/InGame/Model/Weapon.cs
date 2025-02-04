@@ -27,6 +27,6 @@ public abstract class Weapon : MonoBehaviour
 
     public virtual void Moving()
     {
-        transform.position += TargetDir * moveSpeed * Time.deltaTime;
+        transform.position += TargetDir * (moveSpeed * Time.deltaTime);
     }
 }

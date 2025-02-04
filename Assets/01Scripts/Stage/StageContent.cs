@@ -29,7 +29,8 @@ public class StageContent : MonoBehaviour
 
     private void OnClickGameStart()
     {
-        InGameManager.Instance.isTestMode = false; // TestMode = false
+        if (InGameManager.Instance)
+            InGameManager.Instance.isTestMode = false; // TestMode = false
         GameManager.Instance.CurrentStage = stage;
         SceneManager.LoadScene("InGame");
     }

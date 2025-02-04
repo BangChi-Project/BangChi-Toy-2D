@@ -80,6 +80,7 @@ public class PoolManager: MonoBehaviour
         {
             foreach (var enemy in enemies)
                 Destroy(enemy.gameObject);
+            enemies.Clear();
         }
         Debug.Log($"{enemiesPool.Length}");
 
@@ -87,12 +88,14 @@ public class PoolManager: MonoBehaviour
         {
             foreach (var item in items)
                 Destroy(item.gameObject);
+            items.Clear();
         }
 
         foreach (var dt in damageTextPool)
         {
             Destroy(dt.gameObject);
         }
+        damageTextPool.Clear();
     }
     
     public void Initialize()

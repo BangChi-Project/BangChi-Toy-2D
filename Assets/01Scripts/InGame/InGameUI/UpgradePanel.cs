@@ -31,7 +31,7 @@ public class UpgradePanel : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log($"Cant't upgrade id:{id} cost:{cost}");
+                    Debug.Log($"Can't upgrade id:{id} cost:{cost}");
                 }
                 break;
             case(1):
@@ -44,7 +44,7 @@ public class UpgradePanel : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log($"Cant't upgrade id:{id} cost:{cost}");
+                    Debug.Log($"Can't upgrade id:{id} cost:{cost}");
                 }
                 break;
             default:

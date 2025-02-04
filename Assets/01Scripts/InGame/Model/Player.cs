@@ -78,7 +78,7 @@ public class Player : MonoBehaviour
     
     private void Moving()
     {
-        playerObject.transform.position += moveDir * moveSpeed * Time.deltaTime;
+        playerObject.transform.position += moveDir * (moveSpeed * Time.deltaTime);
         // transform.parent.position += moveDir * moveSpeed * Time.deltaTime;
     }
     

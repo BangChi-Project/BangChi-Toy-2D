@@ -10,11 +10,9 @@ public class PlayerRangeViewModel : MonoBehaviour
     [SerializeField] Player player;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
         rangeChecker = transform.parent.GetComponentInChildren<RangeChecker>();
-        rangeChecker.OnEnemyEnter += HandleEnemyEnter;
-        rangeChecker.OnItemEnter += HandleItemEnter;
     }
 
     // Update is called once per frame
@@ -26,12 +24,17 @@ public class PlayerRangeViewModel : MonoBehaviour
     
     // Event
     // Event destructor
+    void OnEnable()
+    {
+        rangeChecker.OnEnemyEnter += HandleEnemyEnter;
+        // rangeChecker.OnItemEnter += HandleItemEnter;
+    }
     void OnDisable()
     {
         if (rangeChecker != null)
         {
             rangeChecker.OnEnemyEnter -= HandleEnemyEnter; // Prevent Memory Leak
-            rangeChecker.OnItemEnter -= HandleItemEnter;
+            // rangeChecker.OnItemEnter -= HandleItemEnter;
         }
     }
     private void HandleEnemyEnter(Collider2D enemy)
@@ -48,13 +51,13 @@ public class PlayerRangeViewModel : MonoBehaviour
         }
     }
     
-    private void HandleItemEnter(Collider2D item) // touch or Player chase Item
-    {
-        if (player.GameState == InGameManager.StateEnum.Running)
-        {
-            var it = item.GetComponent<Item>();
-            InGameManager.Instance.AddItem(it);
-            Destroy(item.gameObject);
-        }
-    }
+    // private void HandleItemEnter(Collider2D item) // touch or Player chase Item
+    // {
+    //     if (player.GameState == InGameManager.StateEnum.Running)
+    //     {
+    //         var it = item.GetComponent<Item>();
+    //         InGameManager.Instance.AddItem(it);
+    //         Destroy(item.gameObject);
+    //     }
+    // }
 }
