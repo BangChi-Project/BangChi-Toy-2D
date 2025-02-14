@@ -20,20 +20,65 @@ namespace Assets.PixelFantasy.PixelHeroes.Common.Scripts.ExampleScripts
             _animation = GetComponent<CharacterAnimation>();
         }
 
-        public void Update()
-        {
-            Move();
-            Attack();
+        // public void Update()
+        // {
+        //     Move();
+        //     Attack();
+        //
+        //     // Play other animations, just for example.
+        //     if (Input.GetKeyDown(KeyCode.I)) _animation.Idle();
+        //     if (Input.GetKeyDown(KeyCode.R)) _animation.Ready();
+        //     if (Input.GetKeyDown(KeyCode.B)) _animation.Block();
+        //     if (Input.GetKeyDown(KeyCode.C)) _animation.Climb();
+        //     if (Input.GetKeyDown(KeyCode.D)) _animation.Die();
+        //     if (Input.GetKeyDown(KeyCode.N)) _animation.Roll();
+        //     if (Input.GetKeyDown(KeyCode.H)) _animation.Hit();
+        //     if (Input.GetKeyUp(KeyCode.L)) EffectManager.Instance.Blink(_character);
+        // }
 
-            // Play other animations, just for example.
-            if (Input.GetKeyDown(KeyCode.I)) _animation.Idle();
-            if (Input.GetKeyDown(KeyCode.R)) _animation.Ready();
-            if (Input.GetKeyDown(KeyCode.B)) _animation.Block();
-            if (Input.GetKeyDown(KeyCode.C)) _animation.Climb();
-            if (Input.GetKeyDown(KeyCode.D)) _animation.Die();
-            if (Input.GetKeyDown(KeyCode.N)) _animation.Roll();
-            if (Input.GetKeyDown(KeyCode.H)) _animation.Hit();
-            if (Input.GetKeyUp(KeyCode.L)) EffectManager.Instance.Blink(_character);
+        public void SetAnim(string state)
+        {
+            switch (state)
+            {
+                case "Idle":
+                    _animation.Idle(); break;
+                case "Run":
+                    _animation.Run(); break;
+                case "Ready":
+                    _animation.Ready(); break;
+                case "Fire":
+                    Fire();
+                    _animation.Shot(); break;
+                case "Block":
+                    _animation.Block(); break;
+                case "Climb":
+                    _animation.Climb(); break;
+                case "Die":
+                    _animation.Die(); break;
+                case "Roll":
+                    _animation.Roll(); break;
+                case "Hit":
+                    _animation.Hit(); break;
+                default:
+                    break;
+            }
+        }
+
+        public void SetDir(string dir)
+        {
+            if (dir == "Right")
+            {
+                _controller.Input.x = 1;
+            }
+            else
+            {
+                _controller.Input.x = -1;
+            }
+        }
+
+        public void Turn(float dir)
+        {
+            _controller.Turn(dir);
         }
 
         private void Move()

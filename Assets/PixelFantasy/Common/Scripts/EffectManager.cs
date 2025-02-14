@@ -40,7 +40,7 @@ namespace Assets.PixelFantasy.Common.Scripts
 
         public SpriteEffect CreateSpriteEffect(Creature creature, string clipName, int direction = 0, Transform parent = null)
         {
-            var instance = Instantiate(SpriteEffectPrefab, creature.transform.position, Quaternion.identity, parent);
+            var instance = Instantiate(SpriteEffectPrefab, creature.transform.position - new Vector3(0, -0.5f, 0), Quaternion.identity, parent);
 
             instance.name = clipName;
             instance.transform.position = parent == null ? creature.transform.position : parent.transform.position;

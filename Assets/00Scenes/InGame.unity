@@ -639,7 +639,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 9.428281
+  orthographic size: 8.4375
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -27827,6 +27827,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1644983903}
   objectView: {fileID: 1233012315}
+  characterAnimation: {fileID: 0}
 --- !u!1 &1476857206
 GameObject:
   m_ObjectHideFlags: 0
@@ -28407,6 +28408,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerViewModel: {fileID: 1476126962}
+  isIdle: 0
+  isMoving: 0
   detectSpeed: 0.5
   attackSpeed: 1
   atk: 100

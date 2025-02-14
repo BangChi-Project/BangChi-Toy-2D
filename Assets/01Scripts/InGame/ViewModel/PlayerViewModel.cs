@@ -1,9 +1,13 @@
+using System;
+using Assets.PixelFantasy.PixelHeroes.Common.Scripts.CharacterScripts;
+using Assets.PixelFantasy.PixelHeroes.Common.Scripts.ExampleScripts;
 using UnityEngine;
 
 public class PlayerViewModel: MonoBehaviour
 {
     [SerializeField] private Player player;
-    [SerializeField] private ObjectView objectView;
+    [SerializeField] private PlayerAnimView animView;
+    [SerializeField] private ObjectView stateView;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -38,23 +42,38 @@ public class PlayerViewModel: MonoBehaviour
 
     public void UpdateHpBar(float value) // view
     {
-        objectView.SetHpBar(value);
+        stateView.SetHpBar(value);
     }
 
     public void UpdateHpBar() // view
     {
         float calculHp = player.Health + InGameManager.Instance.PlayerUpgradeStat.Hp;
         float calculMaxHp = player.MaxHealth + InGameManager.Instance.PlayerUpgradeStat.Hp;
-        objectView.SetHpBar(calculHp / calculMaxHp);
+        stateView.SetHpBar(calculHp / calculMaxHp);
     }
 
     public void PresentDamageText(float damage)
     {
-        objectView.PresentDamageText(damage);
+        stateView.PresentDamageText(damage);
     }
 
     public Vector3 GetPlayerPos()
     {
         return player.GetPlayerPos(); //////////////////////
+    }
+
+    public void SetAnimState(string state)
+    {
+        animView.SetAnim(state);
+    }
+
+    public void AnimTurn(float dir)
+    {
+        animView.AnimTurn(dir);
+    }
+
+    public void SetDir(string dir)
+    {
+        animView.SetDir(dir);
     }
 }

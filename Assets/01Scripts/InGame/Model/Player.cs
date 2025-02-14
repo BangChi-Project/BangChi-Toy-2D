@@ -1,4 +1,5 @@
 using System.Collections;
+using Assets.PixelFantasy.PixelHeroes.Common.Scripts.CharacterScripts;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 using InGame.Layers;
@@ -15,6 +16,12 @@ public class Player : MonoBehaviour
         Hitted,
         Death,
     }
+
+    public bool isIdle;
+    public bool isMoving;
+    public bool isLeft;
+    public bool isRight;
+    
     [SerializeField] private float detectSpeed = 0.5f;
     [SerializeField] private float attackSpeed = 1f;
     [SerializeField] private float atk = 100f;
@@ -64,13 +71,31 @@ public class Player : MonoBehaviour
             {
                 case (StateEnum.Idle):
                     Detect();
+                    if (!isIdle)
+                    {
+                        isIdle = true;
+                        isMoving = false;
+                        playerViewModel.SetAnimState("Idle");
+                    }
                     break;
+                
                 case (StateEnum.Moving):
+                    if (!isMoving)
+                    {
+                        isMoving = true;
+                        isIdle = false;
+                        playerViewModel.SetAnimState("Run");
+                    }
+
                     Moving();
                     break;
+                
                 case (StateEnum.Death):
                     InGameManager.Instance.SetGameState(InGameManager.StateEnum.End);
                     Death();
+                    break;
+                default:
+                    // playerViewModel.SetAnimState("Ready");
                     break;
             }
         }
@@ -78,6 +103,26 @@ public class Player : MonoBehaviour
     
     private void Moving()
     {
+        if (moveDir.x > 0)
+        {
+            if (!isRight)
+            {
+                isRight = true;
+                isLeft = false;
+                // playerViewModel.SetDir("Right");
+                playerViewModel.AnimTurn(1f);
+            }
+        }
+        else // dir.x < 0
+        {
+            if (!isLeft)
+            {
+                isLeft = true;
+                isRight = false;
+                // playerViewModel.SetDir("Left");
+                playerViewModel.AnimTurn(-1f);
+            }
+        }
         playerObject.transform.position += moveDir * (moveSpeed * Time.deltaTime);
         // transform.parent.position += moveDir * moveSpeed * Time.deltaTime;
     }
@@ -133,6 +178,8 @@ public class Player : MonoBehaviour
         var bMV = Instantiate(bullet, transform.position, Quaternion.identity);
         bMV.Initialize(other, GetCalCulatedAtk());
 
+        playerViewModel.SetAnimState("Fire");
+        
         StartCoroutine(nameof(CoAttack), AttackSpeed);
     }
 
@@ -229,4 +276,13 @@ public class Player : MonoBehaviour
     {
         return playerObject.transform.position;
     }
+    
+    // public static class AnimParam
+    // {
+    //     // Animator 파라미터 "Walk"를 정수 해시값으로 미리 변환
+    //     public static readonly int Walk = Animator.StringToHash("Walk");
+    //
+    //     public static readonly int Fire = Animator.StringToHash("Fire");
+    //     public static readonly int Idle = Animator.StringToHash("Idle");
+    // }
 }
