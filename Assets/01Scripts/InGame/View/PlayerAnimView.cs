@@ -10,13 +10,13 @@ public class PlayerAnimView: MonoBehaviour
         characterControls.SetAnim(state);
     }
 
-    public void AnimTurn(float dir)
+    public void SetAnimTurn(float dir)
     {
         characterControls.Turn(dir);
     }
 
-    public void SetDir(string dir)
-    {
-        characterControls.SetDir(dir);
-    }
+    // public void SetDir(string dir)
+    // {
+    //     characterControls.SetDir(dir);
+    // }
 }

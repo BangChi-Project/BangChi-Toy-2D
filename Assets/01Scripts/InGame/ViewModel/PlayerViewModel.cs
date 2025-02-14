@@ -67,13 +67,13 @@ public class PlayerViewModel: MonoBehaviour
         animView.SetAnim(state);
     }
 
-    public void AnimTurn(float dir)
+    public void SetAnimTurn(float dir)
     {
-        animView.AnimTurn(dir);
+        animView.SetAnimTurn(dir);
     }
 
-    public void SetDir(string dir)
-    {
-        animView.SetDir(dir);
-    }
+    // public void SetDir(string dir)
+    // {
+    //     animView.SetDir(dir);
+    // }
 }

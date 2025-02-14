@@ -110,7 +110,7 @@ public class Player : MonoBehaviour
                 isRight = true;
                 isLeft = false;
                 // playerViewModel.SetDir("Right");
-                playerViewModel.AnimTurn(1f);
+                playerViewModel.SetAnimTurn(1f);
             }
         }
         else // dir.x < 0
@@ -120,7 +120,7 @@ public class Player : MonoBehaviour
                 isLeft = true;
                 isRight = false;
                 // playerViewModel.SetDir("Left");
-                playerViewModel.AnimTurn(-1f);
+                playerViewModel.SetAnimTurn(-1f);
             }
         }
         playerObject.transform.position += moveDir * (moveSpeed * Time.deltaTime);
@@ -178,6 +178,8 @@ public class Player : MonoBehaviour
         var bMV = Instantiate(bullet, transform.position, Quaternion.identity);
         bMV.Initialize(other, GetCalCulatedAtk());
 
+        float dir = other.transform.position.x - transform.position.x;
+        playerViewModel.SetAnimTurn(dir);
         playerViewModel.SetAnimState("Fire");
         
         StartCoroutine(nameof(CoAttack), AttackSpeed);

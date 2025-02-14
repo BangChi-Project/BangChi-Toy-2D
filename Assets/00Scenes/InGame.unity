@@ -639,7 +639,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 8.4375
+  orthographic size: 9.428281
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -27381,17 +27381,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7963604453283431003, guid: 1a8363709f2c74a1582902ddcbe8c0c8, type: 3}
   m_PrefabInstance: {fileID: 863298779}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1233012315 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2644861489365326394, guid: 1a8363709f2c74a1582902ddcbe8c0c8, type: 3}
-  m_PrefabInstance: {fileID: 863298779}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: edbfa5313b6954b7b85c5a25a554aaf4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1256556761
 GameObject:
   m_ObjectHideFlags: 0
@@ -27826,8 +27815,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1644983903}
-  objectView: {fileID: 1233012315}
-  characterAnimation: {fileID: 0}
+  animView: {fileID: 0}
+  stateView: {fileID: 0}
 --- !u!1 &1476857206
 GameObject:
   m_ObjectHideFlags: 0
@@ -28410,6 +28399,8 @@ MonoBehaviour:
   playerViewModel: {fileID: 1476126962}
   isIdle: 0
   isMoving: 0
+  isLeft: 0
+  isRight: 0
   detectSpeed: 0.5
   attackSpeed: 1
   atk: 100
@@ -28457,7 +28448,7 @@ MonoBehaviour:
     stageName: 
     spawners: []
   poolManager: {fileID: 0}
-  playerPrefab: {fileID: 4904209020302609906, guid: 1790d6f18597a474183fc5ce562f735e, type: 3}
+  playerPrefab: {fileID: 1021880506455493181, guid: 76272a0c7ffe44c76b10c2c344170ac2, type: 3}
   playerViewModel: {fileID: 0}
   itemCollector: {fileID: 1601255071}
 --- !u!4 &1661088306
