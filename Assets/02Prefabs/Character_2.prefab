@@ -781,6 +781,7 @@ MonoBehaviour:
   MaxSpeed: 0
   JumpForce: 1000
   Gravity: 70
+  isTest: 0
 --- !u!114 &9051314974548736528
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -793,6 +794,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e56c8e188bacb84099d677f695a571d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isTest: 0
 --- !u!114 &3910531469532861247
 MonoBehaviour:
   m_ObjectHideFlags: 0

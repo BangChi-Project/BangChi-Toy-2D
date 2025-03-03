@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
     private StageDataParsing stageDataParsing;
     public StageDataList StageList { get; set; }
     public StageData CurrentStage { get; set; }
-    [SerializeField] private StageContents stageContents = null;
+    [SerializeField] private LobbyView lobbyView;
     
     void Awake()
     {
@@ -57,13 +57,15 @@ public class GameManager : MonoBehaviour
         Debug.Log("Game::Scene Loaded::"+scene.name);
         if (scene.name == "Test_Lobby")
         {
-            canvas.gameObject.SetActive(true);
+            // canvas.gameObject.SetActive(true);
+            lobbyView.gameObject.SetActive(true);
             // if (instance != null && isReady)
             //     stageContents.SetContents();
         }
         else
         {
-            canvas.gameObject.SetActive(false);
+            lobbyView.gameObject.SetActive(false);
+            // canvas.gameObject.SetActive(false);
         }
     }
     void OnDestroy()
@@ -77,7 +79,7 @@ public class GameManager : MonoBehaviour
         stageDataParsing = GetComponent<StageDataParsing>();
 
         stageDataParsing.LoadStageData();
-        stageContents.SetContents();
+        lobbyView.Initialize();
         
         isReady = true;
     }

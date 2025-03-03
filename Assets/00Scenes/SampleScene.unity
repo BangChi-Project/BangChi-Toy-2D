@@ -175,6 +175,14 @@ PrefabInstance:
       propertyPath: m_SpriteHash
       value: 673223268
       objectReference: {fileID: 0}
+    - target: {fileID: 1518708408748348103, guid: 2689439e0fdf4ac9aa554747adb92ba7, type: 3}
+      propertyPath: isTest
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8053676341395069874, guid: 2689439e0fdf4ac9aa554747adb92ba7, type: 3}
+      propertyPath: isTest
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

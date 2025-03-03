@@ -16,6 +16,7 @@ namespace Assets.PixelFantasy.PixelHeroes.Common.Scripts.ExampleScripts
         public float MaxSpeed;
         public float JumpForce;
         public float Gravity;
+        public bool isTest = false;
 
         private Collider2D _collider;
         private Rigidbody2D _rigidbody;
@@ -23,6 +24,7 @@ namespace Assets.PixelFantasy.PixelHeroes.Common.Scripts.ExampleScripts
         
         private bool _jump;
         private bool _crouch;
+
 
         public void Start()
         {
@@ -39,84 +41,87 @@ namespace Assets.PixelFantasy.PixelHeroes.Common.Scripts.ExampleScripts
             
             var velocity = _rigidbody.linearVelocity;
 
-            // if (Input.x == 0)
-            // {
-            //     if (IsGrounded)
-            //     {
-            //         velocity.x = Mathf.MoveTowards(velocity.x, 0, Acceleration * 3 * Time.fixedDeltaTime);
-            //     }
-            // }
-            // else
-            // {
-            //     var maxSpeed = MaxSpeed;
-            //     var acceleration = Acceleration;
-            //
-            //     if (_jump)
-            //     {
-            //         acceleration /= 2;
-            //     }
-            //     else if (_crouch)
-            //     {
-            //         acceleration /= 2;
-            //         maxSpeed /= 4;
-            //     }
-            //
-            //     velocity.x = Mathf.MoveTowards(velocity.x, Input.x * maxSpeed, acceleration * Time.fixedDeltaTime);
-            //     Turn(velocity.x);
-            // }
-            
-            // if (IsGrounded)
-            // {
-            //     _crouch = Input.y < 0;
-            //
-            //     if (!_jump)
-            //     {
-            //         if (Input.x == 0)
-            //         {
-            //             if (_crouch)
-            //             {
-            //                 _animation.Crouch();
-            //             }
-            //             else
-            //             {
-            //                 if (state != CharacterState.Idle)
-            //                 {
-            //                     _animation.Ready();
-            //                 }
-            //             }
-            //         }
-            //         else
-            //         {
-            //             if (_crouch)
-            //             {
-            //                 _animation.Crawl();
-            //             }
-            //             else
-            //             {
-            //                 _animation.Run();
-            //             }
-            //         }
-            //     }
+            if (isTest == true)
+            {
+                if (Input.x == 0)
+                {
+                    if (IsGrounded)
+                    {
+                        velocity.x = Mathf.MoveTowards(velocity.x, 0, Acceleration * 3 * Time.fixedDeltaTime);
+                    }
+                }
+                else
+                {
+                    var maxSpeed = MaxSpeed;
+                    var acceleration = Acceleration;
 
-            //     if (Input.y > 0 && !_jump)
-            //     {
-            //         _jump = true;
-            //         _rigidbody.AddForce(Vector2.up * JumpForce);
-            //         _animation.Jump();
-            //     }
-            // }
-            // else
-            // {
-            //     velocity.y -= Gravity * Time.fixedDeltaTime;
-            //
-            //     if (velocity.y < 0)
-            //     {
-            //         _jump = true;
-            //         _animation.Fall();
-            //     }
-            // }
+                    if (_jump)
+                    {
+                        acceleration /= 2;
+                    }
+                    else if (_crouch)
+                    {
+                        acceleration /= 2;
+                        maxSpeed /= 4;
+                    }
 
-            _rigidbody.linearVelocity = velocity;
+                    velocity.x = Mathf.MoveTowards(velocity.x, Input.x * maxSpeed, acceleration * Time.fixedDeltaTime);
+                    Turn(velocity.x);
+                }
+
+                if (IsGrounded)
+                {
+                    _crouch = Input.y < 0;
+
+                    if (!_jump)
+                    {
+                        if (Input.x == 0)
+                        {
+                            if (_crouch)
+                            {
+                                _animation.Crouch();
+                            }
+                            else
+                            {
+                                if (state != CharacterState.Idle)
+                                {
+                                    _animation.Ready();
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (_crouch)
+                            {
+                                _animation.Crawl();
+                            }
+                            else
+                            {
+                                _animation.Run();
+                            }
+                        }
+                    }
+
+                    if (Input.y > 0 && !_jump)
+                    {
+                        _jump = true;
+                        _rigidbody.AddForce(Vector2.up * JumpForce);
+                        _animation.Jump();
+                    }
+                }
+                else
+                {
+                    velocity.y -= Gravity * Time.fixedDeltaTime;
+
+                    if (velocity.y < 0)
+                    {
+                        _jump = true;
+                        _animation.Fall();
+                    }
+                }
+            }
+            else
+                _rigidbody.linearVelocity = velocity;
         }
 
         public void Turn(float direction)

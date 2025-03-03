@@ -7,8 +7,10 @@ namespace Assets.PixelFantasy.PixelHeroes.Common.Scripts.ExampleScripts
     [RequireComponent(typeof(Character))]
     [RequireComponent(typeof(CharacterController2D))]
     [RequireComponent(typeof(CharacterAnimation))]
+    
     public class CharacterControls : MonoBehaviour
     {
+        public bool isTest = false;
         private Character _character;
         private CharacterController2D _controller;
         private CharacterAnimation _animation;
@@ -20,21 +22,24 @@ namespace Assets.PixelFantasy.PixelHeroes.Common.Scripts.ExampleScripts
             _animation = GetComponent<CharacterAnimation>();
         }
 
-        // public void Update()
-        // {
-        //     Move();
-        //     Attack();
-        //
-        //     // Play other animations, just for example.
-        //     if (Input.GetKeyDown(KeyCode.I)) _animation.Idle();
-        //     if (Input.GetKeyDown(KeyCode.R)) _animation.Ready();
-        //     if (Input.GetKeyDown(KeyCode.B)) _animation.Block();
-        //     if (Input.GetKeyDown(KeyCode.C)) _animation.Climb();
-        //     if (Input.GetKeyDown(KeyCode.D)) _animation.Die();
-        //     if (Input.GetKeyDown(KeyCode.N)) _animation.Roll();
-        //     if (Input.GetKeyDown(KeyCode.H)) _animation.Hit();
-        //     if (Input.GetKeyUp(KeyCode.L)) EffectManager.Instance.Blink(_character);
-        // }
+        public void Update()
+        {
+            if (isTest)
+            {
+                Move();
+                Attack();
+            
+                // Play other animations, just for example.
+                if (Input.GetKeyDown(KeyCode.I)) _animation.Idle();
+                if (Input.GetKeyDown(KeyCode.R)) _animation.Ready();
+                if (Input.GetKeyDown(KeyCode.B)) _animation.Block();
+                if (Input.GetKeyDown(KeyCode.C)) _animation.Climb();
+                if (Input.GetKeyDown(KeyCode.D)) _animation.Die();
+                if (Input.GetKeyDown(KeyCode.N)) _animation.Roll();
+                if (Input.GetKeyDown(KeyCode.H)) _animation.Hit();
+                if (Input.GetKeyUp(KeyCode.L)) EffectManager.Instance.Blink(_character);
+            }
+        }
 
         public void SetAnim(string state)
         {
