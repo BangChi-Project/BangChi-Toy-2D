@@ -6,6 +6,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Debug = UnityEngine.Debug;
 
+using SkinDic = SkinInt2String;
+
 public class GameManager : MonoBehaviour
 {
     // Event
@@ -32,8 +34,12 @@ public class GameManager : MonoBehaviour
     public StageDataList StageList { get; set; }
     public StageData CurrentStage { get; set; }
     [SerializeField] private LobbyView lobbyView;
-    
-    public int weaponIdx = 0;
+
+    public Dictionary<string, string> SkinString = new ()
+    {
+        {"Weapon", SkinDic.SkinDic["Weapon"][0]},
+        {"Armor", SkinDic.SkinDic["Armor"][0]},
+    };
     
     void Awake()
     {

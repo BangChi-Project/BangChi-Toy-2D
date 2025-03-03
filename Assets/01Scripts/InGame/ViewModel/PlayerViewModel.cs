@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Assets.PixelFantasy.PixelHeroes.Common.Scripts.CharacterScripts;
 using Assets.PixelFantasy.PixelHeroes.Common.Scripts.ExampleScripts;
 using UnityEngine;
@@ -75,11 +76,19 @@ public class PlayerViewModel: MonoBehaviour
         animView.SetAnimTurn(dir);
     }
 
-    public void SetSkin(string skin, int skinIndex)
+
+    public void InGameBuildSkin()
     {
-        builderView.Weapon = SkinIdx.WeaponNames[skinIndex];
+        var skinIdx = GameManager.Instance.SkinString;
+        builderView.Weapon = skinIdx["Weapon"];
+        builderView.Armor = skinIdx["Armor"];
         builderView.Rebuild();
     }
+    // public void SetSkin(string skin, int skinIndex)
+    // {
+    //     builderView.Weapon = SkinIdx.WeaponNames[skin][skinIndex];
+    //     builderView.Rebuild();
+    // }
 
     // public void SetDir(string dir)
     // {

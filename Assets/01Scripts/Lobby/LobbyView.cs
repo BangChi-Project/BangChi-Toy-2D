@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 
-using SkinIdx = SkinInt2String;
+using SkinDic = SkinInt2String;
 
 public class LobbyView: MonoBehaviour
 {
@@ -16,12 +16,14 @@ public class LobbyView: MonoBehaviour
     // Character Edit Panel
     [SerializeField] private GameObject characterEditPanel;
     [SerializeField] private CharacterBuilder characterBuilder;
-    [SerializeField] private TMP_Dropdown dropdown;
+    [SerializeField] private TMP_Dropdown weaponDropdown;
+    [SerializeField] private TMP_Dropdown armorDropdown;
     [SerializeField] private Button hideCharacterEditButton;
 
     void OnEnable()
     {
-        dropdown.onValueChanged.AddListener(value => SetIndex(value));
+        weaponDropdown.onValueChanged.AddListener(value => SetWeaponIndex(value));
+        armorDropdown.onValueChanged.AddListener(value => SetArmorIndex(value));
     }
 
     public void OnClickShowCharacterEditPanel()
@@ -34,10 +36,16 @@ public class LobbyView: MonoBehaviour
         characterEditPanel.SetActive(false);
     }
 
-    void SetIndex(int index)
+    void SetWeaponIndex(int index)
     {
-        GameManager.Instance.weaponIdx = index;
-        characterBuilder.Weapon = SkinIdx.WeaponNames[index];
+        GameManager.Instance.SkinString["Weapon"] = SkinDic.SkinDic["Weapon"][index];
+        characterBuilder.Weapon = SkinDic.SkinDic["Weapon"][index];
+        characterBuilder.Rebuild();
+    }
+    void SetArmorIndex(int index)
+    {
+        GameManager.Instance.SkinString["Armor"] = SkinDic.SkinDic["Armor"][index];
+        characterBuilder.Armor = SkinDic.SkinDic["Armor"][index];
         characterBuilder.Rebuild();
     }
     

@@ -157,8 +157,10 @@ public class InGameManager : MonoBehaviour
         playerViewModel = playerObj.GetComponentInChildren<PlayerViewModel>();
         PlayerUpgradeStat = GetComponent<PlayerUpgradeStat>();
         if (GameManager.Instance != null)
-            playerViewModel.SetSkin("Weapon", GameManager.Instance.weaponIdx);
-        
+        {
+            playerViewModel.InGameBuildSkin();
+        }
+
         poolManager = GetComponentInChildren<PoolManager>();
         gameMaker = GetComponentInChildren<GameMaker>();
         // SpawnerDatas = new ();
