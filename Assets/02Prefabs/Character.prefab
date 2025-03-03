@@ -267,6 +267,7 @@ MonoBehaviour:
   player: {fileID: 3338051694883888813}
   animView: {fileID: 7278474690433598036}
   stateView: {fileID: 771228946006627214}
+  builderView: {fileID: 3961207546213830750}
 --- !u!114 &334407598606031953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -478,7 +479,7 @@ MonoBehaviour:
   Hair: Hair2
   Armor: 
   Helmet: 
-  Weapon: ShordDagger
+  Weapon: ShortDagger
   Firearm: 
   Shield: 
   Cape: 
@@ -503,6 +504,7 @@ MonoBehaviour:
   MaxSpeed: 0
   JumpForce: 1000
   Gravity: 70
+  isTest: 0
 --- !u!114 &4960449292221859965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -515,6 +517,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e56c8e188bacb84099d677f695a571d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isTest: 0
 --- !u!114 &1085168489487950162
 MonoBehaviour:
   m_ObjectHideFlags: 0

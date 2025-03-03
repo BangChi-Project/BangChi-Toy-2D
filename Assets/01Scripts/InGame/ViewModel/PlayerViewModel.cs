@@ -3,11 +3,14 @@ using Assets.PixelFantasy.PixelHeroes.Common.Scripts.CharacterScripts;
 using Assets.PixelFantasy.PixelHeroes.Common.Scripts.ExampleScripts;
 using UnityEngine;
 
+using SkinIdx = SkinInt2String;
+
 public class PlayerViewModel: MonoBehaviour
 {
     [SerializeField] private Player player;
     [SerializeField] private PlayerAnimView animView;
     [SerializeField] private ObjectView stateView;
+    [SerializeField] private CharacterBuilder builderView;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -70,6 +73,12 @@ public class PlayerViewModel: MonoBehaviour
     public void SetAnimTurn(float dir)
     {
         animView.SetAnimTurn(dir);
+    }
+
+    public void SetSkin(string skin, int skinIndex)
+    {
+        builderView.Weapon = SkinIdx.WeaponNames[skinIndex];
+        builderView.Rebuild();
     }
 
     // public void SetDir(string dir)

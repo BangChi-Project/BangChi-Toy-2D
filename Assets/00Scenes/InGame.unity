@@ -27817,6 +27817,7 @@ MonoBehaviour:
   player: {fileID: 1644983903}
   animView: {fileID: 0}
   stateView: {fileID: 0}
+  builderView: {fileID: 0}
 --- !u!1 &1476857206
 GameObject:
   m_ObjectHideFlags: 0
@@ -28448,7 +28449,7 @@ MonoBehaviour:
     stageName: 
     spawners: []
   poolManager: {fileID: 0}
-  playerPrefab: {fileID: 1021880506455493181, guid: 76272a0c7ffe44c76b10c2c344170ac2, type: 3}
+  playerPrefab: {fileID: 4904209020302609906, guid: 1790d6f18597a474183fc5ce562f735e, type: 3}
   playerViewModel: {fileID: 0}
   itemCollector: {fileID: 1601255071}
 --- !u!4 &1661088306

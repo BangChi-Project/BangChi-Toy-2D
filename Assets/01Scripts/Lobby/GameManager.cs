@@ -33,6 +33,8 @@ public class GameManager : MonoBehaviour
     public StageData CurrentStage { get; set; }
     [SerializeField] private LobbyView lobbyView;
     
+    public int weaponIdx = 0;
+    
     void Awake()
     {
         if (instance == null)
@@ -43,7 +45,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Destroy(this);
+            Destroy(this.gameObject); // Error when use <this>
         }
     }
 

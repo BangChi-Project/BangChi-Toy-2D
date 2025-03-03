@@ -11,23 +11,17 @@ public class LobbyView: MonoBehaviour
 {
     [SerializeField] private StageContents stageContents;
     [SerializeField] private Button showCharacterEditButton;
+    [SerializeField] private Canvas canvas;
     
     // Character Edit Panel
     [SerializeField] private GameObject characterEditPanel;
     [SerializeField] private CharacterBuilder characterBuilder;
     [SerializeField] private TMP_Dropdown dropdown;
-    public int weaponIdx = 0;
     [SerializeField] private Button hideCharacterEditButton;
 
     void OnEnable()
     {
         dropdown.onValueChanged.AddListener(value => SetIndex(value));
-    }
-    
-    public void Initialize()
-    {
-        characterEditPanel.SetActive(false);
-        stageContents.SetContents();
     }
 
     public void OnClickShowCharacterEditPanel()
@@ -42,8 +36,14 @@ public class LobbyView: MonoBehaviour
 
     void SetIndex(int index)
     {
-        weaponIdx = index;
-        characterBuilder.Weapon = SkinIdx.WeaponNames[weaponIdx];
+        GameManager.Instance.weaponIdx = index;
+        characterBuilder.Weapon = SkinIdx.WeaponNames[index];
         characterBuilder.Rebuild();
+    }
+    
+    public void Initialize()
+    {
+        characterEditPanel.SetActive(false);
+        stageContents.SetContents();
     }
 }

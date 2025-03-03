@@ -72,7 +72,7 @@ public class InGameManager : MonoBehaviour
         }
         else
         {
-            Destroy(this);
+            Destroy(this.gameObject);
         }
     }
 
@@ -156,6 +156,8 @@ public class InGameManager : MonoBehaviour
         playerObj = Instantiate(playerPrefab, transform.position, Quaternion.identity);
         playerViewModel = playerObj.GetComponentInChildren<PlayerViewModel>();
         PlayerUpgradeStat = GetComponent<PlayerUpgradeStat>();
+        if (GameManager.Instance != null)
+            playerViewModel.SetSkin("Weapon", GameManager.Instance.weaponIdx);
         
         poolManager = GetComponentInChildren<PoolManager>();
         gameMaker = GetComponentInChildren<GameMaker>();
