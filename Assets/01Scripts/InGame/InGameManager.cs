@@ -100,7 +100,7 @@ public class InGameManager : MonoBehaviour
         {
             GameState = StateEnum.End;
             
-            playerViewModel.SetAnimState(Player.StateEnum.Idle);
+            // playerViewModel.SetAnimState(Player.StateEnum.Idle); // destroyed
             
             poolManager.DestroyAllObject();
         }
