@@ -1,0 +1,162 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1385376606957085644
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 108747399273606436}
+  - component: {fileID: 3085581289571788544}
+  m_Layer: 0
+  m_Name: CharacterEditor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &108747399273606436
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1385376606957085644}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 90}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3085581289571788544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1385376606957085644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26d3a112f2df4db38b8b229d77c613ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpriteCollection: {fileID: 11400000, guid: 29f49e465a594f99b5b90d21e02e50ed, type: 2}
+  Layers:
+  - Name: Cape
+    Controls: {fileID: 0}
+    Index: -1
+    CanBeEmpty: 1
+    Default: 
+    Hidden: 0
+    Color: {r: 1, g: 1, b: 1, a: 1}
+  - Name: Back
+    Controls: {fileID: 0}
+    Index: -1
+    CanBeEmpty: 1
+    Default: 
+    Hidden: 0
+    Color: {r: 1, g: 1, b: 1, a: 1}
+  - Name: Shield
+    Controls: {fileID: 0}
+    Index: -1
+    CanBeEmpty: 1
+    Default: 
+    Hidden: 0
+    Color: {r: 1, g: 1, b: 1, a: 1}
+  - Name: Body
+    Controls: {fileID: 0}
+    Index: 0
+    CanBeEmpty: 0
+    Default: Human
+    Hidden: 0
+    Color: {r: 1, g: 1, b: 1, a: 1}
+  - Name: Armor
+    Controls: {fileID: 0}
+    Index: -1
+    CanBeEmpty: 1
+    Default: PirateCostume
+    Hidden: 0
+    Color: {r: 1, g: 1, b: 1, a: 1}
+  - Name: Head
+    Controls: {fileID: 0}
+    Index: -1
+    CanBeEmpty: 0
+    Default: Human
+    Hidden: 0
+    Color: {r: 1, g: 1, b: 1, a: 1}
+  - Name: Horns
+    Controls: {fileID: 0}
+    Index: -1
+    CanBeEmpty: 1
+    Default: 
+    Hidden: 0
+    Color: {r: 1, g: 1, b: 1, a: 1}
+  - Name: Eyes
+    Controls: {fileID: 0}
+    Index: -1
+    CanBeEmpty: 1
+    Default: Human
+    Hidden: 0
+    Color: {r: 1, g: 1, b: 1, a: 1}
+  - Name: Mask
+    Controls: {fileID: 0}
+    Index: -1
+    CanBeEmpty: 1
+    Default: 
+    Hidden: 0
+    Color: {r: 1, g: 1, b: 1, a: 1}
+  - Name: Hair
+    Controls: {fileID: 0}
+    Index: -1
+    CanBeEmpty: 1
+    Default: Hair2
+    Hidden: 0
+    Color: {r: 1, g: 1, b: 1, a: 1}
+  - Name: Ears
+    Controls: {fileID: 0}
+    Index: -1
+    CanBeEmpty: 1
+    Default: 
+    Hidden: 0
+    Color: {r: 1, g: 1, b: 1, a: 1}
+  - Name: Helmet
+    Controls: {fileID: 0}
+    Index: -1
+    CanBeEmpty: 1
+    Default: 
+    Hidden: 0
+    Color: {r: 1, g: 1, b: 1, a: 1}
+  - Name: Arms
+    Controls: {fileID: 0}
+    Index: 0
+    CanBeEmpty: 0
+    Default: 
+    Hidden: 0
+    Color: {r: 1, g: 1, b: 1, a: 1}
+  - Name: Weapon
+    Controls: {fileID: 0}
+    Index: -1
+    CanBeEmpty: 1
+    Default: ShortDagger
+    Hidden: 0
+    Color: {r: 1, g: 1, b: 1, a: 1}
+  - Name: Firearm
+    Controls: {fileID: 0}
+    Index: -1
+    CanBeEmpty: 1
+    Default: 0
+    Hidden: 0
+    Color: {r: 1, g: 1, b: 1, a: 1}
+  - Name: Bracers
+    Controls: {fileID: 0}
+    Index: -1
+    CanBeEmpty: 1
+    Default: 
+    Hidden: 0
+    Color: {r: 1, g: 1, b: 1, a: 1}
+  CharacterBuilder: {fileID: 0}
+  EmptyIcon: {fileID: 21300000, guid: 90341519efbb479daf5f3244c5e9aa7d, type: 3}
