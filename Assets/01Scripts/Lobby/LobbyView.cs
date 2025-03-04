@@ -25,6 +25,11 @@ public class LobbyView: MonoBehaviour
         weaponDropdown.onValueChanged.AddListener(value => SetWeaponIndex(value));
         armorDropdown.onValueChanged.AddListener(value => SetArmorIndex(value));
     }
+    void OnDisable()
+    {
+        weaponDropdown.onValueChanged.RemoveAllListeners();
+        armorDropdown.onValueChanged.RemoveAllListeners();
+    }
 
     public void OnClickShowCharacterEditPanel()
     {
@@ -53,5 +58,10 @@ public class LobbyView: MonoBehaviour
     {
         characterEditPanel.SetActive(false);
         stageContents.SetContents();
+    }
+
+    public void SetWorldCamera()
+    {
+        canvas.worldCamera = Camera.main;
     }
 }

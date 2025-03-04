@@ -68,6 +68,26 @@ namespace Assets.PixelFantasy.PixelHeroes.Common.Scripts.ExampleScripts
                     break;
             }
         }
+        
+        public void SetAnim(Player.StateEnum state)
+        {
+            switch (state)
+            {
+                case Player.StateEnum.Idle:
+                    _animation.Idle(); break;
+                case Player.StateEnum.Moving:
+                    _animation.Run(); break;
+                case Player.StateEnum.Attack:
+                    Fire();
+                    _animation.Shot(); break;
+                case Player.StateEnum.Death:
+                    _animation.Die(); break;
+                case Player.StateEnum.Hitted:
+                    _animation.Hit(); break;
+                default:
+                    break;
+            }
+        }
 
         public void SetDir(string dir)
         {

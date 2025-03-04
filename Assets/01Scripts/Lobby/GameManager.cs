@@ -57,6 +57,9 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        stageDataParsing = GetComponent<StageDataParsing>();
+        stageDataParsing.LoadStageData();
+        
         Initialize();
     }
 
@@ -69,6 +72,7 @@ public class GameManager : MonoBehaviour
             lobbyView.gameObject.SetActive(true);
             // if (instance != null && isReady)
             //     stageContents.SetContents();
+            lobbyView.SetWorldCamera();
         }
         else
         {
@@ -84,9 +88,6 @@ public class GameManager : MonoBehaviour
 
     private void Initialize()
     {
-        stageDataParsing = GetComponent<StageDataParsing>();
-
-        stageDataParsing.LoadStageData();
         lobbyView.Initialize();
         
         isReady = true;

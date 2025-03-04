@@ -9,6 +9,10 @@ public class PlayerAnimView: MonoBehaviour
     {
         characterControls.SetAnim(state);
     }
+    public void SetAnim(Player.StateEnum state)
+    {
+        characterControls.SetAnim(state);
+    }
 
     public void SetAnimTurn(float dir)
     {

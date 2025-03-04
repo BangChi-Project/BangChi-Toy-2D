@@ -66,7 +66,11 @@ public class PlayerViewModel: MonoBehaviour
         return player.GetPlayerPos(); //////////////////////
     }
 
-    public void SetAnimState(string state)
+    public void SetAnimState(string state) // string, more func
+    {
+        animView.SetAnim(state);
+    }
+    public void SetAnimState(Player.StateEnum state) // Player.StateEnum
     {
         animView.SetAnim(state);
     }
