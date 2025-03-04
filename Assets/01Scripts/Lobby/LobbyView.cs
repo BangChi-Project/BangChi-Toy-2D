@@ -11,6 +11,7 @@ public class LobbyView: MonoBehaviour
 {
     [SerializeField] private StageContents stageContents;
     [SerializeField] private Button showCharacterEditButton;
+    [SerializeField] private Button showUpgradeButton;
     [SerializeField] private Canvas canvas;
     
     // Character Edit Panel
@@ -19,14 +20,32 @@ public class LobbyView: MonoBehaviour
     [SerializeField] private TMP_Dropdown weaponDropdown;
     [SerializeField] private TMP_Dropdown armorDropdown;
     [SerializeField] private Button hideCharacterEditButton;
+    
+    // Character Upgrade Panel
+    [SerializeField] private GameObject upgradePanel;
+    [SerializeField] private Button attackUpgradeButton;
+    [SerializeField] private TextMeshProUGUI plusAttackText;
+    [SerializeField] private Button hideUpgradeButton;
 
     void OnEnable()
     {
+        showCharacterEditButton.onClick.AddListener(() => OnClickShow(characterEditPanel));
+        hideCharacterEditButton.onClick.AddListener(() => OnClickHide(characterEditPanel));
+        
+        showUpgradeButton.onClick.AddListener( () => OnClickShow(upgradePanel));
+        hideUpgradeButton.onClick.AddListener( () => OnClickHide(upgradePanel));
+        
         weaponDropdown.onValueChanged.AddListener(value => SetWeaponIndex(value));
         armorDropdown.onValueChanged.AddListener(value => SetArmorIndex(value));
     }
     void OnDisable()
     {
+        showCharacterEditButton.onClick.RemoveAllListeners();
+        hideCharacterEditButton.onClick.RemoveAllListeners();
+        
+        showUpgradeButton.onClick.RemoveAllListeners();
+        hideCharacterEditButton.onClick.RemoveAllListeners();
+        
         weaponDropdown.onValueChanged.RemoveAllListeners();
         armorDropdown.onValueChanged.RemoveAllListeners();
     }
@@ -39,6 +58,15 @@ public class LobbyView: MonoBehaviour
     public void OnClickHideCharacterEditPanel()
     {
         characterEditPanel.SetActive(false);
+    }
+
+    public void OnClickShow(GameObject obj)
+    {
+        obj.SetActive(true);
+    }
+    public void OnClickHide(GameObject obj)
+    {
+        obj.SetActive(false);
     }
 
     void SetWeaponIndex(int index)
@@ -57,6 +85,7 @@ public class LobbyView: MonoBehaviour
     public void Initialize()
     {
         characterEditPanel.SetActive(false);
+        upgradePanel.SetActive(false);
         stageContents.SetContents();
     }
 
