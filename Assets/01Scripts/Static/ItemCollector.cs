@@ -56,14 +56,15 @@ public class ItemCollector : MonoBehaviour
         }
     }
 
-    public bool UpgradeExcute(UpgradeType id)
+    public bool UpgradeExcute(UpgradeType upgradeType)
     {
-        int cost = PlayerUpgradeStat.Instance.GetCost(id);
+        int itemId = (int)UpgradeMatching.match[upgradeType];
+        int cost = PlayerUpgradeStat.Instance.GetCost(upgradeType);
         if (Inventory.Count > 0)
         {
             foreach (ItemData item in Inventory)
             {
-                if (item.IdNumber == (int)id && item.Amount >= cost)
+                if (item.IdNumber == itemId && item.Amount >= cost)
                 {
                     item.AddAmount(-cost);
                     return true;
@@ -72,6 +73,17 @@ public class ItemCollector : MonoBehaviour
         }
 
         return false;
+    }
+
+    public int GetItemAmount(ItemType itemType)
+    {
+        ItemData it = Inventory.Find(x => x.IdNumber == (int)itemType);
+        if (it == null)
+            return 0;
+        else
+        {
+            return it.Amount;
+        }
     }
 
     public void Initialize()

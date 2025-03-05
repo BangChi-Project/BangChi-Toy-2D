@@ -63,7 +63,7 @@ public abstract class Enemy : MonoBehaviour
         {
             Item it = InGameManager.Instance.poolManager.GetItemInPool(2);
             it.Initialize(ItemType.LobbyMoney, "LobbyMoney",1);  // Random.Range(10, 100));
-            it.transform.position = transform.position;
+            it.transform.position = transform.position + Vector3.left * 0.2f;
         }
     }
 }

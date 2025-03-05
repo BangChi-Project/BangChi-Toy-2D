@@ -52,8 +52,8 @@ public class PlayerViewModel: MonoBehaviour
 
     public void UpdateHpBar() // view
     {
-        float calculHp = player.Health + PlayerUpgradeStat.Instance.InGameHp;
-        float calculMaxHp = player.MaxHealth + PlayerUpgradeStat.Instance.InGameHp;
+        float calculHp = PlayerUpgradeStat.Instance.CalculateInGameHp(player.Health);
+        float calculMaxHp = PlayerUpgradeStat.Instance.CalculateInGameHp(player.MaxHealth);
         stateView.SetHpBar(calculHp / calculMaxHp);
     }
 

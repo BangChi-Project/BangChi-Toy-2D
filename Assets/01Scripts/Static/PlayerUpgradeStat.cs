@@ -16,15 +16,17 @@ public class PlayerUpgradeStat: MonoBehaviour // For InGame? or Lobby?
     }
     [Header("InGame Stats")]
     public int InGameAtk { get; private set; }
-    public int InGameAtkUpgradeCost { get; private set; } // tuple<id, cost> 
+
+    public int InGameAtkUpgradeCost { get; private set; } = 1; // tuple<id, cost> 
     public int InGameHp { get; private set; }
-    public int InGameHpUpgradeCost { get; private set; } // tuple<id, cost>
+    public int InGameHpUpgradeCost { get; private set; } = 1; // tuple<id, cost>
     
     [Header("Lobby Stats")]
-    public int LobbyAtk { get; set; }
-    public int LobbyAtkUpgradeCost { get; private set; }
-    public int LobbyHp { get; set; }
-    public int LobbyHpUpgradeCost { get; private set; }
+    public int LobbyAtk { get; private set; }
+
+    public int LobbyAtkUpgradeCost { get; private set; } = 1;
+    public int LobbyHp { get; private set; }
+    public int LobbyHpUpgradeCost { get; private set; } = 1;
 
     private void Awake()
     {
@@ -73,12 +75,12 @@ public class PlayerUpgradeStat: MonoBehaviour // For InGame? or Lobby?
         }
     }
 
-    public int CalculateInGameAtk(int atk)
+    public float CalculateInGameAtk(float atk)
     {
         return atk + LobbyAtk + InGameAtk;
     }
 
-    public int CalculateInGameHp(int hp)
+    public float CalculateInGameHp(float hp)
     {
         return hp + LobbyHp + InGameHp;
     }
@@ -111,8 +113,5 @@ public class PlayerUpgradeStat: MonoBehaviour // For InGame? or Lobby?
 
         InGameHp = 0;
         InGameHpUpgradeCost = 1;
-
-        LobbyAtkUpgradeCost = 1;
-        LobbyHpUpgradeCost = 1;
     }
 }

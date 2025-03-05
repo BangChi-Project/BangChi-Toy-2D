@@ -9,12 +9,15 @@ public class LobbyUpgrader: MonoBehaviour
     [SerializeField] private Button hideUpgradeButton;
     [SerializeField] private TextMeshProUGUI plusAttackText;
     [SerializeField] private Button atkUpgradeButton;
+    [SerializeField] private TextMeshProUGUI lobbyMoneyText;
 
     void OnEnable()
     {
         hideUpgradeButton.onClick.AddListener( () => OnClickHide(this.gameObject) );
         // upgrade Button
         atkUpgradeButton.onClick.AddListener(() => OnClickUpgradeButton(UpgradeType.LobbyAtk) );
+        
+        lobbyMoneyText.SetText(ItemCollector.Instance.GetItemAmount(ItemType.LobbyMoney).ToString("0000"));
     }
 
     void OnDisable()
@@ -31,43 +34,24 @@ public class LobbyUpgrader: MonoBehaviour
     
     public void OnClickUpgradeButton(UpgradeType upgradeType)
     {
+        // switch
         ItemType itemType = UpgradeMatching.match[upgradeType];
-        int cost = PlayerUpgradeStat.Instance.GetCost(upgradeType);
         if (UpgradeExcute(upgradeType))
         {
-            plusAttackText.SetText($"ATK +{PlayerUpgradeStat.Instance.InGameAtk}");
-            
-            atkUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().SetText($"upgradeType:{upgradeType}\ncost:{cost}");
+            plusAttackText.SetText($"ATK +{PlayerUpgradeStat.Instance.LobbyAtk}");
+            lobbyMoneyText.SetText(ItemCollector.Instance.GetItemAmount(ItemType.LobbyMoney).ToString("0000"));
+            int cost = PlayerUpgradeStat.Instance.GetCost(upgradeType);
+            atkUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().SetText($"itemType:{itemType}\ncost:{cost}");
         }
         else
         {
-            Debug.Log($"Can't upgrade upgradeType:{upgradeType} cost:{cost}");
+            int cost = PlayerUpgradeStat.Instance.GetCost(upgradeType);
+            Debug.Log($"Can't upgrade itemType:{itemType} cost:{cost}");
         }
-        // switch (upgradeType) // Update Text
-        // {
-        //     case(UpgradeType.):
-                // break;
-            // case((int)UsingType.LobbyHp):
-            //     cost = PlayerUpgradeStat.Instance.InGameHpUpgradeCost;
-            //     if (InGameManager.Instance.UpgradeExcute(id, cost))
-            //     {
-            //         hpUpgradeText.SetText($"HP +{PlayerUpgradeStat.Instance.InGameHp}");
-            //         var hpUpgradeCost = PlayerUpgradeStat.Instance.InGameHpUpgradeCost;
-            //         hpUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().SetText($"Gem\n{hpUpgradeCost}");
-            //     }
-            //     else
-            //     {
-            //         Debug.Log($"Can't upgrade id:{id} cost:{cost}");
-            //     }
-            //     break;
-        //     default:
-        //         break;
-        // }
     }
     
     public bool UpgradeExcute(UpgradeType id)
     {
-        int cost = PlayerUpgradeStat.Instance.GetCost(id);
         if (ItemCollector.Instance.UpgradeExcute(id))
         {
             switch (id)

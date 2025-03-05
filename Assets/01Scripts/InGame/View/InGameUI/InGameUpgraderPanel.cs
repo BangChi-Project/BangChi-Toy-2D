@@ -18,21 +18,19 @@ public class UpgradePanel : MonoBehaviour
 
     private void OnClickUpgradeButton(UpgradeType id)
     {
-        int cost = PlayerUpgradeStat.Instance.GetCost(id);
-        
         switch (id) // Update Text
         {
             case(UpgradeType.InGameAtk):
                 if (InGameManager.Instance.UpgradeExcute(id))
                 {
                     atkUpgradeText.SetText($"ATK +{PlayerUpgradeStat.Instance.InGameAtk}");
-                    
+                    int cost = PlayerUpgradeStat.Instance.GetCost(id);
                     atkUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().SetText($"id:{(int)id}(Gold)\n{cost}");
-                    
                     InGuiManager.Instance.UpdateItemText();
                 }
                 else
                 {
+                    int cost = PlayerUpgradeStat.Instance.GetCost(id);
                     Debug.Log($"Can't upgrade id:{id} cost:{cost}");
                 }
                 break;
@@ -40,13 +38,13 @@ public class UpgradePanel : MonoBehaviour
                 if (InGameManager.Instance.UpgradeExcute(id))
                 {
                     hpUpgradeText.SetText($"HP +{PlayerUpgradeStat.Instance.InGameHp}");
-                    
+                    int cost = PlayerUpgradeStat.Instance.GetCost(id);
                     hpUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().SetText($"id:{(int)id}(Gem)\n{cost}");
-                    
                     InGuiManager.Instance.UpdateItemText();
                 }
                 else
                 {
+                    int cost = PlayerUpgradeStat.Instance.GetCost(id);
                     Debug.Log($"Can't upgrade id:{id} cost:{cost}");
                 }
                 break;
