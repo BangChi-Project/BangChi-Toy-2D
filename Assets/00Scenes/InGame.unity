@@ -898,6 +898,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d551f2b76ae04131b5468d9397b0b85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  atkUpgradeText: {fileID: 1625424200}
+  hpUpgradeText: {fileID: 1202591910}
 --- !u!1 &594332611
 GameObject:
   m_ObjectHideFlags: 0
@@ -28129,12 +28131,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1601255070}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1661088306}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1625424198
 GameObject:
@@ -28451,7 +28453,6 @@ MonoBehaviour:
   poolManager: {fileID: 0}
   playerPrefab: {fileID: 4904209020302609906, guid: 1790d6f18597a474183fc5ce562f735e, type: 3}
   playerViewModel: {fileID: 0}
-  itemCollector: {fileID: 1601255071}
 --- !u!4 &1661088306
 Transform:
   m_ObjectHideFlags: 0
@@ -28465,7 +28466,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1601255072}
   - {fileID: 1144333976}
   - {fileID: 1016105440}
   m_Father: {fileID: 0}
@@ -29368,3 +29368,4 @@ SceneRoots:
   - {fileID: 1661088306}
   - {fileID: 1138787397}
   - {fileID: 124487525}
+  - {fileID: 1601255072}

@@ -50,14 +50,12 @@ public class InGameManager : MonoBehaviour
     public StateEnum GameState { get; private set; } = StateEnum.Running;
     public float GameTime { get; private set; } = 0f;
     public PoolManager poolManager;
-    public PlayerUpgradeStat PlayerUpgradeStat { get; private set; }
     
     // private field
     [Header("Player Data")]
     [SerializeField] GameObject playerPrefab;
     GameObject playerObj;
     [SerializeField] private PlayerViewModel playerViewModel;
-    [SerializeField] private InGameItemCollector itemCollector;
     [Header("SingleTon")] private static InGameManager instance = null;
 
 
@@ -89,14 +87,14 @@ public class InGameManager : MonoBehaviour
             case(StateEnum.Pause):
                 break;
             case(StateEnum.End):
-                InGuiViewModel.Instance.ShowResultPanel();
+                InGuiManager.Instance.ShowResultPanel();
                 break;
         }
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "Test_Lobby") // when go to Lobby
+        if (scene.name == SceneNames.Lobby) // when go to Lobby
         {
             GameState = StateEnum.End;
             
@@ -128,20 +126,20 @@ public class InGameManager : MonoBehaviour
 
     public void AddItem(Item item)
     {
-        itemCollector.AddItem(item);
+        ItemCollector.Instance.AddItem(item);
     }
 
-    public bool UpgradeExcute(int id, int cost)
+    public bool UpgradeExcute(UpgradeType type)
     {
-        if (itemCollector.UpgradeExcute(id, cost))
+        if (ItemCollector.Instance.UpgradeExcute(type))
         {
-            switch (id)
+            switch (type)
             {
-                case(0):
-                    PlayerUpgradeStat.AtkUpgrade();
+                case(UpgradeType.InGameAtk):
+                    PlayerUpgradeStat.Instance.AtkUpgrade(true);
                     return true;
-                case(1):
-                    PlayerUpgradeStat.HpUpgrade();
+                case(UpgradeType.InGameHp):
+                    PlayerUpgradeStat.Instance.HpUpgrade(true);
                     playerViewModel.UpdateHpBar();
                     return true;
             }
@@ -157,7 +155,6 @@ public class InGameManager : MonoBehaviour
         // playerObj = Instantiate(playerObj, , Quaternion.identity);
         playerObj = Instantiate(playerPrefab, transform.position, Quaternion.identity);
         playerViewModel = playerObj.GetComponentInChildren<PlayerViewModel>();
-        PlayerUpgradeStat = GetComponent<PlayerUpgradeStat>();
         if (GameManager.Instance != null)
         {
             playerViewModel.InGameBuildSkin();
@@ -190,9 +187,9 @@ public class InGameManager : MonoBehaviour
         Debug.Log("spawnerCount: "+stageData.spawners.Count);
         poolManager.Initialize();
         gameMaker.Initialize(stageData.spawners);
-        PlayerUpgradeStat.Initialize();
-        itemCollector.Initialize();
-        InGuiViewModel.Instance.Initialize();
+        PlayerUpgradeStat.Instance.Initialize();
+        ItemCollector.Instance.Initialize();
+        InGuiManager.Instance.Initialize();
 
         GameState = StateEnum.Running;
     }

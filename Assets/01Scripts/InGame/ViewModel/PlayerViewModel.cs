@@ -19,6 +19,7 @@ public class PlayerViewModel: MonoBehaviour
         {
             var item = other.GetComponent<Item>();
             InGameManager.Instance.AddItem(item);
+            InGuiManager.Instance.UpdateItemText();
             item.SetDisable(); // SetActive(false)
         }
     }
@@ -51,8 +52,8 @@ public class PlayerViewModel: MonoBehaviour
 
     public void UpdateHpBar() // view
     {
-        float calculHp = player.Health + InGameManager.Instance.PlayerUpgradeStat.Hp;
-        float calculMaxHp = player.MaxHealth + InGameManager.Instance.PlayerUpgradeStat.Hp;
+        float calculHp = player.Health + PlayerUpgradeStat.Instance.InGameHp;
+        float calculMaxHp = player.MaxHealth + PlayerUpgradeStat.Instance.InGameHp;
         stateView.SetHpBar(calculHp / calculMaxHp);
     }
 

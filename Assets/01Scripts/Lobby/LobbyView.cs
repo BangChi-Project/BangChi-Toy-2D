@@ -3,6 +3,7 @@ using Assets.PixelFantasy.PixelHeroes.Common.Scripts.CharacterScripts;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 using SkinDic = SkinInt2String;
@@ -15,6 +16,7 @@ public class LobbyView: MonoBehaviour
     [SerializeField] private Canvas canvas;
     
     // Character Edit Panel
+    [Header("Character Edit")]
     [SerializeField] private GameObject characterEditPanel;
     [SerializeField] private CharacterBuilder characterBuilder;
     [SerializeField] private TMP_Dropdown weaponDropdown;
@@ -22,30 +24,32 @@ public class LobbyView: MonoBehaviour
     [SerializeField] private Button hideCharacterEditButton;
     
     // Character Upgrade Panel
-    [SerializeField] private GameObject upgradePanel;
-    [SerializeField] private Button attackUpgradeButton;
-    [SerializeField] private TextMeshProUGUI plusAttackText;
-    [SerializeField] private Button hideUpgradeButton;
-
+    [Header("Character Upgrade")]
+    [SerializeField] private GameObject upgraderPanel;
+    
     void OnEnable()
     {
+        // show&hide Button
         showCharacterEditButton.onClick.AddListener(() => OnClickShow(characterEditPanel));
         hideCharacterEditButton.onClick.AddListener(() => OnClickHide(characterEditPanel));
         
-        showUpgradeButton.onClick.AddListener( () => OnClickShow(upgradePanel));
-        hideUpgradeButton.onClick.AddListener( () => OnClickHide(upgradePanel));
+        showUpgradeButton.onClick.AddListener( () => OnClickShow(upgraderPanel));
         
+        // edit Dropdown
         weaponDropdown.onValueChanged.AddListener(value => SetWeaponIndex(value));
         armorDropdown.onValueChanged.AddListener(value => SetArmorIndex(value));
+        
     }
     void OnDisable()
     {
+        // show&hide Button
         showCharacterEditButton.onClick.RemoveAllListeners();
         hideCharacterEditButton.onClick.RemoveAllListeners();
         
         showUpgradeButton.onClick.RemoveAllListeners();
         hideCharacterEditButton.onClick.RemoveAllListeners();
         
+        // edit Dropdown
         weaponDropdown.onValueChanged.RemoveAllListeners();
         armorDropdown.onValueChanged.RemoveAllListeners();
     }
@@ -85,7 +89,7 @@ public class LobbyView: MonoBehaviour
     public void Initialize()
     {
         characterEditPanel.SetActive(false);
-        upgradePanel.SetActive(false);
+        upgraderPanel.SetActive(false);
         stageContents.SetContents();
     }
 

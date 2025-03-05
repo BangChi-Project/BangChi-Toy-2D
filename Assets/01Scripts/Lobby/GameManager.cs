@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         Debug.Log("Game::Scene Loaded::"+scene.name);
-        if (scene.name == "Test_Lobby")
+        if (scene.name == SceneNames.Lobby)
         {
             // canvas.gameObject.SetActive(true);
             lobbyView.gameObject.SetActive(true);

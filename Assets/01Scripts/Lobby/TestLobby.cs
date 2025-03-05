@@ -17,6 +17,6 @@ public class TestLobby : MonoBehaviour
 
     public void OnClickGameStart()
     {
-        SceneManager.LoadScene("InGame");
+        SceneManager.LoadScene(SceneNames.Game);
     }
 }
