@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+[Serializable]
+[CreateAssetMenu(menuName = "Items/Item Collector")]
 public class ItemCollector : MonoBehaviour
 {
     private static ItemCollector instance;

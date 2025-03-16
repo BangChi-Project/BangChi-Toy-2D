@@ -36,8 +36,8 @@ public enum UpgradeType
 {
     InGameAtk = 0, // gold
     InGameHp = 1, // gem
-    LobbyAtk = 2, // lobby gold
-    LobbyHp = 3, // lobby gold
+    LobbyAtk = 100, // lobby gold
+    LobbyHp = 101, // lobby gold
 }
 
 public enum ItemType
