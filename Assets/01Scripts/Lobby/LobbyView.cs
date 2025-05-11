@@ -35,6 +35,7 @@ public class LobbyView: MonoBehaviour
 
         // make dropDown Button
         weaponDropdown.options.Clear();
+        var a = DataManager.Instance.SkinDatas.ToString();
         foreach (var name in DataManager.Instance.SkinDatas["Weapon"])
         {
             weaponDropdown.options.Add(new TMP_Dropdown.OptionData(name));

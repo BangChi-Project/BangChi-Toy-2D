@@ -12,6 +12,7 @@ public class DataManager: MonoBehaviour
         {
             if (instance == null)
             {
+                Debug.Log("instance is null, new GameObj");
                 GameObject obj = new GameObject("DataManager", typeof(DataManager));
                 instance = obj.GetComponent<DataManager>();
             }
@@ -21,21 +22,21 @@ public class DataManager: MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log("DataManager Awake");
         if (instance == null)
         {
             instance = this;
             DontDestroyOnLoad(this.gameObject);
-            
-            if (SkinDatas == null)
-                SkinDatas = Resources.Load<SkinDatas>("SkinDatas");
         }
-        else
+        else if (instance != this)
         {
-            Destroy(this.gameObject); // Error when use <this>
+            Destroy(gameObject);
         }
+        if (SkinDatas == null)
+            SkinDatas = Resources.Load<SkinDatas>("SkinDic");
     }
 
-    public SkinDatas SkinDatas;
+    public SkinDatas SkinDatas = null;
 
     public string EquipWeaponSkin
     {

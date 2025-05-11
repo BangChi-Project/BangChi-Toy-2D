@@ -11,11 +11,12 @@ public class SkinDatas : ScriptableObject
     private List<SkinCategoryEntry> entries = new List<SkinCategoryEntry>();
 
     // 런타임에 한 번 변환해 캐싱해 둘 딕셔너리
-    private Dictionary<string, List<string>> _skinDictionary;
-    public Dictionary<string, List<string>> SkinDictionary =>
-        _skinDictionary ??= entries.ToDictionary(e => e.category, e => e.skins);
+    // private Dictionary<string, List<string>> _skinDictionary;
+    // public Dictionary<string, List<string>> SkinDictionary =>
+    //     _skinDictionary ??= entries.ToDictionary(e => e.category, e => e.skins);
     
-    public List<string> this[string category] => SkinDictionary[category];
+    public List<string> this[string category] => entries.ToDictionary(
+        e => e.category, e => e.skins)[category];
 }
 
 [Serializable]
