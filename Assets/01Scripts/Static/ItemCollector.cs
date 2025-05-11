@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-[Serializable]
-[CreateAssetMenu(menuName = "Items/Item Collector")]
 public class ItemCollector : MonoBehaviour
 {
     private static ItemCollector instance;
@@ -19,14 +17,14 @@ public class ItemCollector : MonoBehaviour
             return instance;
         }
     } 
-    public List<ItemData> Inventory { get; private set; } = new List<ItemData>(); // 초기화하면 안되는 중요한 변수
+    public List<GetItemData> Inventory { get; private set; } = new List<GetItemData>(); // 초기화하면 안되는 중요한 변수
 
     void Awake()
     {
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(this);
+            DontDestroyOnLoad(this.gameObject);
         }
         else
         {
@@ -41,7 +39,7 @@ public class ItemCollector : MonoBehaviour
     public void AddItem(Item addItem)
     {
         bool isFind = true;
-        foreach (ItemData item in Inventory)
+        foreach (GetItemData item in Inventory)
         {
             if (item.IdNumber == addItem.IdNumber)
             {
@@ -53,7 +51,7 @@ public class ItemCollector : MonoBehaviour
 
         if (isFind)
         {
-            Inventory.Add(new ItemData(addItem));
+            Inventory.Add(new GetItemData(addItem));
             Inventory.Sort((x, y) => x.IdNumber.CompareTo(y.IdNumber));
         }
     }
@@ -64,7 +62,7 @@ public class ItemCollector : MonoBehaviour
         int cost = PlayerUpgradeStat.Instance.GetCost(upgradeType);
         if (Inventory.Count > 0)
         {
-            foreach (ItemData item in Inventory)
+            foreach (GetItemData item in Inventory)
             {
                 if (item.IdNumber == itemId && item.Amount >= cost)
                 {
@@ -79,7 +77,7 @@ public class ItemCollector : MonoBehaviour
 
     public int GetItemAmount(ItemType itemType)
     {
-        ItemData it = Inventory.Find(x => x.IdNumber == (int)itemType);
+        GetItemData it = Inventory.Find(x => x.IdNumber == (int)itemType);
         if (it == null)
             return 0;
         else

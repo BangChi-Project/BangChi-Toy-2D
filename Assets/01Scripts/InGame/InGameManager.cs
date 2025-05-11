@@ -64,7 +64,7 @@ public class InGameManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(this);
+            DontDestroyOnLoad(this.gameObject);
             SceneManager.sceneLoaded += OnSceneLoaded;
             // Initialize();
         }
@@ -155,7 +155,7 @@ public class InGameManager : MonoBehaviour
         // playerObj = Instantiate(playerObj, , Quaternion.identity);
         playerObj = Instantiate(playerPrefab, transform.position, Quaternion.identity);
         playerViewModel = playerObj.GetComponentInChildren<PlayerViewModel>();
-        if (GameManager.Instance != null)
+        if (LobbyManager.Instance != null)
         {
             playerViewModel.InGameBuildSkin();
         }
@@ -182,7 +182,7 @@ public class InGameManager : MonoBehaviour
         }
         else
         {
-            stageData = GameManager.Instance.CurrentStage;
+            stageData = LobbyManager.Instance.CurrentStage;
         }
         Debug.Log("spawnerCount: "+stageData.spawners.Count);
         poolManager.Initialize();

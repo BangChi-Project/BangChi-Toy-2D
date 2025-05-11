@@ -6,8 +6,6 @@ using UnityEngine.Rendering;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-using SkinDic = SkinInt2String;
-
 public class LobbyView: MonoBehaviour
 {
     [SerializeField] private StageContents stageContents;
@@ -29,6 +27,24 @@ public class LobbyView: MonoBehaviour
     
     void OnEnable()
     {
+        // Rebuild Character
+        characterBuilder.Weapon = DataManager.Instance.EquipWeaponSkin;
+        characterBuilder.Armor = DataManager.Instance.EquipArmorSkin;
+        characterBuilder.Rebuild();
+        Debug.Log($"Rebuild W:{DataManager.Instance.EquipWeaponSkin}");
+
+        // make dropDown Button
+        weaponDropdown.options.Clear();
+        foreach (var name in DataManager.Instance.SkinDatas["Weapon"])
+        {
+            weaponDropdown.options.Add(new TMP_Dropdown.OptionData(name));
+        }
+        armorDropdown.options.Clear();
+        foreach (var name in DataManager.Instance.SkinDatas["Armor"])
+        {
+            armorDropdown.options.Add(new TMP_Dropdown.OptionData(name));
+        }
+        
         // show&hide Button
         showCharacterEditButton.onClick.AddListener(() => OnClickShow(characterEditPanel));
         hideCharacterEditButton.onClick.AddListener(() => OnClickHide(characterEditPanel));
@@ -75,14 +91,14 @@ public class LobbyView: MonoBehaviour
 
     void SetWeaponIndex(int index)
     {
-        GameManager.Instance.SkinString["Weapon"] = SkinDic.SkinDic["Weapon"][index];
-        characterBuilder.Weapon = SkinDic.SkinDic["Weapon"][index];
+        DataManager.Instance.EquipWeaponSkin = DataManager.Instance.SkinDatas["Weapon"][index];
+        characterBuilder.Weapon = DataManager.Instance.SkinDatas["Weapon"][index];
         characterBuilder.Rebuild();
     }
     void SetArmorIndex(int index)
     {
-        GameManager.Instance.SkinString["Armor"] = SkinDic.SkinDic["Armor"][index];
-        characterBuilder.Armor = SkinDic.SkinDic["Armor"][index];
+        DataManager.Instance.EquipArmorSkin = DataManager.Instance.SkinDatas["Armor"][index];
+        characterBuilder.Armor = DataManager.Instance.SkinDatas["Armor"][index];
         characterBuilder.Rebuild();
     }
     

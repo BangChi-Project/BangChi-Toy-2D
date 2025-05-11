@@ -31,7 +31,7 @@ public class StageContent : MonoBehaviour
     {
         if (InGameManager.Instance)
             InGameManager.Instance.isTestMode = false; // TestMode = false
-        GameManager.Instance.CurrentStage = stage;
+        LobbyManager.Instance.CurrentStage = stage;
         SceneManager.LoadScene("InGame");
     }
 

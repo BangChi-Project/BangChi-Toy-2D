@@ -22,8 +22,8 @@ public class StageDataParsing: MonoBehaviour
         if (File.Exists(filePath))
         {
             string fromJsonData = File.ReadAllText(filePath); 
-            GameManager.Instance.StageList = JsonUtility.FromJson<StageDataList>(fromJsonData);
-            Debug.Log("Stage count: "+GameManager.Instance.StageList.stages.Count);
+            LobbyManager.Instance.StageList = JsonUtility.FromJson<StageDataList>(fromJsonData);
+            Debug.Log("Stage count: "+LobbyManager.Instance.StageList.stages.Count);
         }
         else
         {

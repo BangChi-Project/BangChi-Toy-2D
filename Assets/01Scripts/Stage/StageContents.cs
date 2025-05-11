@@ -19,7 +19,7 @@
 
         public void SetContents()
         {
-            List<StageData> stageList = GameManager.Instance.StageList.stages;
+            List<StageData> stageList = LobbyManager.Instance.StageList.stages;
             foreach (var stage in stageList)
             {
                 contentParent.GetComponent<RectTransform>().sizeDelta += new Vector2(400, 0);

@@ -33,7 +33,7 @@ public class PlayerUpgradeStat: MonoBehaviour // For InGame? or Lobby?
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(this);
+            DontDestroyOnLoad(this.gameObject);
         }
         else
         {

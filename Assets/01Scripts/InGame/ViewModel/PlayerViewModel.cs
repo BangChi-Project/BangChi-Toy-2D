@@ -4,8 +4,6 @@ using Assets.PixelFantasy.PixelHeroes.Common.Scripts.CharacterScripts;
 using Assets.PixelFantasy.PixelHeroes.Common.Scripts.ExampleScripts;
 using UnityEngine;
 
-using SkinIdx = SkinInt2String;
-
 public class PlayerViewModel: MonoBehaviour
 {
     [SerializeField] private Player player;
@@ -84,9 +82,8 @@ public class PlayerViewModel: MonoBehaviour
 
     public void InGameBuildSkin()
     {
-        var skinIdx = GameManager.Instance.SkinString;
-        builderView.Weapon = skinIdx["Weapon"];
-        builderView.Armor = skinIdx["Armor"];
+        builderView.Weapon = DataManager.Instance.EquipWeaponSkin;
+        builderView.Armor = DataManager.Instance.EquipArmorSkin;
         builderView.Rebuild();
     }
     // public void SetSkin(string skin, int skinIndex)

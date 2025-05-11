@@ -58,8 +58,8 @@ public class InGuiManager: MonoBehaviour
     public void UpdateItemText()
     {
         string itemText = ""; 
-        List<ItemData> Inventory = ItemCollector.Instance.Inventory;
-        foreach (ItemData item in Inventory)
+        List<GetItemData> Inventory = ItemCollector.Instance.Inventory;
+        foreach (GetItemData item in Inventory)
         {
             itemText += "item name: " + item.Name + "\nitem id: " + item.IdNumber + "\nitem amount: " + item.Amount + "\n\n";
         }
@@ -90,7 +90,5 @@ public class InGuiManager: MonoBehaviour
         this.gameObject.SetActive(true);
         
         inGuiView.Initialize();
-        
-        UpdateItemText();
     }
 }

@@ -5,16 +5,15 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Debug = UnityEngine.Debug;
+// using SkinDic = SkinInt2String;
 
-using SkinDic = SkinInt2String;
-
-public class GameManager : MonoBehaviour
+public class LobbyManager : MonoBehaviour
 {
     // Event
     // public Action<StateEnum> OnStateChange;
     
     // Properties
-    public static GameManager Instance
+    public static LobbyManager Instance
     {
         get
         {
@@ -25,28 +24,22 @@ public class GameManager : MonoBehaviour
     }
     // public StateEnum GameState { get; private set; } = StateEnum.Running;
     
-    [Header("SingleTon")] private static GameManager instance = null;
+    [Header("SingleTon")] private static LobbyManager instance = null;
     
     private bool isReady = false;
+    [SerializeField] private LobbyView lobbyView;
     [SerializeField] private Canvas canvas;
     
     private StageDataParsing stageDataParsing;
     public StageDataList StageList { get; set; }
     public StageData CurrentStage { get; set; }
-    [SerializeField] private LobbyView lobbyView;
-
-    public Dictionary<string, string> SkinString = new ()
-    {
-        {"Weapon", SkinDic.SkinDic["Weapon"][0]},
-        {"Armor", SkinDic.SkinDic["Armor"][0]},
-    };
     
     void Awake()
     {
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(this);
+            DontDestroyOnLoad(this.gameObject);
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
         else
