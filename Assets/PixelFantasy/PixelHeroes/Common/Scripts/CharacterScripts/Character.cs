@@ -12,7 +12,7 @@ namespace Assets.PixelFantasy.PixelHeroes.Common.Scripts.CharacterScripts
 
         #if UNITY_EDITOR
 
-        public void OnValidate()
+        public void Awake()
         {
             if (Application.isPlaying && Time.time > 1)
             {

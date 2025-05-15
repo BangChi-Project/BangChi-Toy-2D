@@ -40,14 +40,8 @@ public class DataManager: MonoBehaviour
 
     public string EquipWeaponSkin
     {
-        get
-        {
-            return PlayerPrefs.GetString("EquipWeaponSkin", "ShortDagger");
-        }
-        set
-        {
-            PlayerPrefs.GetString("EquipWeaponSkin", value);
-        }
+        get { return PlayerPrefs.GetString("EquipWeaponSkin", "ShortDagger"); }
+        set { PlayerPrefs.SetString("EquipWeaponSkin", value); }
     }
     public string EquipArmorSkin
     {
@@ -57,7 +51,7 @@ public class DataManager: MonoBehaviour
         }
         set
         {
-            PlayerPrefs.GetString("EquipArmorSkin", value);
+            PlayerPrefs.SetString("EquipArmorSkin", value);
         }
     }
 }
